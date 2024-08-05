@@ -41,7 +41,7 @@ jobs:
 
       - name: Build the web application
         working-directory: src
-        run: flutter build web
+        run: flutter build web --wasm
 
       - name: Test the web application
         working-directory: src
