@@ -4,20 +4,6 @@ import 'pages/home.dart';
 import 'theme/color_scheme.dart';
 import 'theme/text_theme.dart';
 
-// GoRouter configuration
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(title: 'Alejandro Fernández'),
-    ),
-    GoRoute(
-      path: '/Research',
-      builder: (context, state) => const HomePage(title: 'Research'),
-    ),
-  ],
-);
-
 void main() {
   runApp(const MyApp());
 }
@@ -29,14 +15,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
-    final TextTheme textTheme =
-        createTextTheme(context, 'Noto Sans', 'Silkscreen');
-    MaterialTheme theme = MaterialTheme(textTheme);
+    final textTheme = createTextTheme(context, 'Noto Sans', 'Silkscreen');
+    final theme = brightness == Brightness.light
+        ? MaterialTheme(textTheme).light()
+        : MaterialTheme(textTheme).dark();
+    final router = GoRouter(
+      initialLocation: '/',
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => Title(
+            title: 'Home | Alejandro Fernández Alburquerque',
+            color: theme.primaryColor,
+            child: const HomePage(title: 'Work in progress'),
+          ),
+        ),
+        GoRoute(
+          path: '/Research',
+          builder: (context, state) => Title(
+            title: 'Research | Alejandro Fernández Alburquerque',
+            color: theme.primaryColor,
+            child: const HomePage(title: 'Work in progress | Research'),
+          ),
+        ),
+        GoRoute(
+          path: '/About',
+          builder: (context, state) => Title(
+            title: 'About Me | Alejandro Fernández Alburquerque',
+            color: theme.primaryColor,
+            child: const HomePage(title: 'Work in progress | About Me'),
+          ),
+        ),
+      ],
+    );
 
     return MaterialApp.router(
-      title: 'Alejandro Fernández',
-      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      routerConfig: _router,
+      title: 'Alejandro Fernández Alburquerque',
+      theme: theme,
+      routerConfig: router,
     );
   }
 }

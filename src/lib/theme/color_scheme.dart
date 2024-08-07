@@ -371,7 +371,51 @@ class MaterialTheme {
         canvasColor: colorScheme.surface,
       );
 
-  List<ExtendedColor> get extendedColors => [];
+  /// Custom Color 1
+  static const customColor1 = ExtendedColor(
+    seed: Color(4280499533),
+    value: Color(4280499533),
+    light: ColorFamily(
+      color: Color(4280312967),
+      onColor: Color(4294967295),
+      colorContainer: Color(4291225599),
+      onColorContainer: Color(4278197805),
+    ),
+    lightMediumContrast: ColorFamily(
+      color: Color(4280312967),
+      onColor: Color(4294967295),
+      colorContainer: Color(4291225599),
+      onColorContainer: Color(4278197805),
+    ),
+    lightHighContrast: ColorFamily(
+      color: Color(4280312967),
+      onColor: Color(4294967295),
+      colorContainer: Color(4291225599),
+      onColorContainer: Color(4278197805),
+    ),
+    dark: ColorFamily(
+      color: Color(4287811317),
+      onColor: Color(4278203467),
+      colorContainer: Color(4278209643),
+      onColorContainer: Color(4291225599),
+    ),
+    darkMediumContrast: ColorFamily(
+      color: Color(4287811317),
+      onColor: Color(4278203467),
+      colorContainer: Color(4278209643),
+      onColorContainer: Color(4291225599),
+    ),
+    darkHighContrast: ColorFamily(
+      color: Color(4287811317),
+      onColor: Color(4278203467),
+      colorContainer: Color(4278209643),
+      onColorContainer: Color(4291225599),
+    ),
+  );
+
+  List<ExtendedColor> get extendedColors => [
+        customColor1,
+      ];
 }
 
 class MaterialScheme {
