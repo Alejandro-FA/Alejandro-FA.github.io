@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'Silkscreen';
+    src: url('../assets/google_fonts/Silkscreen/Silkscreen-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+div#splash-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+    flex-direction: column;
+}
+
+img#splash-screen-logo {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 0.5rem;
+}
+
+div#splash-screen-progress-bar {
+    width: 10rem;
+    border-radius: 4px;
+}
+
+@keyframes progress {
+    0% {width: 0%;}
+    100% {width: 100%;}
+}
+
+div#splash-screen-progress-bar-fill {
+    display: block;
+    height: 0.5rem;
+    border-radius: 4px;
+    transition: width 0.3s ease-in;
+    animation: progress 5s ease-in-out forwards;
+}
+
+div#splash-screen p {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-family: "Silkscreen", sans-serif;
+}
+
+/* Light theme colors */
+@media (prefers-color-scheme: light) {
+    body,
+    html {
+        background-color: #f5fbf7; /* theme.light().background */
+    }
+
+    div#splash-screen-progress-bar {
+        background-color: #a2f2da; /* theme.light().primaryContainer */
+    }
+
+    div#splash-screen-progress-bar-fill {
+        background-color: #002019; /* theme.light().onPrimaryContainer */
+    }
+
+    div#splash-screen p {
+        color: #171d1b; /* theme.light().onBackground */
+    }
+}
+
+/* Dark theme colors */
+@media (prefers-color-scheme: dark) {
+    body,
+    html {
+        background-color: #0f1513; /* theme.dark().background */
+    }
+
+    div#splash-screen-progress-bar {
+        background-color: #005142; /* theme.dark().primaryContainer */
+    }
+
+    div#splash-screen-progress-bar-fill {
+        background-color: #a2f2da; /* theme.dark().onPrimaryContainer */
+    }
+
+    div#splash-screen p {
+        color: #dee4e0; /* theme.dark().onBackground */
+    }
+}
