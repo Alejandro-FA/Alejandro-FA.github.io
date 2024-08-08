@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Silkscreen';
-    src: url('../assets/google_fonts/Silkscreen/Silkscreen-Regular.ttf') format('truetype');
+    src: url('fonts/Silkscreen-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }

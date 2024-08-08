@@ -61,8 +61,8 @@ flutter:
 
   # To add assets to your application, add them here:
   assets:
-    - assets/google_fonts/Noto_Sans/
-    - assets/google_fonts/Silkscreen/
+    - assets/fonts/Noto_Sans/
+    - assets/fonts/Silkscreen/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
