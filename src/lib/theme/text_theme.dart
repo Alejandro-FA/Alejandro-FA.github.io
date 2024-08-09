@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 TextTheme createTextTheme(
-    BuildContext context, String bodyFontString, String displayFontString) {
-  TextTheme baseTextTheme = Theme.of(context).textTheme;
-  TextTheme bodyTextTheme =
-      GoogleFonts.getTextTheme(bodyFontString, baseTextTheme);
-  TextTheme displayTextTheme =
-      GoogleFonts.getTextTheme(displayFontString, baseTextTheme);
-  TextTheme textTheme = displayTextTheme.copyWith(
-    bodyLarge: bodyTextTheme.bodyLarge,
-    bodyMedium: bodyTextTheme.bodyMedium,
-    bodySmall: bodyTextTheme.bodySmall,
-    labelLarge: bodyTextTheme.labelLarge,
-    labelMedium: bodyTextTheme.labelMedium,
-    labelSmall: bodyTextTheme.labelSmall,
+    BuildContext context, String bodyFont, String displayFont) {
+  TextTheme baseTheme = Theme.of(context).textTheme;
+
+  return baseTheme.copyWith(
+    displayLarge: baseTheme.displayLarge?.copyWith(fontFamily: displayFont),
+    displayMedium: baseTheme.displayMedium?.copyWith(fontFamily: displayFont),
+    displaySmall: baseTheme.displaySmall?.copyWith(fontFamily: displayFont),
+    headlineLarge: baseTheme.headlineLarge?.copyWith(fontFamily: displayFont),
+    headlineMedium: baseTheme.headlineMedium?.copyWith(fontFamily: displayFont),
+    headlineSmall: baseTheme.headlineSmall?.copyWith(fontFamily: displayFont),
+    titleLarge: baseTheme.titleLarge?.copyWith(fontFamily: displayFont),
+    titleMedium: baseTheme.titleMedium?.copyWith(fontFamily: displayFont),
+    titleSmall: baseTheme.titleSmall?.copyWith(fontFamily: displayFont),
+    bodyLarge: baseTheme.bodyLarge?.copyWith(fontFamily: bodyFont),
+    bodyMedium: baseTheme.bodyMedium?.copyWith(fontFamily: bodyFont),
+    bodySmall: baseTheme.bodySmall?.copyWith(fontFamily: bodyFont),
+    labelLarge: baseTheme.labelLarge?.copyWith(fontFamily: bodyFont),
+    labelMedium: baseTheme.labelMedium?.copyWith(fontFamily: bodyFont),
+    labelSmall: baseTheme.labelSmall?.copyWith(fontFamily: bodyFont),
   );
-  return textTheme;
 }
