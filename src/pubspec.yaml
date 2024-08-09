@@ -70,12 +70,12 @@ flutter:
   fonts:
     - family: Silkscreen
       fonts:
-        - asset: fonts/Silkscreen/Silkscreen-Regular.ttf
+        - asset: fonts/Silkscreen/Silkscreen-Regular.woff
           weight: 400
-        - asset: fonts/Silkscreen/Silkscreen-Bold.ttf
+        - asset: fonts/Silkscreen/Silkscreen-Bold.woff
           weight: 700
     - family: Noto Sans
       fonts:
-        - asset: fonts/Noto_Sans/NotoSans-VariableFont_wdth,wght.ttf
-        - asset: fonts/Noto_Sans/NotoSans-Italic-VariableFont_wdth,wght.ttf
+        - asset: fonts/Noto_Sans/NotoSans-VariableFont_wdth,wght.woff
+        - asset: fonts/Noto_Sans/NotoSans-Italic-VariableFont_wdth,wght.woff
           style: italic

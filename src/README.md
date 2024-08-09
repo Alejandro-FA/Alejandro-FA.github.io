@@ -1,16 +1,12 @@
-# src
+# Portfolio
 
-A new Flutter project.
+Portfolio of Alejandro Fernández Alburquerque.
 
-## Getting Started
+## Fonts
 
-This project is a starting point for a Flutter application.
+To download Google Fonts but in woff2 format and only a subset of the characters,
+check the Google Fonts API: https://developers.google.com/fonts/docs/getting_started
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For example, to download the Silkscreen font in woff2 format and only the Latin,
+regular glyphs required for the text "Loading portfolio...", send a request to
+https://fonts.googleapis.com/css2?family=Silkscreen&text=Loading%20portfolio...
