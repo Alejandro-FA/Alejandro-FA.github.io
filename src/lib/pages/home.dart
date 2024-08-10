@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -13,6 +14,8 @@ class HomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final double pageHeight = 1000.0;
+  final portfolioIconPath = 'assets/icons/portfolio-icon.svg';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -40,44 +43,78 @@ class _HomePageState extends State<HomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: false,
+            floating: true,
+            snap: false,
+            centerTitle: false,
+            forceMaterialTransparency: true,
+            leading: IconButton(
+              icon: SvgPicture.asset(widget.portfolioIconPath),
+              onPressed: () {},
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            title: Text(widget.title),
+            actions: [
+              TextButton(
+                child: const Text('About Me'),
+                style: TextButton.styleFrom(
+                  textStyle: textTheme.titleMedium?.copyWith(color: null),
+                ),
+                onPressed: () {},
+              ),
+              TextButton(
+                child: const Text('Projects'),
+                style: TextButton.styleFrom(
+                  textStyle: textTheme.titleMedium?.copyWith(color: null),
+                ),
+                onPressed: () {},
+              ),
+              TextButton(
+                child: const Text('Research'),
+                style: TextButton.styleFrom(
+                  textStyle: textTheme.titleMedium?.copyWith(color: null),
+                ),
+                onPressed: () {},
+              ),
+
+            ],
+            // expandedHeight: 200,
+            // flexibleSpace: const FlexibleSpaceBar(
+            //   title: Text('SliverAppBar'),
+            //   background: FlutterLogo(),
+            // ),
+          ),
+          SliverFixedExtentList(
+            itemExtent: widget.pageHeight,
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  height: widget.pageHeight,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        'You have pushed the button this many times:',
+                      ),
+                      Text(
+                        '$_counter',
+                        style: textTheme.headlineMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

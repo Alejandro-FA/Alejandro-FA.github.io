@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^14.2.3
+  flutter_svg: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +56,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add them here:
-  # assets:
+  assets:
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -70,12 +72,12 @@ flutter:
   fonts:
     - family: Silkscreen
       fonts:
-        - asset: fonts/Silkscreen/Silkscreen-Regular.woff
+        - asset: assets/fonts/Silkscreen/Silkscreen-Regular.woff
           weight: 400
-        - asset: fonts/Silkscreen/Silkscreen-Bold.woff
+        - asset: assets/fonts/Silkscreen/Silkscreen-Bold.woff
           weight: 700
     - family: Noto Sans
       fonts:
-        - asset: fonts/Noto_Sans/NotoSans-VariableFont_wdth,wght.woff
-        - asset: fonts/Noto_Sans/NotoSans-Italic-VariableFont_wdth,wght.woff
+        - asset: assets/fonts/Noto_Sans/NotoSans-VariableFont_wdth,wght.woff
+        - asset: assets/fonts/Noto_Sans/NotoSans-Italic-VariableFont_wdth,wght.woff
           style: italic
