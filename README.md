@@ -42,6 +42,7 @@ To use these hooks, you’ll need to configure Git to use the provided hooks dir
 
 The hooks in this project are designed to run automated checks before certain Git operations. For example:
 
-- **Pre-commit Hook:** Before you commit changes, the pre-commit hook will run tests using `flutter test`. If the tests fail, the commit will be aborted.
+- **Pre-commit Hook:** Before you commit changes, the pre-commit hook will run tests using `flutter test`.
+  If the tests fail, the commit will be aborted. It also ensures that the project builds successfully using `flutter build web --wasm`.
 
 By setting up these hooks, you help maintain code quality and prevent potential issues from being committed to the repository.

@@ -1,29 +1,58 @@
 #!/bin/bash
 
-# Get the root directory of the git repository
-REPO_ROOT=$(git rev-parse --show-toplevel)
+# Script parameters
+original_dir=$(pwd)
+tmp_worktree_path=$(mktemp --directory)
+tmp_diff_path=$(mktemp)
 
-# Navigate to the directory where you want to run the flutter test, relative to the repo root
-cd "$REPO_ROOT/src" || exit 1
+# Function to clean up and exit
+cleanup_and_exit() {
+    # Remove the temporary worktree
+    git worktree remove "$tmp_worktree_path" --force
 
-# Run the flutter test command
-flutter test
-TEST_STATUS=$?
+    # Remove the temporary diff file
+    rm "$tmp_diff_path"
 
-if [ $TEST_STATUS -ne 0 ]; then
-    echo "Tests failed. Commit aborted."
-    exit 1
-fi
+    # Navigate back to the original directory
+    cd "$original_dir" || exit 1
 
-# Check that the project compiles correctly
-flutter build web --wasm
-BUILD_STATUS=$?
-rm -rf build/web
+    # Exit with the provided status code
+    exit $1
+}
 
-if [ $BUILD_STATUS -ne 0 ]; then
-    echo "Build failed. Commit aborted."
-    exit 1
-fi
+# Function to run checks
+run_checks() {
+    # Create a temporary worktree
+    git worktree add "$tmp_worktree_path"
 
-echo "All commit checks passed. Proceeding with commit."
-exit 0
+    # Apply the staged changes to the worktree
+    git diff --staged > "$tmp_diff_path"
+    cd "$tmp_worktree_path" || cleanup_and_exit 1
+    git apply "$tmp_diff_path"
+
+    # Navigate to the flutter project root folder
+    cd "src" || cleanup_and_exit 1
+
+    # Check that all flutter tests pass
+    flutter test
+    TEST_STATUS=$?
+    if [ $TEST_STATUS -ne 0 ]; then
+        echo "Tests failed. Commit aborted."
+        cleanup_and_exit 1
+    fi
+
+    # Check that the project compiles correctly
+    flutter build web --wasm
+    BUILD_STATUS=$?
+    if [ $BUILD_STATUS -ne 0 ]; then
+        echo "Build failed. Commit aborted."
+        cleanup_and_exit 1
+    fi
+
+    # If all checks pass, proceed with the commit
+    echo "All commit checks passed. Proceeding with commit."
+    cleanup_and_exit 0
+}
+
+# Run the checks
+run_checks
