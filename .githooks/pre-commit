@@ -15,5 +15,15 @@ if [ $TEST_STATUS -ne 0 ]; then
     exit 1
 fi
 
-echo "Tests passed. Proceeding with commit."
+# Check that the project compiles correctly
+flutter build web --wasm
+BUILD_STATUS=$?
+rm -rf build/web
+
+if [ $BUILD_STATUS -ne 0 ]; then
+    echo "Build failed. Commit aborted."
+    exit 1
+fi
+
+echo "All commit checks passed. Proceeding with commit."
 exit 0
