@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Get the root directory of the git repository
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+# Navigate to the directory where you want to run the flutter test, relative to the repo root
+cd "$REPO_ROOT/src" || exit 1
+
+# Run the flutter test command
+flutter test
+TEST_STATUS=$?
+
+if [ $TEST_STATUS -ne 0 ]; then
+    echo "Tests failed. Commit aborted."
+    exit 1
+fi
+
+echo "Tests passed. Proceeding with commit."
+exit 0
