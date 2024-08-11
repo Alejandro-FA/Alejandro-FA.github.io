@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../utils.dart';
 
 class ResponsiveAppBar extends StatelessWidget {
   const ResponsiveAppBar({
@@ -20,7 +21,8 @@ class ResponsiveAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     final wideScreen = MediaQuery.sizeOf(context).width > wideScreenBreakpoint;
     final actions = menus.map((menu) {
       return TextButton(
@@ -39,7 +41,14 @@ class ResponsiveAppBar extends StatelessWidget {
       centerTitle: false,
       forceMaterialTransparency: true,
       leading: homeIcon,
-      title: Text(title),
+      title: LayoutBuilder(builder: (context, constraints) {
+        final titleOverflows = constraints.maxWidth <
+            computeTextWidth(
+              title,
+              textStyle: theme.appBarTheme.titleTextStyle ?? textTheme.titleLarge,
+            );
+        return titleOverflows ? SizedBox.shrink() : Text(title);
+      }),
       actions: wideScreen
           ? actions
           : [
@@ -63,7 +72,7 @@ class PortfolioAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveAppBar(
-      title: "Alejandro's Portfolio",
+      title: "My portfolio",
       menus: const ['Research', 'Projects', 'Curriculum Vitae'],
       homeIcon: IconButton(
         icon: SvgPicture.asset('assets/icons/portfolio-icon.svg'),
