@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'pages/home.dart';
+import 'pages/home/home.dart';
 import 'theme/color_scheme.dart';
 import 'theme/text_theme.dart';
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => Title(
             title: 'Home | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
-            child: const HomePage(title: 'Work in progress'),
+            child: const HomePage(),
           ),
         ),
         GoRoute(
@@ -35,15 +35,23 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => Title(
             title: 'Research | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
-            child: const HomePage(title: 'Work in progress | Research'),
+            child: const HomePage(),
           ),
         ),
         GoRoute(
-          path: '/About',
+          path: '/Projects',
           builder: (context, state) => Title(
-            title: 'About Me | Alejandro Fernández Alburquerque',
+            title: 'Projects | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
-            child: const HomePage(title: 'Work in progress | About Me'),
+            child: const HomePage(),
+          ),
+        ),
+        GoRoute(
+          path: '/CV',
+          builder: (context, state) => Title(
+            title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
+            color: theme.primaryColor,
+            child: const HomePage(),
           ),
         ),
       ],
