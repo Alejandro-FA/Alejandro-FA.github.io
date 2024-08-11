@@ -5,18 +5,23 @@ class ResponsiveAppBar extends StatelessWidget {
   const ResponsiveAppBar({
     super.key,
     required this.title,
-    required this.logoPath,
     required this.menus,
+    this.homeIcon = const IconButton(
+      icon: Icon(Icons.home),
+      onPressed: null,
+    ),
+    this.wideScreenBreakpoint = 840.0,
   });
 
   final String title;
-  final String logoPath;
   final List<String> menus;
+  final IconButton homeIcon;
+  final double wideScreenBreakpoint;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final wideScreen = MediaQuery.sizeOf(context).width > 840;
+    final wideScreen = MediaQuery.sizeOf(context).width > wideScreenBreakpoint;
     final actions = menus.map((menu) {
       return TextButton(
         child: Text(menu),
@@ -33,10 +38,7 @@ class ResponsiveAppBar extends StatelessWidget {
       snap: false,
       centerTitle: false,
       forceMaterialTransparency: true,
-      leading: IconButton(
-        icon: SvgPicture.asset(logoPath),
-        onPressed: () {},
-      ),
+      leading: homeIcon,
       title: Text(title),
       actions: wideScreen
           ? actions
@@ -62,8 +64,11 @@ class PortfolioAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveAppBar(
       title: "Alejandro's Portfolio",
-      logoPath: 'assets/icons/portfolio-icon.svg',
       menus: const ['Research', 'Projects', 'Curriculum Vitae'],
+      homeIcon: IconButton(
+        icon: SvgPicture.asset('assets/icons/portfolio-icon.svg'),
+        onPressed: () {},
+      ),
     );
   }
 }
