@@ -2,6 +2,13 @@
 
 Flutter web app for my personal website.
 
+## Building a Material Theme
+
+This project uses the Material Design system to create a consistent and visually appealing user interface.
+Follow the instructions in the [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/)
+to build your own Material theme. For more information, check the
+[Material Design website](https://m3.material.io/blog/material-theme-builder).
+
 ## Setting Up Git Hooks
 
 This project includes custom Git hooks to ensure code quality and consistency.
