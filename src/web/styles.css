@@ -58,19 +58,19 @@ div#splash-screen p {
 @media (prefers-color-scheme: light) {
     body,
     html {
-        background-color: #f5fbf7; /* theme.light().background */
+        background-color: rgb(250 249 250); /* lightScheme().surface */
     }
 
     div#splash-screen-progress-bar {
-        background-color: #a2f2da; /* theme.light().primaryContainer */
+        background-color: rgb(110 169 151); /* lightScheme().primaryContainer */
     }
 
     div#splash-screen-progress-bar-fill {
-        background-color: #002019; /* theme.light().onPrimaryContainer */
+        background-color: rgb(0 19 14); /* lightScheme().onPrimaryContainer */
     }
 
     div#splash-screen p {
-        color: #171d1b; /* theme.light().onBackground */
+        color: rgb(26 28 29); /* lightScheme().onSurface */
     }
 }
 
@@ -78,18 +78,18 @@ div#splash-screen p {
 @media (prefers-color-scheme: dark) {
     body,
     html {
-        background-color: #0f1513; /* theme.dark().background */
+        background-color: rgb(18 19 21); /* darkScheme().surface */
     }
 
     div#splash-screen-progress-bar {
-        background-color: #005142; /* theme.dark().primaryContainer */
+        background-color: rgb(69 127 111); /* darkScheme().primaryContainer */
     }
 
     div#splash-screen-progress-bar-fill {
-        background-color: #a2f2da; /* theme.dark().onPrimaryContainer */
+        background-color: rgb(255 255 255); /* darkScheme().onPrimaryContainer */
     }
 
     div#splash-screen p {
-        color: #dee4e0; /* theme.dark().onBackground */
+        color: rgb(227 226 227); /* darkScheme().onSurface */
     }
 }

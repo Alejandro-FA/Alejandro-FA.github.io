@@ -52,9 +52,11 @@ class ResponsiveAppBar extends StatelessWidget {
       actions: wideScreen
           ? actions
           : [
-              const IconButton(
+              IconButton(
                 icon: Icon(Icons.menu),
-                onPressed: null, // TODO: Implement drawer
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                }, // TODO: Implement drawer
               ),
             ],
       // expandedHeight: 200,

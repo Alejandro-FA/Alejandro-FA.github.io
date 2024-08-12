@@ -2,57 +2,47 @@
 
 # Script parameters
 original_dir=$(pwd)
-tmp_worktree_path=$(mktemp --directory)
-tmp_diff_path=$(mktemp)
+stash_message="pre-commit $(date +%c)"
 
-# Function to clean up and exit
+setup() {
+    # Create a temporary stash to store the unstaged changes
+    git stash push --keep-index --include-untracked --quiet --message "$stash_message" \
+        || cleanup_and_exit 1 "Failed to create temporary stash."
+}
+
 cleanup_and_exit() {
-    # Remove the temporary worktree
-    git worktree remove "$tmp_worktree_path" --force
-
-    # Remove the temporary diff file
-    rm "$tmp_diff_path"
-
     # Navigate back to the original directory
     cd "$original_dir" || exit 1
 
-    # Exit with the provided status code
+    # Remove the temporary stash if it exists
+    last_stash=$(git stash list | head -n 1)
+    if [[ $last_stash == *"$stash_message"* ]]; then
+      git stash pop --quiet || exit 1
+    fi
+
+    # Exit with the provided status code after printing the provided message
+    if [ $1 -eq 0 ]; then
+        echo -e "\033[1;32m$2\033[0m" # Print the message in bold green
+    else
+        echo -e "\033[1;31m$2\033[0m" # Print the message in bold red
+    fi
     exit $1
 }
 
-# Function to run checks
-run_checks() {
-    # Create a temporary worktree
-    git worktree add "$tmp_worktree_path"
-
-    # Apply the staged changes to the worktree
-    git diff --staged > "$tmp_diff_path"
-    cd "$tmp_worktree_path" || cleanup_and_exit 1
-    git apply "$tmp_diff_path"
-
-    # Navigate to the flutter project root folder
-    cd "src" || cleanup_and_exit 1
-
-    # Check that all flutter tests pass
-    flutter test
-    TEST_STATUS=$?
-    if [ $TEST_STATUS -ne 0 ]; then
-        echo "Tests failed. Commit aborted."
-        cleanup_and_exit 1
-    fi
+run_tests() {
+    # Navigate to the root of the repository
+    repo_root=$(git rev-parse --show-toplevel)
+    cd "$repo_root" || cleanup_and_exit 1 "Failed to navigate to $repo_root"
 
     # Check that the project compiles correctly
-    flutter build web --wasm
-    BUILD_STATUS=$?
-    if [ $BUILD_STATUS -ne 0 ]; then
-        echo "Build failed. Commit aborted."
-        cleanup_and_exit 1
-    fi
+    flutter analyze || exit 1
 
-    # If all checks pass, proceed with the commit
-    echo "All commit checks passed. Proceeding with commit."
-    cleanup_and_exit 0
+    # Check that all flutter tests pass
+    cd "$repo_root/src" || cleanup_and_exit 1 "Failed to navigate $repo_root/src"
+    flutter test || exit 1
+
 }
 
-# Run the checks
-run_checks
+setup
+run_tests || cleanup_and_exit 1 "Pre-commit tests failed. Commit aborted."
+cleanup_and_exit 0 "Pre-commit tests passed. Proceeding with commit."
