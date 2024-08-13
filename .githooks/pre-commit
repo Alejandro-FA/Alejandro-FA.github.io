@@ -9,10 +9,10 @@ app_dir="$repo_root/app"
 setup() {
     # Create a temporary stash to store the unstaged changes
     git stash push --keep-index --include-untracked --quiet --message "$stash_message" \
-        || cleanup_and_exit 1 "Failed to create temporary stash."
+        || exit 1
 
     # Navigate to the root of the Flutter app
-    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
+    cd "$app_dir" || exit 1
 }
 
 cleanup_and_exit() {
@@ -42,6 +42,6 @@ run_tests() {
     flutter test || exit 1
 }
 
-setup
+setup || cleanup_and_exit 1 "Failed to setup pre-commit hook."
 run_tests || cleanup_and_exit 1 "Pre-commit tests failed. Commit aborted."
 cleanup_and_exit 0 "Pre-commit tests passed. Proceeding with commit."

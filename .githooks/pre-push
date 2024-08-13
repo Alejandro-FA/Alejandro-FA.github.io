@@ -7,7 +7,7 @@ app_dir="$repo_root/app"
 
 setup() {
     # Navigate to the root of the Flutter app
-    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
+    cd "$app_dir" || exit 1
 }
 
 cleanup_and_exit() {
@@ -28,5 +28,6 @@ run_tests() {
     flutter build web --wasm || exit 1
 }
 
+setup || cleanup_and_exit 1 "Failed to setup the pre-push hook."
 run_tests || cleanup_and_exit 1 "Pre-push tests failed. Commit aborted."
 cleanup_and_exit 0 "Pre-push tests passed. Pushing commits."
