@@ -36,10 +36,10 @@ run_tests() {
     cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
 
     # Check that the project compiles correctly
-    flutter analyze || exit 1
+    flutter analyze || exit 1
 
     # Check that all flutter tests pass
-    flutter test || exit 1
+    flutter test || exit 1
 }
 
 setup
