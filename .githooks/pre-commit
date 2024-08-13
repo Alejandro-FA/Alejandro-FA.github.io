@@ -10,6 +10,9 @@ setup() {
     # Create a temporary stash to store the unstaged changes
     git stash push --keep-index --include-untracked --quiet --message "$stash_message" \
         || cleanup_and_exit 1 "Failed to create temporary stash."
+
+    # Navigate to the root of the Flutter app
+    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
 }
 
 cleanup_and_exit() {
@@ -32,9 +35,6 @@ cleanup_and_exit() {
 }
 
 run_tests() {
-    # Navigate to the root of the Flutter app
-    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
-
     # Check that the project compiles correctly
     flutter analyze || exit 1
 

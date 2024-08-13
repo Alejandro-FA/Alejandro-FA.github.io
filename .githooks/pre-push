@@ -6,6 +6,8 @@ repo_root=$(git rev-parse --show-toplevel)
 app_dir="$repo_root/app"
 
 setup() {
+    # Navigate to the root of the Flutter app
+    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
 }
 
 cleanup_and_exit() {
@@ -22,13 +24,9 @@ cleanup_and_exit() {
 }
 
 run_tests() {
-    # Navigate to the root of the Flutter app
-    cd "$app_dir" || cleanup_and_exit 1 "Failed to navigate to $app_dir"
-
     # Check that the project builds correctly
     flutter build web --wasm || exit 1
 }
 
-setup
 run_tests || cleanup_and_exit 1 "Pre-push tests failed. Commit aborted."
 cleanup_and_exit 0 "Pre-push tests passed. Pushing commits."
