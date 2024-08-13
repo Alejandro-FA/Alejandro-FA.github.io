@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'pages/home.dart';
 import 'theme/color_scheme.dart';
 import 'theme/text_theme.dart';
+import 'utils.dart';
 
 void main() {
+  decidetUrlStrategy();
   runApp(const MyApp());
 }
 
