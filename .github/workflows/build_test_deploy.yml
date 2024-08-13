@@ -33,18 +33,18 @@ jobs:
         with:
           channel: stable
           cache: true
-          flutter-version-file: src/pubspec.yaml # path to pubspec.yaml
+          flutter-version-file: app/pubspec.yaml # path to pubspec.yaml
 
       - name: Install dependencies
-        working-directory: src
+        working-directory: app
         run: flutter pub get
 
       - name: Build the web application
-        working-directory: src
+        working-directory: app
         run: flutter build web --wasm
 
       - name: Test the web application
-        working-directory: src
+        working-directory: app
         run: flutter test
 
       - name: Configure GitHub Pages
@@ -53,7 +53,7 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: src/build/web
+          path: app/build/web
 
   # Job to deploy to GitHub Pages
   deploy:
