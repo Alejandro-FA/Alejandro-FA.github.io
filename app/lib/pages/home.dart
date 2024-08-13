@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
-          PortfolioAppBar(),
+          const PortfolioAppBar(),
           SliverFillRemaining(
             hasScrollBody: false,
             child: Center(

@@ -26,11 +26,11 @@ class ResponsiveAppBar extends StatelessWidget {
     final wideScreen = MediaQuery.sizeOf(context).width > wideScreenBreakpoint;
     final actions = menus.map((menu) {
       return TextButton(
-        child: Text(menu),
         style: TextButton.styleFrom(
           textStyle: textTheme.titleMedium?.copyWith(color: null),
         ),
         onPressed: () {},
+        child: Text(menu),
       );
     }).toList();
 
@@ -47,13 +47,13 @@ class ResponsiveAppBar extends StatelessWidget {
               title,
               textStyle: theme.appBarTheme.titleTextStyle ?? textTheme.titleLarge,
             );
-        return titleOverflows ? SizedBox.shrink() : Text(title);
+        return titleOverflows ? const SizedBox.shrink() : Text(title);
       }),
       actions: wideScreen
           ? actions
           : [
               IconButton(
-                icon: Icon(Icons.menu),
+                icon: const Icon(Icons.menu),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 }, // TODO: Implement drawer

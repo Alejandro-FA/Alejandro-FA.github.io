@@ -14,11 +14,11 @@ void main() {
     // Define the screen width thresholds for the test
     const double wideScreenBreakpoint = 840.0;
     tester.view.devicePixelRatio = 1.0;
-    final appTitle = 'My app with a long title';
+    const appTitle = 'My app with a long title';
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(
-      MaterialApp(
+      const MaterialApp(
         home: Scaffold(
           body: CustomScrollView(
             slivers: <Widget>[
