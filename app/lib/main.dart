@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'pages/home.dart';
-import 'theme/color_scheme.dart';
+import 'theme/material_theme.dart';
 import 'theme/text_theme.dart';
 import 'utils.dart';
+import 'router.dart';
 
 void main() {
-  decidetUrlStrategy();
+  decideUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -16,53 +15,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context).platformDispatcher.platformBrightness;
     final textTheme = createTextTheme(context, 'Noto Sans', 'Silkscreen');
-    final theme = brightness == Brightness.light
-        ? MaterialTheme(textTheme).light()
-        : MaterialTheme(textTheme).dark();
-    final router = GoRouter(
-      initialLocation: '/',
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => Title(
-            title: 'Home | Alejandro Fernández Alburquerque',
-            color: theme.primaryColor,
-            child: const HomePage(),
-          ),
-        ),
-        GoRoute(
-          path: '/research',
-          builder: (context, state) => Title(
-            title: 'Research | Alejandro Fernández Alburquerque',
-            color: theme.primaryColor,
-            child: const HomePage(),
-          ),
-        ),
-        GoRoute(
-          path: '/projects',
-          builder: (context, state) => Title(
-            title: 'Projects | Alejandro Fernández Alburquerque',
-            color: theme.primaryColor,
-            child: const HomePage(),
-          ),
-        ),
-        GoRoute(
-          path: '/cv',
-          builder: (context, state) => Title(
-            title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
-            color: theme.primaryColor,
-            child: const HomePage(),
-          ),
-        ),
-      ],
-    );
+    final theme = MaterialTheme(textTheme);
 
     return MaterialApp.router(
       title: 'Alejandro Fernández Alburquerque',
-      theme: theme,
-      routerConfig: router,
+      routerConfig: buildRouter(color: theme.light().primaryColor),
+      theme: theme.light(),
+      darkTheme: theme.dark(),
+      highContrastTheme: theme.lightHighContrast(),
+      highContrastDarkTheme: theme.darkHighContrast(),
+      themeMode: ThemeMode.system,
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils.dart';
+import 'package:go_router/go_router.dart';
 
 class ResponsiveAppBar extends StatelessWidget {
   const ResponsiveAppBar({
@@ -15,7 +15,7 @@ class ResponsiveAppBar extends StatelessWidget {
   });
 
   final String title;
-  final List<String> menus;
+  final Map<String, String> menus; // Maps menu name to route
   final IconButton homeIcon;
   final double wideScreenBreakpoint;
 
@@ -24,13 +24,13 @@ class ResponsiveAppBar extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final wideScreen = MediaQuery.sizeOf(context).width > wideScreenBreakpoint;
-    final actions = menus.map((menu) {
+    final actions = menus.entries.map((menu) {
       return TextButton(
         style: TextButton.styleFrom(
           textStyle: textTheme.titleMedium?.copyWith(color: null),
         ),
-        onPressed: () {},
-        child: Text(menu),
+        onPressed: () => GoRouter.of(context).go(menu.value),
+        child: Text(menu.key),
       );
     }).toList();
 
@@ -40,15 +40,19 @@ class ResponsiveAppBar extends StatelessWidget {
       snap: false,
       centerTitle: false,
       forceMaterialTransparency: true,
-      leading: homeIcon,
-      title: LayoutBuilder(builder: (context, constraints) {
-        final titleOverflows = constraints.maxWidth <
-            computeTextWidth(
-              title,
-              textStyle: theme.appBarTheme.titleTextStyle ?? textTheme.titleLarge,
-            );
-        return titleOverflows ? const SizedBox.shrink() : Text(title);
-      }),
+      title: TextButton.icon(
+        style: const ButtonStyle(
+          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
+        icon: homeIcon.icon,
+        onPressed: homeIcon.onPressed,
+        label: Text(
+          title,
+          style: textTheme.titleLarge,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
       actions: wideScreen
           ? actions
           : [
@@ -75,10 +79,14 @@ class PortfolioAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveAppBar(
       title: "My portfolio",
-      menus: const ['Research', 'Projects', 'Curriculum Vitae'],
+      menus: const {
+        'Research': '/research',
+        'Projects': '/projects',
+        'Curriculum Vitae': '/cv',
+      },
       homeIcon: IconButton(
         icon: SvgPicture.asset('assets/icons/portfolio-icon.svg'),
-        onPressed: () {},
+        onPressed: () => GoRouter.of(context).go('/'),
       ),
     );
   }

@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import '../widgets/app_bar.dart';
+
+class ResearchPage extends StatelessWidget {
+  const ResearchPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Scaffold(
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: <Widget>[
+          const PortfolioAppBar(),
+          SliverFillRemaining(
+            child: Center(
+              child: Text(
+                'Research | Work in progress',
+                style: textTheme.displayLarge,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
