@@ -26,6 +26,11 @@ run_tests() {
     flutter test || return 1
 }
 
+update_sitemap() {
+    "$repo_root/scripts/update_sitemap.py" || return 1
+    git add "$app_dir/web/sitemap.xml" || return 1
+}
+
 cleanup_and_exit() {
     local exit_code=$? # Capture the last error code
     local message=$1
@@ -50,4 +55,5 @@ cleanup_and_exit() {
 
 setup || cleanup_and_exit "Failed to setup pre-commit hook."
 run_tests || cleanup_and_exit "Pre-commit tests failed. Commit aborted."
+update_sitemap || cleanup_and_exit "Failed to update sitemap. Commit aborted."
 cleanup_and_exit "Pre-commit tests passed. Proceeding with commit."
