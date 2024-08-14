@@ -12,8 +12,6 @@ import 'package:portfolio/widgets/app_bar.dart';
 void main() {
   testWidgets('ResponsiveAppBar adapts based on screen width',
       (WidgetTester tester) async {
-    // Define the screen width thresholds for the test
-    const double wideScreenBreakpoint = 840.0;
     tester.view.devicePixelRatio = 1.0;
     const appTitle = 'My app with a long title';
 
@@ -26,7 +24,6 @@ void main() {
               ResponsiveAppBar(
                 title: appTitle,
                 menus: {'Page 1': '/page1', 'Page 2': '/page2', 'Page 3': '/page3'},
-                wideScreenBreakpoint: wideScreenBreakpoint,
               ),
             ],
           ),

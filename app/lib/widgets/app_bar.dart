@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import '../utils.dart';
 
 class ResponsiveAppBar extends StatelessWidget {
   const ResponsiveAppBar({
@@ -11,19 +12,16 @@ class ResponsiveAppBar extends StatelessWidget {
       icon: Icon(Icons.home),
       onPressed: null,
     ),
-    this.wideScreenBreakpoint = 840.0,
   });
 
   final String title;
   final Map<String, String> menus; // Maps menu name to route
   final IconButton homeIcon;
-  final double wideScreenBreakpoint;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final wideScreen = MediaQuery.sizeOf(context).width > wideScreenBreakpoint;
     final actions = menus.entries.map((menu) {
       return TextButton(
         style: TextButton.styleFrom(
@@ -53,7 +51,7 @@ class ResponsiveAppBar extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      actions: wideScreen
+      actions: MaterialWindowSizeClass.of(context) >= MaterialWindowSizeClass.expanded
           ? actions
           : [
               IconButton(
