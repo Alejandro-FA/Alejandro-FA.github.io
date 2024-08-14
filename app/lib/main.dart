@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         GoRoute(
-          path: '/Research',
+          path: '/research',
           builder: (context, state) => Title(
             title: 'Research | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         GoRoute(
-          path: '/Projects',
+          path: '/projects',
           builder: (context, state) => Title(
             title: 'Projects | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         GoRoute(
-          path: '/CV',
+          path: '/cv',
           builder: (context, state) => Title(
             title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
             color: theme.primaryColor,
