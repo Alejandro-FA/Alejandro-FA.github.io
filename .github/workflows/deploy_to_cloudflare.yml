@@ -34,14 +34,14 @@ jobs:
         with:
           channel: stable
           cache: true
-          flutter-version-file: "$FLUTTER_ROOT/pubspec.yaml" # path to pubspec.yaml
+          flutter-version-file: ${{ env.FLUTTER_ROOT }}/pubspec.yaml # path to pubspec.yaml
 
       - name: Install dependencies
-        working-directory: "$FLUTTER_ROOT"
+        working-directory: ${{ env.FLUTTER_ROOT }}
         run: flutter pub get
 
       - name: Build the web application
-        working-directory: "$FLUTTER_ROOT"
+        working-directory: ${{ env.FLUTTER_ROOT }}
         run: flutter build web --wasm --no-source-maps
 
       - name: Publish
@@ -50,5 +50,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: alejandrofernandez
-          directory: "$FLUTTER_ROOT/build/web"
+          directory: ${{ env.FLUTTER_ROOT }}/build/web
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
