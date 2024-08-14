@@ -45,3 +45,4 @@ jobs:
           projectName: alejandrofernandez
           directory: app/build/web
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: latest
