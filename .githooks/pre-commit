@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit immediately if a command exits with a non-zero status
+set -euo pipefail
+
 # Script parameters
 original_dir=$(pwd)
 stash_message="pre-commit $(date +%c)"
@@ -9,39 +12,42 @@ app_dir="$repo_root/app"
 setup() {
     # Create a temporary stash to store the unstaged changes
     git stash push --keep-index --include-untracked --quiet --message "$stash_message" \
-        || exit 1
+        || return 1
 
     # Navigate to the root of the Flutter app
-    cd "$app_dir" || exit 1
-}
-
-cleanup_and_exit() {
-    # Navigate back to the original directory
-    cd "$original_dir" || exit 1
-
-    # Remove the temporary stash if it exists
-    last_stash=$(git stash list | head -n 1)
-    if [[ $last_stash == *"$stash_message"* ]]; then
-      git stash pop --quiet || exit 1
-    fi
-
-    # Exit with the provided status code after printing the provided message
-    if [ $1 -eq 0 ]; then
-        echo -e "\033[1;32m$2\033[0m" # Print the message in bold green
-    else
-        echo -e "\033[1;31m$2\033[0m" # Print the message in bold red
-    fi
-    exit $1
+    cd "$app_dir" || return 1
 }
 
 run_tests() {
     # Check that the project compiles correctly
-    flutter analyze || exit 1
+    flutter analyze || return 1
 
     # Check that all flutter tests pass
-    flutter test || exit 1
+    flutter test || return 1
 }
 
-setup || cleanup_and_exit 1 "Failed to setup pre-commit hook."
-run_tests || cleanup_and_exit 1 "Pre-commit tests failed. Commit aborted."
-cleanup_and_exit 0 "Pre-commit tests passed. Proceeding with commit."
+cleanup_and_exit() {
+    local exit_code=$? # Capture the last error code
+    local message=$1
+
+    # Ensure we navigate back to the original directory
+    cd "$original_dir"
+
+    # Remove the temporary stash if it exists
+    local last_stash=$(git stash list | head -n 1)
+    if [[ $last_stash == *"$stash_message"* ]]; then
+      git stash pop --quiet
+    fi
+
+    # Exit with the last error code after printing the provided message
+    if [ $exit_code -eq 0 ]; then
+        echo -e "\033[1;32m$message\033[0m" # Print the message in bold green
+    else
+        echo -e "\033[1;31m$message\033[0m" # Print the message in bold red
+    fi
+    exit $exit_code
+}
+
+setup || cleanup_and_exit "Failed to setup pre-commit hook."
+run_tests || cleanup_and_exit "Pre-commit tests failed. Commit aborted."
+cleanup_and_exit "Pre-commit tests passed. Proceeding with commit."
