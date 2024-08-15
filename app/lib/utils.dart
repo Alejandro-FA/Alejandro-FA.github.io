@@ -12,29 +12,40 @@ void decideUrlStrategy() {
   setUrlStrategy(strategy);
 }
 
+/// An enumeration of the different window sizes according to the [Material
+/// Design 3 guidelines](https://m3.material.io/foundations/layout/applying-layout/window-size-classes).
 enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
-  compact(minWidth: 0, maxWidth: 600),
-  medium(minWidth: 600, maxWidth: 840),
-  expanded(minWidth: 840, maxWidth: 1200),
-  large(minWidth: 1200, maxWidth: 1600),
-  extraLarge(minWidth: 1600, maxWidth: double.infinity);
+  compact(minDP: 0, maxDP: 600, panes: 1,),
+  medium(minDP: 600, maxDP: 840, panes: 1,),
+  expanded(minDP: 840, maxDP: 1200, panes: 2,),
+  large(minDP: 1200, maxDP: 1600, panes: 2,),
+  extraLarge(minDP: 1600, maxDP: double.infinity, panes: 3,);
 
   const MaterialWindowSizeClass({
-    required this.minWidth,
-    required this.maxWidth,
+    required this.minDP,
+    required this.maxDP,
+    required this.panes,
   });
-  final double minWidth;
-  final double maxWidth;
 
+  /// Minimum width in Density-independent Pixels.
+  final double minDP;
+
+  /// Maximum width in Density-independent Pixels.
+  final double maxDP;
+
+  /// Recommended number of panes to divide the screen.
+  final int panes;
+
+  /// Returns the [MaterialWindowSizeClass] based on the screen width.
   static MaterialWindowSizeClass of(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width < MaterialWindowSizeClass.compact.maxWidth) {
+    if (width < MaterialWindowSizeClass.compact.maxDP) {
       return MaterialWindowSizeClass.compact;
-    } else if (width < MaterialWindowSizeClass.medium.maxWidth) {
+    } else if (width < MaterialWindowSizeClass.medium.maxDP) {
       return MaterialWindowSizeClass.medium;
-    } else if (width < MaterialWindowSizeClass.expanded.maxWidth) {
+    } else if (width < MaterialWindowSizeClass.expanded.maxDP) {
       return MaterialWindowSizeClass.expanded;
-    } else if (width < MaterialWindowSizeClass.large.maxWidth) {
+    } else if (width < MaterialWindowSizeClass.large.maxDP) {
       return MaterialWindowSizeClass.large;
     } else {
       return MaterialWindowSizeClass.extraLarge;
@@ -42,10 +53,11 @@ enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
   }
 
   @override
-  int compareTo(MaterialWindowSizeClass other) => minWidth.compareTo(other.minWidth);
+  int compareTo(MaterialWindowSizeClass other) =>
+      minDP.compareTo(other.minDP);
 
-  bool operator <(MaterialWindowSizeClass other) => minWidth < other.minWidth;
-  bool operator <=(MaterialWindowSizeClass other) => minWidth <= other.minWidth;
-  bool operator >(MaterialWindowSizeClass other) => minWidth > other.minWidth;
-  bool operator >=(MaterialWindowSizeClass other) => minWidth >= other.minWidth;
+  bool operator <(MaterialWindowSizeClass other) => minDP < other.minDP;
+  bool operator <=(MaterialWindowSizeClass other) => minDP <= other.minDP;
+  bool operator >(MaterialWindowSizeClass other) => minDP > other.minDP;
+  bool operator >=(MaterialWindowSizeClass other) => minDP >= other.minDP;
 }

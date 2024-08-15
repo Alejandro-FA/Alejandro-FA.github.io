@@ -5,11 +5,13 @@ import 'pages/research.dart';
 import 'pages/projects.dart';
 import 'pages/cv.dart';
 
+/// Builds the router for the app.
 GoRouter buildRouter({required Color color}) {
   return GoRouter(
     initialLocation: '/',
     routes: [
       GoRoute(
+        name: 'Home',
         path: '/',
         pageBuilder: (context, state) => NoTransitionPage(
           child: Title(
@@ -20,6 +22,7 @@ GoRouter buildRouter({required Color color}) {
         ),
       ),
       GoRoute(
+        name: 'Research',
         path: '/research',
         pageBuilder: (context, state) => NoTransitionPage(
           child: Title(
@@ -30,6 +33,7 @@ GoRouter buildRouter({required Color color}) {
         ),
       ),
       GoRoute(
+        name: 'Projects',
         path: '/projects',
         pageBuilder: (context, state) => NoTransitionPage(
           child: Title(
@@ -40,6 +44,7 @@ GoRouter buildRouter({required Color color}) {
         ),
       ),
       GoRoute(
+        name: 'Curriculum Vitae',
         path: '/cv',
         pageBuilder: (context, state) => NoTransitionPage(
           child: Title(

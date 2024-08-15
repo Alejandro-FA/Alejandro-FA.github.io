@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/app_bar.dart';
+import 'base.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
@@ -8,21 +8,18 @@ class ProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: <Widget>[
-          const PortfolioAppBar(),
-          SliverFillRemaining(
-            child: Center(
-              child: Text(
-                'Projects | Work in progress',
-                style: textTheme.displayLarge,
-              ),
+    return BasePage(
+      bodySlivers: [
+        SliverFillRemaining(
+          hasScrollBody: true,
+          child: Center(
+            child: Text(
+              'Projects | Work in progress',
+              style: textTheme.displayLarge,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
