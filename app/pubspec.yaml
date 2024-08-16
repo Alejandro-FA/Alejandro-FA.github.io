@@ -74,16 +74,16 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.woff2
           weight: 400
     - family: Silkscreen
       fonts:
-        - asset: assets/fonts/Silkscreen/Silkscreen-Regular.ttf
+        - asset: assets/fonts/Silkscreen/Silkscreen-Regular.woff2
           weight: 400
-        - asset: assets/fonts/Silkscreen/Silkscreen-Bold.ttf
+        - asset: assets/fonts/Silkscreen/Silkscreen-Bold.woff2
           weight: 700
     - family: Noto Sans
       fonts:
-        - asset: assets/fonts/Noto_Sans/NotoSans-VariableFont_wght.ttf
-        - asset: assets/fonts/Noto_Sans/NotoSans-Italic-VariableFont_wght.ttf
+        - asset: assets/fonts/Noto_Sans/NotoSans-VariableFont_wght.woff2
+        - asset: assets/fonts/Noto_Sans/NotoSans-Italic-VariableFont_wght.woff2
           style: italic
