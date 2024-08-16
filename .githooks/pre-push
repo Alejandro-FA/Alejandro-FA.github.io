@@ -15,7 +15,7 @@ setup() {
 
 run_tests () {
     # Ensure that the Flutter web app builds successfully
-    flutter build web --wasm --no-source-maps || return 1
+    flutter build web --wasm --no-web-resources-cdn --release || return 1
 }
 
 cleanup_and_exit() {

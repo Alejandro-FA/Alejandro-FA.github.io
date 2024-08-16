@@ -35,7 +35,7 @@ jobs:
 
       - name: Build the web application
         working-directory: app
-        run: flutter build web --wasm --no-source-maps
+        run: flutter build web --wasm --no-web-resources-cdn --release
 
       - name: Publish
         uses: cloudflare/pages-action@v1
