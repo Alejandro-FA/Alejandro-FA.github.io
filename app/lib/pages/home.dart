@@ -19,6 +19,15 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
+        SliverFillRemaining(
+          hasScrollBody: true,
+          child: Center(
+            child: Text(
+              'Home | Work in progress',
+              style: textTheme.bodyLarge?.copyWith(fontVariations: const [FontVariation.weight(100)]),
+            ),
+          ),
+        ),
       ],
     );
   }
