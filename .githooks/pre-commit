@@ -1,24 +1,38 @@
 #!/bin/bash
 
-# Exit immediately if a command exits with a non-zero status
-set -euo pipefail
+# Avoid masking errors
+set -uo pipefail
 
 # Script parameters
 original_dir=$(pwd)
 stash_message="pre-commit $(date +%c)"
 repo_root=$(git rev-parse --show-toplevel)
-app_dir="$repo_root/app"
+app_dir="${repo_root}/app"
 
 setup() {
     # Create a temporary stash to store the unstaged changes
-    git stash push --keep-index --include-untracked --quiet --message "$stash_message" \
+    git stash push --keep-index --include-untracked --quiet --message "${stash_message}" \
         || return 1
 
     # Navigate to the root of the Flutter app
-    cd "$app_dir" || return 1
+    cd "${app_dir}" || return 1
+}
+
+__analyze_scripts() {
+    for file in "$@"; do
+        if [[ -f "${file}" ]]; then
+            shellcheck --enable=all "${file}" || return 1
+        fi
+    done
 }
 
 run_tests() {
+    # Check that the shell scripts do not have errors
+    echo "Checking shell scripts..."
+    __analyze_scripts "${repo_root}/.githooks/"* || return 1
+    __analyze_scripts "${repo_root}/scripts/"*.sh || return 1
+    echo "No issues found!"
+
     # Check that the project compiles correctly
     flutter analyze || return 1
 
@@ -27,8 +41,8 @@ run_tests() {
 }
 
 update_sitemap() {
-    "$repo_root/scripts/update_sitemap.py" || return 1
-    git add "$app_dir/web/sitemap.xml" || return 1
+    "${repo_root}/scripts/update_sitemap.py" || return 1
+    git add "${app_dir}/web/sitemap.xml" || return 1
 }
 
 cleanup_and_exit() {
@@ -36,21 +50,22 @@ cleanup_and_exit() {
     local message=$1
 
     # Ensure we navigate back to the original directory
-    cd "$original_dir"
+    cd "${original_dir}" || exit
 
     # Remove the temporary stash if it exists
-    local last_stash=$(git stash list | head -n 1)
-    if [[ $last_stash == *"$stash_message"* ]]; then
+    local last_stash
+    last_stash=$(git stash list | head -n 1)
+    if [[ "${last_stash}" == *"${stash_message}"* ]]; then
       git stash pop --quiet
     fi
 
     # Exit with the last error code after printing the provided message
-    if [ $exit_code -eq 0 ]; then
-        echo -e "\033[1;32m$message\033[0m" # Print the message in bold green
+    if [[ "${exit_code}" -eq 0 ]]; then
+        echo -e "\033[1;32m${message}\033[0m" # Print the message in bold green
     else
-        echo -e "\033[1;31m$message\033[0m" # Print the message in bold red
+        echo -e "\033[1;31m${message}\033[0m" # Print the message in bold red
     fi
-    exit $exit_code
+    exit "${exit_code}"
 }
 
 setup || cleanup_and_exit "Failed to setup pre-commit hook."

@@ -1,0 +1,76 @@
+# This reusable workflow is intended to streamline the deployment of a Flutter web
+# application to Cloudflare Pages. To customize the deployment process, you can
+# specify the flutter build flags and the deployment environment ('main' for production,
+# or any other environment name for preview deployments) as inputs.
+name: Deploy Flutter web app to Cloudflare Pages
+
+on:
+  workflow_call:
+    inputs:
+      buildFlags:
+        description: 'Flutter build flags (see `flutter build web --help` for a full list of options).'
+        type: string
+        required: false
+        default: '--release'
+      deploymentEnvironment:
+        description: |
+          Environment name where the deployment will be done (typically the branch name being pushed to).
+          - Use "main" for production deployments.
+          - Use other environment names for preview deployments with their own URLs.
+        type: string
+        required: false
+        default: 'main'
+      workingDirectory:
+        description: 'Path to the directory where the wrangler.toml file is located.'
+        type: string
+        required: false
+        default: '.'
+      appRoot:
+        description: 'Path to the Flutter web application root directory relative to workingDirectory.'
+        type: string
+        required: false
+        default: '.'
+
+concurrency:
+  group: ${{ inputs.deploymentEnvironment }}-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+        working-directory: ${{ inputs.workingDirectory }}
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # v2.16.0
+        with:
+          channel: stable
+          cache: true
+          flutter-version-file: ${{ inputs.workingDirectory }}/${{ inputs.appRoot }}/pubspec.yaml
+
+      - name: Build the web application
+        env:
+          BUILD_FLAGS: ${{ inputs.buildFlags }} # To avoid script injection
+        run: |
+          FLAGS_ARRAY=(${BUILD_FLAGS})
+          flutter build web "${FLAGS_ARRAY[@]}"
+        working-directory: ${{ inputs.workingDirectory }}/${{ inputs.appRoot }}
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@f84a562284fc78278ff9052435d9526f9c718361 # v3.7.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy --branch=${{ inputs.deploymentEnvironment }}
+          workingDirectory: ${{ inputs.workingDirectory }}

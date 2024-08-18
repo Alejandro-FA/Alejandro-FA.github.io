@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
   sdk: ">=3.4.4 <4.0.0"
@@ -74,16 +74,16 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto/Roboto-Regular.woff2
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
           weight: 400
     - family: Silkscreen
       fonts:
-        - asset: assets/fonts/Silkscreen/Silkscreen-Regular.woff2
+        - asset: assets/fonts/Silkscreen/Silkscreen-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Silkscreen/Silkscreen-Bold.woff2
+        - asset: assets/fonts/Silkscreen/Silkscreen-Bold.ttf
           weight: 700
     - family: Noto Sans
       fonts:
-        - asset: assets/fonts/Noto_Sans/NotoSans-VariableFont_wght.woff2
-        - asset: assets/fonts/Noto_Sans/NotoSans-Italic-VariableFont_wght.woff2
+        - asset: assets/fonts/Noto_Sans/NotoSans-VariableFont_wght.ttf
+        - asset: assets/fonts/Noto_Sans/NotoSans-Italic-VariableFont_wght.ttf
           style: italic

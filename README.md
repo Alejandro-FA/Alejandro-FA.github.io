@@ -47,6 +47,56 @@ The hooks in this project are designed to run automated checks before certain Gi
 
 By setting up these hooks, you help maintain code quality and prevent potential issues from being published to production.
 
+## How to use other browsers instead of Google Chrome
+
+By default, Flutter web apps will try to run in Google Chrome (check the [Getting Started](https://docs.flutter.dev/get-started/install) guide for more information on how to configure flutter for web development). Furthermore, this project uses [Lighthouse](https://developers.google.com/web/tools/lighthouse) to evaluate the performance of the website (see the [Performance evaluation](##Performance evaluation) section for more information).
+
+If you prefer to use another Chromium-based browser instead of Chrome (e.g. Edge, Opera, Brave...), add the following line to your `.bash_profile` file (if you use bash) or your `.zprofile` file (if you use zsh):
+
+```bash
+export CHROME_EXECUTABLE="path/to/broswer/executable"
+export CHROME_PATH="${CHROME_EXECUTABLE}"
+```
+
+For example, to use [Brave Browser](https://brave.com/) in macOS:
+
+```bash
+export CHROME_EXECUTABLE="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
+export CHROME_PATH="${CHROME_EXECUTABLE}"
+```
+
+## Performance evaluation
+
+The performance of a website is crucial for user experience. To evaluate the performance of this website, we use the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. It has audits for performance, accessibility, progressive web apps, SEO, and more.
+
+To evaluate the performance of this website, follow these steps:
+
+1. **Install Node.js (and npm)**
+
+    To use Lighthouse, you need to have Node.js installed on your machine. You can download it from the [official website](https://nodejs.org/), or use a package manager (**recommended**) like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/).
+
+    This project specifies the version of Node.js to use in the `.nvmrc` file. If you use nvm, you can install this version by running the following command:
+
+    ```bash
+    nvm install
+    ```
+
+2. **Install Lighthouse**
+
+    To install Lighthouse, install the dependencies specified in the `package.json` and `package-lock.json` files:
+
+    ```bash
+    npm ci
+    ```
+
+3. **Run Lighthouse**
+
+    To evaluate the performance of the website and generate a report with the results, run the following command:
+
+    ```bash
+    npx lighthouse https://alejandrofernandez.pages.dev/ --output html
+    ```
+
 ## Building a Material Theme
 
 This project uses the Material Design system to create a consistent and visually appealing user interface. Follow the instructions in the [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) to build your own Material theme. For more information, check the [Material Design website](https://m3.material.io/blog/material-theme-builder).
