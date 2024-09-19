@@ -1,5 +1,6 @@
 /*
-    Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com
+    # CSP info: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    Content-Security-Policy: script-src 'strict-dynamic'; object-src 'none'; base-uri 'none';
     Cross-Origin-Embedder-Policy: credentialless
     Cross-Origin-Opener-Policy: same-origin
 

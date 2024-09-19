@@ -45,12 +45,24 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'package.json'
           cache: 'npm'
 
       - name: Install npm dependencies
         run: npm ci
         working-directory: ${{ inputs.workingDirectory }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: '${{ inputs.workingDirectory }}/requirements.txt'
+
+      - name: Install Python dependencies
+        env:
+          REQUIREMENTS_PATH: ${{ inputs.workingDirectory }}/requirements.txt
+        run: python -m pip install -r "${REQUIREMENTS_PATH}"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # v2.16.0
@@ -66,6 +78,11 @@ jobs:
           FLAGS_ARRAY=(${BUILD_FLAGS})
           flutter build web "${FLAGS_ARRAY[@]}"
         working-directory: ${{ inputs.workingDirectory }}/${{ inputs.appRoot }}
+
+      - name: Compute script hashes
+        run: |
+          scripts/csp_scripts_hashes.py
+        working-directory: ${{ inputs.workingDirectory }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@f84a562284fc78278ff9052435d9526f9c718361 # v3.7.0

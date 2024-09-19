@@ -2,6 +2,16 @@
 
 Flutter web app for my personal website.
 
+## Installation of dev dependencies
+
+This project uses several node packages to automate the development process and test the website performance. Before installing the dependencies with `npm`, make sure you have Node.js installed on your machine. You can download it from the [official website](https://nodejs.org/en/download/package-manager), or use a version manager (**recommended**) like [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
+
+To install the dependencies, run the following command:
+
+```bash
+npm ci
+```
+
 ## Setting Up Git Hooks
 
 This project includes custom Git hooks to ensure code quality and consistency. To use these hooks, you’ll need to configure Git to use the provided hooks directory.
@@ -69,33 +79,11 @@ export CHROME_PATH="${CHROME_EXECUTABLE}"
 
 The performance of a website is crucial for user experience. To evaluate the performance of this website, we use the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. It has audits for performance, accessibility, progressive web apps, SEO, and more.
 
-To evaluate the performance of this website, follow these steps:
+To evaluate the performance of the website and generate a report with the results, run the following command:
 
-1. **Install Node.js (and npm)**
-
-    To use Lighthouse, you need to have Node.js installed on your machine. You can download it from the [official website](https://nodejs.org/), or use a package manager (**recommended**) like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/).
-
-    This project specifies the version of Node.js to use in the `.nvmrc` file. If you use nvm, you can install this version by running the following command:
-
-    ```bash
-    nvm install
-    ```
-
-2. **Install Lighthouse**
-
-    To install Lighthouse, install the dependencies specified in the `package.json` and `package-lock.json` files:
-
-    ```bash
-    npm ci
-    ```
-
-3. **Run Lighthouse**
-
-    To evaluate the performance of the website and generate a report with the results, run the following command:
-
-    ```bash
-    npx lighthouse https://alejandrofernandez.pages.dev/ --output html
-    ```
+```bash
+npx lighthouse https://alejandrofernandez.pages.dev/ --output html
+```
 
 ## Building a Material Theme
 
