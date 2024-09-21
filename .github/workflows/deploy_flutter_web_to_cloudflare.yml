@@ -7,26 +7,21 @@ name: Deploy Flutter web app to Cloudflare Pages
 on:
   workflow_call:
     inputs:
-      buildFlags:
-        description: 'Flutter build flags (see `flutter build web --help` for a full list of options).'
+      buildRenderer:
+        description: 'The renderer to use for the Flutter web build.'
         type: string
-        required: false
-        default: '--release'
-      deploymentEnvironment:
+        required: true
+        default: 'wasm' # valid options: ['wasm', 'html']
+      deploymentBranch:
         description: |
-          Environment name where the deployment will be done (typically the branch name being pushed to).
+          Deployment environment name (usually the branch name).
           - Use "main" for production deployments.
-          - Use other environment names for preview deployments with their own URLs.
+          - Use other names for preview deployments with their own URLs.
         type: string
         required: false
         default: 'main'
       workingDirectory:
         description: 'Path to the directory where the wrangler.toml file is located.'
-        type: string
-        required: false
-        default: '.'
-      appRoot:
-        description: 'Path to the Flutter web application root directory relative to workingDirectory.'
         type: string
         required: false
         default: '.'
@@ -48,46 +43,24 @@ jobs:
           node-version-file: 'package.json'
           cache: 'npm'
 
-      - name: Install npm dependencies
-        run: npm ci
-        working-directory: ${{ inputs.workingDirectory }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          cache: 'pip'
-          cache-dependency-path: '${{ inputs.workingDirectory }}/requirements.txt'
-
-      - name: Install Python dependencies
-        env:
-          REQUIREMENTS_PATH: ${{ inputs.workingDirectory }}/requirements.txt
-        run: python -m pip install -r "${REQUIREMENTS_PATH}"
+      - name: Get app root directory
+        id: get_app_root
+        run: echo "::set-output name=path::$(node -p "require('./package.json').config.app_root")"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # v2.16.0
         with:
           channel: stable
           cache: true
-          flutter-version-file: ${{ inputs.workingDirectory }}/${{ inputs.appRoot }}/pubspec.yaml
+          flutter-version-file: ${{ steps.get_app_root.outputs.path }}/pubspec.yaml
 
-      - name: Build the web application
+      - name: Install project dependencies # Both from Flutter app and Node.js
+        run: npm run setup:ci
+
+      - name: Deploy to Cloudflare Pages using Wrangler
         env:
-          BUILD_FLAGS: ${{ inputs.buildFlags }} # To avoid script injection
-        run: |
-          FLAGS_ARRAY=(${BUILD_FLAGS})
-          flutter build web "${FLAGS_ARRAY[@]}"
-        working-directory: ${{ inputs.workingDirectory }}/${{ inputs.appRoot }}
-
-      - name: Compute script hashes
-        run: |
-          scripts/csp_scripts_hashes.py
-        working-directory: ${{ inputs.workingDirectory }}
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@f84a562284fc78278ff9052435d9526f9c718361 # v3.7.0
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy --branch=${{ inputs.deploymentEnvironment }}
-          workingDirectory: ${{ inputs.workingDirectory }}
+          BUILD_RENDERER: ${{ inputs.buildRenderer }} # Used to build with `html` or `wasm` renderer
+          DEPLOY_BRANCH: ${{ inputs.deploymentEnvironment }} # Used to select the deployment environment
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npm run deploy

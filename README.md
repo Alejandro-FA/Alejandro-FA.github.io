@@ -1,89 +1,91 @@
 # Alejandro-FA.github.io
 
-Flutter web app for my personal website.
+Flutter web app for my personal website. Deployed at [https://alejandrofernandez.pages.dev/](https://alejandrofernandez.pages.dev/).
 
-## Installation of dev dependencies
+## Installation instructions
 
-This project uses several node packages to automate the development process and test the website performance. Before installing the dependencies with `npm`, make sure you have Node.js installed on your machine. You can download it from the [official website](https://nodejs.org/en/download/package-manager), or use a version manager (**recommended**) like [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating).
+To know how to set up this project for development, check [INSTALL.md](INSTALL.md).
 
-To install the dependencies, run the following command:
+## Usage
 
-```bash
-npm ci
-```
+Common development tasks have been unified into single interface of npm scripts for convenience. GitHub Actions also use these scripts to automate the deployment process, so be mindful of the changes you make to them. Here are some of the most common tasks:
 
-## Setting Up Git Hooks
-
-This project includes custom Git hooks to ensure code quality and consistency. To use these hooks, you’ll need to configure Git to use the provided hooks directory.
-
-### Steps to configure git hooks
-
-1. **Clone the Repository**
-
-   If you haven’t already, clone the repository to your local machine:
-
-   ```bash
-   git clone git@github.com:Alejandro-FA/Alejandro-FA.github.io.git
-   cd Alejandro-FA.github.io
-   ```
-
-2. **Configure Git to Use the Custom Hooks Directory**
-
-   Run the following command to tell Git to use the custom hooks directory included in this repository:
-
-   ```bash
-   git config core.hooksPath .githooks
-   ```
-
-   This command sets up Git to look for hooks in the `.githooks` directory in the root of the repository.
-
-3. **Verify the Configuration**
-
-   To ensure that the configuration is set up correctly, you can check your Git settings:
-
-   ```bash
-   git config --get core.hooksPath
-   ```
-
-   This should output `.githooks`, confirming that Git is using the correct directory.
-
-### What do the hooks do?
-
-The hooks in this project are designed to run automated checks before certain Git operations. For example:
-
-- **Pre-commit hook:** Before you commit changes, the pre-commit hook will run a static code analysis with `flutter analyze`. It will also run tests using `flutter test`. If either the static analysis or the tests fail, the commit will be aborted.
-
-- **Pre-push hook:** Before pushing changes to production, it ensures that the project builds successfully using `flutter build web --wasm --no-web-resources-cdn --release`.
-
-By setting up these hooks, you help maintain code quality and prevent potential issues from being published to production.
-
-## How to use other browsers instead of Google Chrome
-
-By default, Flutter web apps will try to run in Google Chrome (check the [Getting Started](https://docs.flutter.dev/get-started/install) guide for more information on how to configure flutter for web development). Furthermore, this project uses [Lighthouse](https://developers.google.com/web/tools/lighthouse) to evaluate the performance of the website (see the [Performance evaluation](##Performance evaluation) section for more information).
-
-If you prefer to use another Chromium-based browser instead of Chrome (e.g. Edge, Opera, Brave...), add the following line to your `.bash_profile` file (if you use bash) or your `.zprofile` file (if you use zsh):
+### Upgrading the project dependencies to the latest (non-major) versions
 
 ```bash
-export CHROME_EXECUTABLE="path/to/broswer/executable"
-export CHROME_PATH="${CHROME_EXECUTABLE}"
+npm run upgrade-deps
 ```
 
-For example, to use [Brave Browser](https://brave.com/) in macOS:
+### Running the development server
 
 ```bash
-export CHROME_EXECUTABLE="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
-export CHROME_PATH="${CHROME_EXECUTABLE}"
+npm run serve
 ```
 
-## Performance evaluation
-
-The performance of a website is crucial for user experience. To evaluate the performance of this website, we use the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. It has audits for performance, accessibility, progressive web apps, SEO, and more.
-
-To evaluate the performance of the website and generate a report with the results, run the following command:
+### Checking for linting errors
 
 ```bash
-npx lighthouse https://alejandrofernandez.pages.dev/ --output html
+npm run lint
 ```
+
+> On first execution, the `shellcheck` binary is automatically downloaded.
+
+### Running tests
+
+```bash
+npm run test
+```
+
+### Building the project
+
+```bash
+npm run build:wasm
+npm run build:html
+```
+
+You can also use the `build` script and change the rendering engine with the `BUILD_RENDERER` environment variable. For example, to build the project with the `html` renderer, run:
+
+```bash
+BUILD_RENDERER=html npm run build
+```
+
+> By default, the project is built with the `wasm` renderer.
+
+### Auditing the project for performance, accessibility, SEO, and security
+
+To evaluate the performance of this website, crucial for a good user experience, we use the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. If you want to audit the webpage on a local server, run the following commands:
+
+```bash
+npm run serve:release
+npm run audit:local
+```
+
+If instead you want to audit the production server, then run:
+
+```bash
+npm run audit:prod
+```
+
+The audit reports will be saved in `html` format.
+
+### Deploying the project
+
+To deploy the project to [Cloudflare Pages](https://pages.cloudflare.com/), run:
+
+```bash
+npm run deploy
+```
+
+By default, the project is deployed to the current `git` branch. If you want to deploy to another branch, use the `DEPLOY_BRANCH` environment variable. For example, to deploy to the `main` branch (production), run:
+
+```bash
+DEPLOY_BRANCH=main npm run deploy
+```
+
+### Other tasks
+
+To see the full list of tasks, check the `scripts` section in the [package.json](package.json) file.
+
 
 ## Building a Material Theme
 
@@ -93,7 +95,7 @@ This project uses the Material Design system to create a consistent and visually
 
 Fonts are a great way to give a personalized look and feel to a webpage. [Google Fonts](https://fonts.google.com/) offers a wide variety of free fonts that can be easily integrated into webpages.
 
-There are two ways to use Google Fonts in a webpage. The first is to download the font files and host them on your server. The second is to use the Google Fonts API to load the fonts from Google's servers dynamically (see the [google_fonts](https://pub.dev/packages/google_fonts) flutter package for more information about this). The first method is recommended for privacy and performance reasons (especially if the webpage is served in a CDN).
+There are two ways to use Google Fonts in a webpage. The first is to download the font files and host them on your server. The second is to use the Google Fonts API to load the fonts from Google's servers dynamically (see the [google_fonts](https://pub.dev/packages/google_fonts) `flutter` package for more information about this). The first method is recommended for privacy and performance reasons (especially if the webpage is served over a CDN).
 
 ### How to download Google Fonts and host them on your server
 

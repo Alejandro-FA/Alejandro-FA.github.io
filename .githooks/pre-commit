@@ -4,7 +4,6 @@
 set -uo pipefail
 
 # Script parameters
-original_dir=$(pwd)
 stash_message="pre-commit $(date +%c)"
 repo_root=$(git rev-parse --show-toplevel)
 app_dir="${repo_root}/app"
@@ -13,44 +12,24 @@ setup() {
     # Create a temporary stash to store the unstaged changes
     git stash push --keep-index --include-untracked --quiet --message "${stash_message}" \
         || return 1
-
-    # Navigate to the root of the Flutter app
-    cd "${app_dir}" || return 1
 }
 
-__analyze_scripts() {
-    for file in "$@"; do
-        if [[ -f "${file}" ]]; then
-            shellcheck --enable=all "${file}" || return 1
-        fi
-    done
-}
+run_checks() {
+    echo "Running lint checks..."
+    npm run lint --silent || return 1
 
-run_tests() {
-    # Check that the shell scripts do not have errors
-    echo "Checking shell scripts..."
-    __analyze_scripts "${repo_root}/.githooks/"* || return 1
-    __analyze_scripts "${repo_root}/scripts/"*.sh || return 1
-    echo "No issues found!"
-
-    # Check that the project compiles correctly
-    flutter analyze || return 1
-
-    # Check that all flutter tests pass
-    flutter test || return 1
+    echo "Running tests..."
+    npm run test --silent || return 1
 }
 
 update_sitemap() {
-    "${repo_root}/scripts/update_sitemap.py" || return 1
+    npm run update-sitemap || return 1
     git add "${app_dir}/web/sitemap.xml" || return 1
 }
 
 cleanup_and_exit() {
     local exit_code=$? # Capture the last error code
     local message=$1
-
-    # Ensure we navigate back to the original directory
-    cd "${original_dir}" || exit
 
     # Remove the temporary stash if it exists
     local last_stash
@@ -69,6 +48,6 @@ cleanup_and_exit() {
 }
 
 setup || cleanup_and_exit "Failed to setup pre-commit hook."
-run_tests || cleanup_and_exit "Pre-commit tests failed. Commit aborted."
+run_checks || cleanup_and_exit "Pre-commit checks failed. Commit aborted."
 update_sitemap || cleanup_and_exit "Failed to update sitemap. Commit aborted."
-cleanup_and_exit "Pre-commit tests passed. Proceeding with commit."
+cleanup_and_exit "Pre-commit checks passed. Proceeding with commit."

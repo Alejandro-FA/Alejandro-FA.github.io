@@ -3,22 +3,22 @@
 # build configurations to choose the best one for the production deployment.
 name: Deploy Flutter web app to multiple deployment environments in Cloudflare Pages
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   Wasm:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildFlags: '--release --no-web-resources-cdn --wasm'
-      deploymentEnvironment: ${{ github.ref_name || 'main' }} # Branch name
-      appRoot: 'app'
+      buildRenderer: 'wasm'
+      deploymentBranch: 'main'
     secrets: inherit
 
   HTML-Renderer:
-    if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildFlags: '--release --no-web-resources-cdn --web-renderer html'
-      deploymentEnvironment: html_renderer
-      appRoot: 'app'
+      buildRenderer: 'html'
+      deploymentBranch: html_renderer
     secrets: inherit
