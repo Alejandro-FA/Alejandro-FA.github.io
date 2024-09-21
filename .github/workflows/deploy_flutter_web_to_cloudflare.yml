@@ -20,11 +20,6 @@ on:
         type: string
         required: false
         default: 'main'
-      workingDirectory:
-        description: 'Path to the directory where the wrangler.toml file is located.'
-        type: string
-        required: false
-        default: '.'
 
 concurrency:
   group: ${{ inputs.deploymentEnvironment }}-${{ github.workflow }}
@@ -54,10 +49,10 @@ jobs:
           cache: true
           flutter-version-file: ${{ steps.get_app_root.outputs.path }}/pubspec.yaml
 
-      - name: Install project dependencies # Both from Flutter app and Node.js
+      - name: Install project dependencies # Both from Node.js (npm) and Flutter (pub)
         run: npm run setup:ci
 
-      - name: Deploy to Cloudflare Pages using Wrangler
+      - name: Deploy to Cloudflare Pages using Wrangler # It will also build the Flutter web app
         env:
           BUILD_RENDERER: ${{ inputs.buildRenderer }} # Used to build with `html` or `wasm` renderer
           DEPLOY_BRANCH: ${{ inputs.deploymentEnvironment }} # Used to select the deployment environment

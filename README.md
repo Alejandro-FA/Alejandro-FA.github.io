@@ -22,6 +22,8 @@ npm run upgrade-deps
 npm run serve
 ```
 
+> You can also run the server in release mode with `npm run serve:release`, which will build the project as the production build.
+
 ### Checking for linting errors
 
 ```bash
@@ -35,21 +37,6 @@ npm run lint
 ```bash
 npm run test
 ```
-
-### Building the project
-
-```bash
-npm run build:wasm
-npm run build:html
-```
-
-You can also use the `build` script and change the rendering engine with the `BUILD_RENDERER` environment variable. For example, to build the project with the `html` renderer, run:
-
-```bash
-BUILD_RENDERER=html npm run build
-```
-
-> By default, the project is built with the `wasm` renderer.
 
 ### Auditing the project for performance, accessibility, SEO, and security
 
@@ -67,6 +54,21 @@ npm run audit:prod
 ```
 
 The audit reports will be saved in `html` format.
+
+### Building the project
+
+```bash
+npm run build:wasm
+npm run build:html
+```
+
+You can also use the `build` script and change the rendering engine with the `BUILD_RENDERER` environment variable. For example, to build the project with the `html` renderer, run:
+
+```bash
+BUILD_RENDERER=html npm run build
+```
+
+> By default, the project is built with the `wasm` renderer.
 
 ### Deploying the project
 
