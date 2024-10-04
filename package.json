@@ -1,36 +1,37 @@
 {
   "name": "portfolio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Portfolio of Alejandro Fernández Alburquerque.",
   "config": {
-    "app_root": "app",
+    "scripts_root": "scripts",
     "port": 8080,
-    "headers": "",
+    "headers": "Cross-Origin-Embedder-Policy=credentialless;Cross-Origin-Opener-Policy=same-origin",
     "url": "https://alejandrofernandez.pages.dev"
   },
   "scripts": {
-    "setup:ci": "npm ci && cd ${npm_package_config_app_root} && flutter pub get",
-    "setup:dev": "npm run setup:ci && flutter pub global activate dhttpd",
+    "setup:ci": "npm ci --omit=dev && flutter pub get",
+    "setup:dev": "npm ci --include=dev && flutter pub get && flutter pub global activate dhttpd",
     "upgrade-deps:npm": "npm update --include=dev --save=true",
-    "upgrade-deps:pub": "cd ${npm_package_config_app_root} && flutter pub upgrade --tighten",
+    "upgrade-deps:pub": "flutter pub upgrade --tighten",
     "upgrade-deps": "npm run upgrade-deps:npm && npm run upgrade-deps:pub",
-    "lint:shell": "npx shellcheck --enable=all .githooks/*",
-    "lint:dart": "cd ${npm_package_config_app_root} && flutter analyze --no-pub",
-    "lint": "npm run lint:shell && npm run lint:dart",
-    "test": "cd ${npm_package_config_app_root} && flutter test --no-pub",
-    "build:wasm": "cd ${npm_package_config_app_root} && flutter build web --no-pub --release --no-web-resources-cdn --wasm",
-    "build:html": "cd ${npm_package_config_app_root} && flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
+    "lint:shell": "shellcheck --enable=all .githooks/*",
+    "lint:dart": "flutter analyze --no-pub",
+    "lint:ts": "tsc && eslint ${npm_package_config_scripts_root}",
+    "lint": "npm run lint:shell && npm run lint:dart && npm run lint:ts",
+    "test": "flutter test --no-pub",
+    "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
+    "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
     "build": "npm run build:${BUILD_RENDERER:-wasm}",
-    "postbuild": "npm run generate-csp",
-    "serve": "cd ${npm_package_config_app_root} && flutter run -d chrome --web-port ${npm_package_config_port}",
+    "postbuild": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run generate-csp",
     "preserve:release": "npm run build",
-    "serve:release": "flutter pub global run dhttpd --port ${npm_package_config_port} --path ${npm_package_config_app_root}/build/web --headers=${npm_package_config_headers}",
-    "audit:local": "npx lighthouse http://localhost:${npm_package_config_port} --output html",
-    "audit:prod": "npx lighthouse ${npm_package_config_url} --view",
+    "serve:release": "flutter pub global run dhttpd --port ${npm_package_config_port} --path build/web/ --headers=${npm_package_config_headers}",
+    "serve": "flutter run -d chrome --web-port ${npm_package_config_port}",
+    "audit:local": "lighthouse http://localhost:${npm_package_config_port} --output html",
+    "audit:prod": "lighthouse ${npm_package_config_url} --view",
     "predeploy": "npm run build",
-    "deploy": "npx wrangler pages deploy ${npm_package_config_app_root}/build/web --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
-    "update-sitemap": "scripts/update_sitemap.py",
-    "generate-csp": "scripts/csp_scripts_hashes.py"
+    "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
+    "generate-sitemap": "tsx ${npm_package_config_scripts_root}/generate_sitemap.ts lib/pages/home.dart",
+    "generate-csp": "tsx ${npm_package_config_scripts_root}/generate_csp_hashes.ts"
   },
   "repository": {
     "type": "git",
@@ -43,13 +44,22 @@
     "url": "https://github.com/Alejandro-FA/Alejandro-FA.github.io/issues"
   },
   "homepage": "https://github.com/Alejandro-FA/Alejandro-FA.github.io#readme",
+  "dependencies": {
+    "fast-xml-parser": "^4.5.0",
+    "tsx": "^4.19.1",
+    "wrangler": "^3.78.8"
+  },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@tsconfig/node-lts": "^20.1.3",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.7.0",
+    "eslint": "^9.11.1",
     "lighthouse": "^12.2.1",
     "shellcheck": "^3.0.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "wrangler": "^3.78.7"
+    "typescript-eslint": "^8.7.0"
   },
   "engines": {
     "node": "^20.17.0"

@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "@tsconfig/strictest/tsconfig.json",
+    "@tsconfig/node-lts/tsconfig.json"
+  ],
+  "include": ["scripts/**/*.ts"],
+  "files": ["eslint.config.mjs"],
+
+  // tsx recommended configuration: https://tsx.is/typescript#tsconfig-json
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true
+  }
+}

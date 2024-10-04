@@ -3,17 +3,6 @@
 # Avoid masking errors
 set -uo pipefail
 
-# Script parameters
-stash_message="pre-commit $(date +%c)"
-repo_root=$(git rev-parse --show-toplevel)
-app_dir="${repo_root}/app"
-
-setup() {
-    # Create a temporary stash to store the unstaged changes
-    git stash push --keep-index --include-untracked --quiet --message "${stash_message}" \
-        || return 1
-}
-
 run_checks() {
     echo "Running lint checks..."
     npm run lint --silent || return 1
@@ -22,21 +11,9 @@ run_checks() {
     npm run test --silent || return 1
 }
 
-update_sitemap() {
-    npm run update-sitemap || return 1
-    git add "${app_dir}/web/sitemap.xml" || return 1
-}
-
 cleanup_and_exit() {
     local exit_code=$? # Capture the last error code
     local message=$1
-
-    # Remove the temporary stash if it exists
-    local last_stash
-    last_stash=$(git stash list | head -n 1)
-    if [[ "${last_stash}" == *"${stash_message}"* ]]; then
-      git stash pop --quiet
-    fi
 
     # Exit with the last error code after printing the provided message
     if [[ "${exit_code}" -eq 0 ]]; then
@@ -47,7 +24,6 @@ cleanup_and_exit() {
     exit "${exit_code}"
 }
 
-setup || cleanup_and_exit "Failed to setup pre-commit hook."
+# Main script logic
 run_checks || cleanup_and_exit "Pre-commit checks failed. Commit aborted."
-update_sitemap || cleanup_and_exit "Failed to update sitemap. Commit aborted."
 cleanup_and_exit "Pre-commit checks passed. Proceeding with commit."

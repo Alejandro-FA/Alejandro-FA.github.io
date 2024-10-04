@@ -6,6 +6,7 @@ import 'pages/projects.dart';
 import 'pages/cv.dart';
 
 /// Builds the router for the app.
+/// Path names must match the file names in the pages folder.
 GoRouter buildRouter({required Color color}) {
   return GoRouter(
     initialLocation: '/',

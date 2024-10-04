@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'theme/material_theme.dart';
 import 'theme/text_theme.dart';
 import 'utils.dart';
-import 'router.dart';
+import 'web_router.dart';
 
 void main() {
   decideUrlStrategy();
