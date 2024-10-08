@@ -2,7 +2,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { parseArgs } from "node:util";
+import * as util from "node:util";
 import { config } from "../package.json";
 import { XMLBuilder, XMLParser } from "fast-xml-parser";
 
@@ -22,7 +22,7 @@ interface SitemapXML {
 }
 
 class ProgramOptions {
-  static validFreqs = [
+  private static validFreqs = [
     "always",
     "hourly",
     "daily",
@@ -42,13 +42,35 @@ class ProgramOptions {
     public baseUrl: string,
   ) {}
 
-  /**
-   * Parses command-line arguments and returns the program options.
-   *
-   * @returns {ProgramOptions} The program options.
-   */
   public static parse(): ProgramOptions {
-    const { values, positionals } = parseArgs({
+    try {
+      const { values, positionals } = ProgramOptions.parseArgs();
+      if (values.help) {
+        ProgramOptions.printHelp();
+        process.exit(0);
+      }
+      if (positionals.length === 0) throw new Error("No pages specified.");
+
+      return new ProgramOptions(
+        positionals.map((file) => ProgramOptions.parseFile(file)),
+        values.output,
+        ProgramOptions.parseFreq(values.changeFreq),
+        ProgramOptions.parsePriority(values.priority),
+        values.update,
+        values.help,
+        values.baseUrl,
+      );
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) throw error;
+      console.error(error.message);
+      const program = path.basename(process.argv[1] ?? import.meta.url);
+      console.log(`Try '${program} --help' for more information.`);
+      process.exit(1);
+    }
+  }
+
+  private static parseArgs() {
+    return util.parseArgs({
       options: {
         output: { type: "string", short: "o", default: "sitemap.xml" },
         changeFreq: { type: "string", short: "f", default: "monthly" },
@@ -59,32 +81,15 @@ class ProgramOptions {
       },
       allowPositionals: true,
     });
-
-    if (values.help) {
-      ProgramOptions.printHelp();
-      process.exit(0);
-    }
-
-    return new ProgramOptions(
-      ProgramOptions.parseFiles(positionals),
-      values.output,
-      ProgramOptions.parseFreq(values.changeFreq),
-      ProgramOptions.parsePriority(values.priority),
-      values.update,
-      values.help,
-      values.baseUrl,
-    );
   }
 
-  private static parseFiles(files: string[]): string[] {
-    if (files.length === 0) throw new Error("No pages specified.");
-
-    for (const file of files) {
-      if (!fs.existsSync(file)) {
-        throw new Error(`File not found: ${file}`);
-      }
+  private static parseFile(file: string): string {
+    if (!fs.existsSync(file)) {
+      throw new Error(`File not found: ${file}`);
+    } else if (!fs.statSync(file).isFile()) {
+      throw new Error(`${file} is not a file.`);
     }
-    return files;
+    return file;
   }
 
   private static parseFreq(freq: string): string {
@@ -106,17 +111,13 @@ class ProgramOptions {
     }
   }
 
-  /**
-   * Prints the help message for the program.
-   */
-  private static printHelp(): void {
+  public static printHelp(): void {
     const helpMessage = `
-Automatically generate a sitemap with the specified pages.
-
-Usage: generate_sitemap.ts [options] page...
+Usage: generate_sitemap.ts [OPTIONS] PAGE...
+Generate a sitemap with the specified PAGE files.
 
 Arguments:
-  page                      Source code file of a page to include in the sitemap
+  PAGE                      Source code file of a page to include in the sitemap
 
 Options:
   -o, --output <file>       Specify the output path for the sitemap (default: sitemap.xml)
@@ -124,7 +125,7 @@ Options:
   -p, --priority <num>      Set the priority of all URLs (default: 0.5)
   -u, --update              Update an existing sitemap instead of overwriting it (default: false)
   -h, --help                Show this help message and exit
-  --baseUrl <url>           Set the base URL for the sitemap (default: config.url from package.json)
+      --baseUrl <url>       Set the base URL for the sitemap (default: config.url from package.json)
   `.trim();
     console.log(helpMessage);
   }

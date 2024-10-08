@@ -13,7 +13,7 @@
    If you haven’t already, clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/Alejandro-FA/Alejandro-FA.github.io.git
+   git clone git@github.com:Alejandro-FA/Alejandro-FA.github.io.git
    cd Alejandro-FA.github.io
    ```
 
