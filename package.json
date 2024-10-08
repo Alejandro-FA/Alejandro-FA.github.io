@@ -21,14 +21,14 @@
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
     "build": "npm run build:${BUILD_RENDERER:-wasm}",
-    "postbuild": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run csp-hash",
+    "postbuild:wasm": "npm run generate-sitemap -- -o build/web/sitemap.xml",
+    "postbuild:html": "npm run postbuild:wasm",
     "preserve:release": "npm run build",
     "serve:release": "flutter pub global run dhttpd --port ${npm_package_config_port} --path build/web/ --headers=${npm_package_config_headers}",
     "serve": "flutter run -d chrome --web-port ${npm_package_config_port}",
     "predeploy": "npm run build",
     "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
-    "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/home.dart",
-    "csp-hash": "tsx scripts/csp_hash.ts build/web/flutter_bootstrap.js --html build/web/index.html --headers build/web/_headers"
+    "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/home.dart"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,6 @@
   },
   "homepage": "https://github.com/Alejandro-FA/Alejandro-FA.github.io#readme",
   "dependencies": {
-    "cheerio": "^1.0.0",
     "fast-xml-parser": "^4.5.0",
     "tsx": "^4.19.1",
     "wrangler": "^3.80.2"
@@ -53,9 +52,10 @@
     "@tsconfig/strictest": "^2.0.5",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.7.5",
+    "cheerio": "^1.0.0",
     "eslint": "^9.12.0",
     "shellcheck": "^3.0.0",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "typescript-eslint": "^8.8.1"
   },
   "engines": {

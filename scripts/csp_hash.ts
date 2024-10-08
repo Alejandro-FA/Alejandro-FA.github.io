@@ -130,7 +130,7 @@ function writeHashToHtml(
 function writeHashToHeaders(hash: string, headersPath: string): void {
   const headers = fs.readFileSync(headersPath, "utf8");
   const scriptHashesRegex =
-    /(?<=script-src)((?: '\S+'?)*)(?= 'strict-dynamic')/i;
+    /(?<=script-src)((?: 'sha\d{3}-\S+')*)(?= 'strict-dynamic')/i;
 
   // Find the CSP script-src hashes in the headers file
   const scriptHashes = scriptHashesRegex.exec(headers);
