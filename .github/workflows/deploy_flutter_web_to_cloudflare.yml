@@ -22,7 +22,7 @@ on:
         default: "main"
 
 concurrency:
-  group: ${{ inputs.deploymentEnvironment }}-${{ github.workflow }}
+  group: ${{ inputs.deploymentBranch }}-${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
