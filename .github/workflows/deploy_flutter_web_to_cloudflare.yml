@@ -8,10 +8,10 @@ on:
   workflow_call:
     inputs:
       buildRenderer:
-        description: 'The renderer to use for the Flutter web build.'
+        description: "The renderer to use for the Flutter web build."
         type: string
         required: true
-        default: 'wasm' # valid options: ['wasm', 'html']
+        default: "wasm" # valid options: ['wasm', 'html']
       deploymentBranch:
         description: |
           Deployment environment name (usually the branch name).
@@ -19,7 +19,7 @@ on:
           - Use other names for preview deployments with their own URLs.
         type: string
         required: false
-        default: 'main'
+        default: "main"
 
 concurrency:
   group: ${{ inputs.deploymentEnvironment }}-${{ github.workflow }}
@@ -35,19 +35,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: 'package.json'
-          cache: 'npm'
-
-      - name: Get app root directory
-        id: get_app_root
-        run: echo "::set-output name=path::$(node -p "require('./package.json').config.app_root")"
+          node-version-file: "package.json"
+          cache: "npm"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@44ac965b96f18d999802d4b807e3256d5a3f9fa1 # v2.16.0
         with:
           channel: stable
           cache: true
-          flutter-version-file: ${{ steps.get_app_root.outputs.path }}/pubspec.yaml
+          flutter-version-file: pubspec.yaml
 
       - name: Install project dependencies # Both from Node.js (npm) and Flutter (pub)
         run: npm run setup:ci
