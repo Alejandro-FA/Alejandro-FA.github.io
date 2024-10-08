@@ -40,20 +40,11 @@ npm run test
 
 ### Auditing the project for performance, accessibility, SEO, and security
 
-To evaluate the performance of this website, crucial for a good user experience, we use the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. If you want to audit the webpage on a local server, run the following commands:
+To evaluate the performance of this website, crucial for a good user experience, we recommend the [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool. If you want to audit the webpage locally, open the Chrome Developer Tools in a local server:
 
 ```bash
 npm run serve:release
-npm run audit:local
 ```
-
-If instead you want to audit the production server, then run:
-
-```bash
-npm run audit:prod
-```
-
-The audit reports will be saved in `html` format.
 
 ### Building the project
 
