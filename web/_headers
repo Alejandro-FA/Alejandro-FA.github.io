@@ -1,6 +1,6 @@
 /*
     # CSP info: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-    Content-Security-Policy: script-src 'sha256-A1bgKMS5QOndISYKLzD2JBo74w9qn0yCFWYXCNlwfNs=' 'strict-dynamic' 'wasm-unsafe-eval' 'inline-speculation-rules'; object-src 'none'; base-uri 'self';
+    Content-Security-Policy: script-src 'sha256-jRFbZPGxmdoW0/Eufbok8i1mRwc8cgBguB60B/V1YeU=' 'strict-dynamic' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'self';
     Cross-Origin-Embedder-Policy: credentialless
     Cross-Origin-Opener-Policy: same-origin
 
