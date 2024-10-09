@@ -89,9 +89,7 @@
                 border-radius: 4px;
                 background-color: #007bff; /* Add a background color */
                 transform-origin: left; /* Set the transform origin to the left */
-                transform: scaleX(0); /* Start with no width */
-                transition: transform 0.3s ease-in; /* Transition for transform property */
-                animation: progress 5s ease-in-out forwards; /* Animation for filling */
+                animation: progress 2s ease-in-out forwards; /* Animation for filling */
             }
 
             /* Keyframes for progress animation */
@@ -165,10 +163,7 @@
         <div id="splash-screen">
             <img id="splash-screen-logo" src="./icons/Icon-splash.svg" />
             <div id="splash-screen-progress-bar">
-                <div
-                    id="splash-screen-progress-bar-fill"
-                    style="width: 50%"
-                ></div>
+                <div id="splash-screen-progress-bar-fill"></div>
             </div>
             <p>Loading portfolio...</p>
         </div>
