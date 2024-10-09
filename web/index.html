@@ -47,6 +47,22 @@
                 height: 100%;
             }
 
+            div#splash-screen {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex: auto;
+                flex-direction: column;
+            }
+
+            img#splash-screen-logo {
+                width: 10rem;
+                height: 10rem;
+                margin-bottom: 0.5rem;
+            }
+
             /* Light theme colors */
             @media (prefers-color-scheme: light) {
                 body,
@@ -67,6 +83,9 @@
         </style>
     </head>
     <body>
+        <div id="splash-screen">
+            <img id="splash-screen-logo" src="./icons/Icon-splash.svg" />
+        </div>
         <script>
             const scripts = ["flutter_bootstrap.js"];
 
