@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/sliver_scaffold.dart';
-import '../widgets/adaptive_sliver_app_bar.dart';
+import '../utils.dart';
 
 class BasePage extends StatelessWidget {
+  static const menuRoutes = [
+    'Research',
+    'Projects',
+    'Curriculum Vitae',
+  ];
+
   const BasePage({super.key, required this.bodySlivers});
 
   final List<Widget> bodySlivers;
@@ -14,12 +20,12 @@ class BasePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return SliverScaffold(
-      appBar: AdaptiveSliverAppBar(
-        menuRoutesNames: const [
-          'Research',
-          'Projects',
-          'Curriculum Vitae',
-        ],
+      appBar: SliverAppBar(
+        pinned: false,
+        floating: true,
+        snap: false,
+        centerTitle: false,
+        forceMaterialTransparency: true,
         title: TextButton.icon(
           style: TextButton.styleFrom(
             overlayColor: Colors.transparent,
@@ -35,8 +41,44 @@ class BasePage extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
+        titleSpacing: 0,
+        actions: _buildActions(context),
+        // shape: null,
+        // leading: null,
+        // expandedHeight: 200,
+        // flexibleSpace: const FlexibleSpaceBar(
+        //   title: Text('SliverAppBar'),
+        //   background: FlutterLogo(),
+        // ),
       ),
       bodySlivers: bodySlivers,
     );
+  }
+
+  /// Builds the actions menu for the app bar.
+  List<Widget> _buildActions(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    final actions = menuRoutes.map((routeName) {
+      return TextButton(
+        style: TextButton.styleFrom(
+          textStyle: textTheme.titleMedium?.copyWith(color: null),
+        ),
+        onPressed: () => GoRouter.of(context).goNamed(routeName),
+        child: Text(routeName),
+      );
+    }).toList();
+
+    final drawerButton = IconButton(
+      icon: const Icon(Icons.menu),
+      onPressed: () {
+        Scaffold.of(context).openDrawer();
+      },
+    );
+
+    return MaterialWindowSizeClass.of(context) >=
+            MaterialWindowSizeClass.expanded
+        ? actions
+        : [drawerButton];
   }
 }

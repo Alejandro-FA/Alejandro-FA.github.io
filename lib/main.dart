@@ -18,16 +18,14 @@ class MyApp extends StatelessWidget {
     final textTheme = createTextTheme(context, 'Noto Sans', 'Silkscreen');
     final theme = MaterialTheme(textTheme);
 
-    return InteractiveViewer(
-      child: MaterialApp.router(
-        title: 'Alejandro Fernández Alburquerque',
-        routerConfig: buildRouter(color: theme.light().primaryColor),
-        theme: theme.light(),
-        darkTheme: theme.dark(),
-        highContrastTheme: theme.lightHighContrast(),
-        highContrastDarkTheme: theme.darkHighContrast(),
-        themeMode: ThemeMode.system,
-      ),
+    return MaterialApp.router(
+      title: 'Alejandro Fernández Alburquerque',
+      routerConfig: buildRouter(color: theme.light().primaryColor),
+      theme: theme.light(),
+      darkTheme: theme.dark(),
+      highContrastTheme: theme.lightHighContrast(),
+      highContrastDarkTheme: theme.darkHighContrast(),
+      themeMode: ThemeMode.system,
     );
   }
 }

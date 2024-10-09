@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'adaptive_sliver_app_bar.dart';
 
 /// A [Scaffold] specially designed to work with sliver widgets.
 class SliverScaffold extends StatelessWidget {
   /// Creates a visual [SliverScaffold] for Material Design sliver widgets.
-  const SliverScaffold({super.key, required this.appBar, required this.bodySlivers,});
+  const SliverScaffold({
+    super.key,
+    required this.appBar,
+    required this.bodySlivers,
+  });
 
   /// The [AdaptiveSliverAppBar] to display at the top of the [SliverScaffold].
-  final AdaptiveSliverAppBar appBar;
+  final SliverAppBar appBar;
 
   /// The primary content of the [SliverScaffold].
   ///

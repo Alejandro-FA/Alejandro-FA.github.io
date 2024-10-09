@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:portfolio/widgets/adaptive_sliver_app_bar.dart';
+import 'package:portfolio/widgets/base_page.dart';
 
 void main() {
   testWidgets('ResponsiveAppBar adapts based on screen width',
@@ -18,15 +18,18 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              AdaptiveSliverAppBar(
-                title: Text(appTitle),
-                menuRoutesNames: ['Page 1', 'Page 2', 'Page 3'],
+        home: BasePage(
+          bodySlivers: [
+            SliverFillRemaining(
+              hasScrollBody: true,
+              child: Center(
+                child: Text(
+                  appTitle,
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
