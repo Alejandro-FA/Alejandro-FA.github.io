@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'base.dart';
+import '../widgets/base_page.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});

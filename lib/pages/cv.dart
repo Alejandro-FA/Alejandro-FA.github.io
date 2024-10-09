@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'base.dart';
+import '../widgets/base_page.dart';
 
 class CVPage extends StatelessWidget {
   const CVPage({super.key});

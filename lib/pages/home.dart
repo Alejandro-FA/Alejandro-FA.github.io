@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'base.dart';
+import '../widgets/base_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,7 +24,8 @@ class HomePage extends StatelessWidget {
           child: Center(
             child: Text(
               'Home | Work in progress',
-              style: textTheme.bodyLarge?.copyWith(fontVariations: const [FontVariation.weight(100)]),
+              style: textTheme.bodyLarge
+                  ?.copyWith(fontVariations: const [FontVariation.weight(100)]),
             ),
           ),
         ),

@@ -32,19 +32,26 @@
         <!-- Viewport meta tag for responsive design -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Favicon -->
+        <!-- Favicon and critical fonts -->
         <link rel="icon" type="image/png" href="favicon.png" />
+        <link
+            rel="preload"
+            href="fonts/Silkscreen-Regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin="anonymous"
+        />
 
         <title>Alejandro Fernández Alburquerque</title>
         <link rel="manifest" href="manifest.json" />
 
         <style>
             @font-face {
-                font-family: 'Silkscreen';
-                src: url('fonts/Silkscreen-Regular.woff2') format('woff2');
+                font-family: "Silkscreen";
+                src: url("fonts/Silkscreen-Regular.woff2") format("woff2");
                 font-weight: 400;
                 font-style: normal;
-                font-display: swap;
+                font-display: optional;
             }
 
             body,
@@ -76,38 +83,52 @@
                 border-radius: 4px;
             }
 
-            @keyframes progress {
-                0% {width: 0%;}
-                100% {width: 100%;}
-            }
-
             div#splash-screen-progress-bar-fill {
                 display: block;
                 height: 0.5rem;
                 border-radius: 4px;
-                transition: width 0.3s ease-in;
-                animation: progress 5s ease-in-out forwards;
+                background-color: #007bff; /* Add a background color */
+                transform-origin: left; /* Set the transform origin to the left */
+                transform: scaleX(0); /* Start with no width */
+                transition: transform 0.3s ease-in; /* Transition for transform property */
+                animation: progress 5s ease-in-out forwards; /* Animation for filling */
+            }
+
+            /* Keyframes for progress animation */
+            @keyframes progress {
+                0% {
+                    transform: scaleX(0); /* Start from zero scale */
+                }
+                100% {
+                    transform: scaleX(1); /* End at full scale */
+                }
             }
 
             div#splash-screen p {
                 margin-top: 1rem;
                 font-size: 1.5rem;
-                font-family: "Silkscreen", sans-serif;
+                font-family: "Silkscreen";
             }
 
             /* Light theme colors */
             @media (prefers-color-scheme: light) {
                 body,
                 html {
-                    background-color: rgb(250 249 250); /* lightScheme().surface */
+                    background-color: rgb(
+                        250 249 250
+                    ); /* lightScheme().surface */
                 }
 
                 div#splash-screen-progress-bar {
-                    background-color: rgb(110 169 151); /* lightScheme().primaryContainer */
+                    background-color: rgb(
+                        110 169 151
+                    ); /* lightScheme().primaryContainer */
                 }
 
                 div#splash-screen-progress-bar-fill {
-                    background-color: rgb(0 19 14); /* lightScheme().onPrimaryContainer */
+                    background-color: rgb(
+                        0 19 14
+                    ); /* lightScheme().onPrimaryContainer */
                 }
 
                 div#splash-screen p {
@@ -123,11 +144,15 @@
                 }
 
                 div#splash-screen-progress-bar {
-                    background-color: rgb(69 127 111); /* darkScheme().primaryContainer */
+                    background-color: rgb(
+                        69 127 111
+                    ); /* darkScheme().primaryContainer */
                 }
 
                 div#splash-screen-progress-bar-fill {
-                    background-color: rgb(255 255 255); /* darkScheme().onPrimaryContainer */
+                    background-color: rgb(
+                        255 255 255
+                    ); /* darkScheme().onPrimaryContainer */
                 }
 
                 div#splash-screen p {
@@ -138,9 +163,12 @@
     </head>
     <body>
         <div id="splash-screen">
-            <img id="splash-screen-logo" src="./icons/Icon-splash.svg"/>
+            <img id="splash-screen-logo" src="./icons/Icon-splash.svg" />
             <div id="splash-screen-progress-bar">
-                <div id="splash-screen-progress-bar-fill" style="width: 50%"></div>
+                <div
+                    id="splash-screen-progress-bar-fill"
+                    style="width: 50%"
+                ></div>
             </div>
             <p>Loading portfolio...</p>
         </div>

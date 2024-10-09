@@ -16,8 +16,14 @@
 /assets/*
     Cache-Control: public, max-age=2592000, must-revalidate
 
-/assets/fonts/*
-    Cache-Control: public, max-age=31536000
+/canvaskit/*
+    Cache-Control: public, max-age=2592000, must-revalidate
+
+/main.dart.mjs
+    Cache-Control: public, max-age=2592000, must-revalidate
+
+/flutter_bootstrap.js
+    Cache-Control: public, max-age=2592000, must-revalidate
 
 /manifest.json
     Cache-Control: public, max-age=2592000, must-revalidate

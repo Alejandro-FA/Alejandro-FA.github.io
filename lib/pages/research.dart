@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'base.dart';
+import '../widgets/base_page.dart';
 
 class ResearchPage extends StatelessWidget {
   const ResearchPage({super.key});
