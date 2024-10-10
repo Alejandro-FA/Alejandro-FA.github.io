@@ -20,7 +20,7 @@
     "test": "flutter test --no-pub",
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
-    "build": "npm run build:${BUILD_RENDERER:-wasm}",
+    "build": "npm run build:${BUILD_RENDERER:-html}",
     "postbuild:wasm": "npm run generate-sitemap -- -o build/web/sitemap.xml",
     "postbuild:html": "npm run postbuild:wasm",
     "preserve:release": "npm run build",

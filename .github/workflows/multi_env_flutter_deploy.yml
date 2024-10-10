@@ -12,13 +12,13 @@ jobs:
   Wasm:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildRenderer: 'wasm'
-      deploymentBranch: 'main'
+      buildRenderer: wasm
+      deploymentBranch: wasm
     secrets: inherit
 
   HTML-Renderer:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildRenderer: 'html'
-      deploymentBranch: html_renderer
+      buildRenderer: html
+      deploymentBranch: main
     secrets: inherit
