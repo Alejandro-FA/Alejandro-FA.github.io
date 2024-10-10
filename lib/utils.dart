@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Decides the [UrlStrategy] based on the platform.
 ///
@@ -15,11 +16,31 @@ void decideUrlStrategy() {
 /// An enumeration of the different window sizes according to the [Material
 /// Design 3 guidelines](https://m3.material.io/foundations/layout/applying-layout/window-size-classes).
 enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
-  compact(minDP: 0, maxDP: 600, panes: 1,),
-  medium(minDP: 600, maxDP: 840, panes: 1,),
-  expanded(minDP: 840, maxDP: 1200, panes: 2,),
-  large(minDP: 1200, maxDP: 1600, panes: 2,),
-  extraLarge(minDP: 1600, maxDP: double.infinity, panes: 3,);
+  compact(
+    minDP: 0,
+    maxDP: 600,
+    panes: 1,
+  ),
+  medium(
+    minDP: 600,
+    maxDP: 840,
+    panes: 1,
+  ),
+  expanded(
+    minDP: 840,
+    maxDP: 1200,
+    panes: 2,
+  ),
+  large(
+    minDP: 1200,
+    maxDP: 1600,
+    panes: 2,
+  ),
+  extraLarge(
+    minDP: 1600,
+    maxDP: double.infinity,
+    panes: 3,
+  );
 
   const MaterialWindowSizeClass({
     required this.minDP,
@@ -53,11 +74,17 @@ enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
   }
 
   @override
-  int compareTo(MaterialWindowSizeClass other) =>
-      minDP.compareTo(other.minDP);
+  int compareTo(MaterialWindowSizeClass other) => minDP.compareTo(other.minDP);
 
   bool operator <(MaterialWindowSizeClass other) => minDP < other.minDP;
   bool operator <=(MaterialWindowSizeClass other) => minDP <= other.minDP;
   bool operator >(MaterialWindowSizeClass other) => minDP > other.minDP;
   bool operator >=(MaterialWindowSizeClass other) => minDP >= other.minDP;
+}
+
+Future<void> openWebpage(String url) async {
+  final uri = Uri.parse(url);
+  if (!await launchUrl(uri)) {
+    throw 'Could not launch $uri';
+  }
 }

@@ -28,7 +28,7 @@
     "serve": "flutter run -d chrome --web-port ${npm_package_config_port}",
     "predeploy": "npm run build",
     "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
-    "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/home.dart --baseUrl ${npm_package_config_url}"
+    "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}"
   },
   "repository": {
     "type": "git",

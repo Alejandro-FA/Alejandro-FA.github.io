@@ -1,21 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import '../widgets/base_page.dart';
+import '../utils.dart';
 
 class ResearchPage extends StatelessWidget {
   const ResearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    const orcidUrl = 'https://orcid.org/0009-0009-0884-7015';
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return BasePage(
       bodySlivers: [
         SliverFillRemaining(
           hasScrollBody: true,
           child: Center(
-            child: Text(
-              'Research | Work in progress',
-              style: textTheme.displayLarge,
+            child: RichText(
+              text: TextSpan(
+                style: textTheme.displaySmall,
+                children: [
+                  const TextSpan(
+                    text: 'Work in progress. Take a look at my ',
+                  ),
+                  TextSpan(
+                    text: 'ORCID profile',
+                    style: TextStyle(
+                      color: theme.colorScheme.tertiary,
+                      decoration: TextDecoration.underline,
+                      decorationColor: theme.colorScheme.tertiary,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => openWebpage(orcidUrl),
+                  ),
+                  const TextSpan(
+                    text: ' in the meantime.',
+                  ),
+                ],
+              ),
             ),
           ),
         ),

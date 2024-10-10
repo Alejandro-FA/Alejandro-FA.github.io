@@ -35,7 +35,7 @@ class BasePage extends StatelessWidget {
           icon: SvgPicture.asset('assets/icons/portfolio-icon.svg'),
           onPressed: () => GoRouter.of(context).go('/'),
           label: Text(
-            'My Portfolio',
+            'Alejandro',
             style: textTheme.titleLarge,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -43,13 +43,6 @@ class BasePage extends StatelessWidget {
         ),
         titleSpacing: 0,
         actions: _buildActions(context),
-        // shape: null,
-        // leading: null,
-        // expandedHeight: 200,
-        // flexibleSpace: const FlexibleSpaceBar(
-        //   title: Text('SliverAppBar'),
-        //   background: FlutterLogo(),
-        // ),
       ),
       bodySlivers: bodySlivers,
     );
@@ -69,10 +62,14 @@ class BasePage extends StatelessWidget {
       );
     }).toList();
 
-    final drawerButton = IconButton(
-      icon: const Icon(Icons.menu),
-      onPressed: () {
-        Scaffold.of(context).openDrawer();
+    final drawerButton = Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        );
       },
     );
 
