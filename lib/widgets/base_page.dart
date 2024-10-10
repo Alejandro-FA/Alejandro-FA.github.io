@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'home_button.dart';
+import 'floating_rail.dart';
 import '../utils.dart';
 
 class RouteDestination {
@@ -15,20 +16,43 @@ class RouteDestination {
   }
 }
 
+class SocialMedia {
+  const SocialMedia({required this.url, required this.iconPath});
+
+  final String url;
+  final String iconPath;
+}
+
 class BasePage extends StatelessWidget {
+  const BasePage({
+    super.key,
+    required this.bodySlivers,
+    this.socialMediaRail = false,
+  });
+
   static const menuRoutes = [
     RouteDestination(label: 'Research', icon: Icon(Icons.article)),
     RouteDestination(label: 'Projects', icon: Icon(Icons.terminal)),
     RouteDestination(label: 'Curriculum Vitae', icon: Icon(Icons.school)),
   ];
 
-  static const githubUrl = 'https://github.com/Alejandro-FA';
-  static const linkedinUrl =
-      'https://www.linkedin.com/in/alejandro-fernandez-alburquerque/';
-
-  const BasePage({super.key, required this.bodySlivers});
+  static const socialMedia = [
+    SocialMedia(
+      url: 'https://github.com/Alejandro-FA',
+      iconPath: 'assets/icons/github.svg',
+    ),
+    SocialMedia(
+      url: 'https://www.linkedin.com/in/alejandro-fernandez-alburquerque/',
+      iconPath: 'assets/icons/linkedin.svg',
+    ),
+    SocialMedia(
+      url: 'https://orcid.org/0009-0009-0884-7015',
+      iconPath: 'assets/icons/orcid.svg',
+    ),
+  ];
 
   final List<Widget> bodySlivers;
+  final bool socialMediaRail;
 
   @override
   Widget build(BuildContext context) {
@@ -64,51 +88,75 @@ class BasePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/github.svg',
-                  height: 30,
-                  colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onSurface,
-                    BlendMode.srcIn,
+              ...socialMedia.map(
+                (media) => IconButton(
+                  icon: SvgPicture.asset(
+                    media.iconPath,
+                    height: 30,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.onSurface,
+                      BlendMode.srcIn,
+                    ),
                   ),
+                  onPressed: () => openWebpage(media.url),
+                  padding: const EdgeInsets.all(10),
                 ),
-                onPressed: () => openWebpage(githubUrl),
-                padding: const EdgeInsets.all(10),
-              ),
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/linkedin.svg',
-                  height: 30,
-                  colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onSurface,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                onPressed: () => openWebpage(linkedinUrl),
-                padding: const EdgeInsets.all(10),
               ),
             ],
           ),
         ],
       ),
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            pinned: false,
-            floating: true,
-            snap: false,
-            centerTitle: false,
-            forceMaterialTransparency: true,
-            automaticallyImplyLeading: false,
-            title: HomeButton(
-              textStyle: textTheme.titleLarge,
-            ),
-            titleSpacing: 0,
-            actions: _buildActions(context),
+      body: Stack(
+        alignment: MaterialWindowSizeClass.of(context) >=
+                MaterialWindowSizeClass.expanded
+            ? AlignmentDirectional.centerEnd
+            : AlignmentDirectional.bottomCenter,
+        children: [
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                pinned: false,
+                floating: true,
+                snap: false,
+                centerTitle: false,
+                forceMaterialTransparency: true,
+                automaticallyImplyLeading: false,
+                title: HomeButton(
+                  textStyle: textTheme.titleLarge,
+                ),
+                titleSpacing: 0,
+                actions: _buildActions(context),
+              ),
+              ...bodySlivers,
+            ],
           ),
-          ...bodySlivers,
+          if (socialMediaRail)
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: FloatingRail(
+                axis: MaterialWindowSizeClass.of(context) >=
+                        MaterialWindowSizeClass.expanded
+                    ? Axis.vertical
+                    : Axis.horizontal,
+                children: [
+                  ...socialMedia.map(
+                    (media) => IconButton(
+                      icon: SvgPicture.asset(
+                        media.iconPath,
+                        height: 30,
+                        colorFilter: ColorFilter.mode(
+                          theme.colorScheme.onTertiaryContainer,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      onPressed: () => openWebpage(media.url),
+                      padding: const EdgeInsets.all(10),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

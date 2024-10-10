@@ -15,7 +15,7 @@ class CVPage extends StatelessWidget {
           child: Center(
             child: Text(
               'Curriculum Vitae | Work in progress',
-              style: textTheme.displayLarge,
+              style: textTheme.displaySmall,
             ),
           ),
         ),

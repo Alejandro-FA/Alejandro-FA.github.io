@@ -9,6 +9,7 @@ class HomePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return BasePage(
+      socialMediaRail: true,
       bodySlivers: [
         SliverFillRemaining(
           hasScrollBody: true,
