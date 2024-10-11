@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'theme/material_theme.dart';
 import 'theme/text_theme.dart';
-import 'utils.dart';
 import 'web_router.dart';
 
 void main() {
-  decideUrlStrategy();
+  setUrlStrategy(Uri.base.host.endsWith('github.io')
+      ? const HashUrlStrategy()
+      : PathUrlStrategy()); // ignore: prefer_const_constructors
   runApp(const MyApp());
 }
 
