@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import '../widgets/base_page.dart';
+import 'package:flutter/material.dart';
+
 import '../utils.dart';
+import '../widgets/base_page.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final githubUrl = 'https://github.com/Alejandro-FA';
+    const githubUrl = 'https://github.com/Alejandro-FA';
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
@@ -32,7 +33,7 @@ class ProjectsPage extends StatelessWidget {
                       decorationColor: theme.colorScheme.tertiary,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => openWebpage(githubUrl),
+                      ..onTap = () async => openWebpage(githubUrl),
                   ),
                   const TextSpan(
                     text: ' in the meantime.',

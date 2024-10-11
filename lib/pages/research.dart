@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import '../widgets/base_page.dart';
+import 'package:flutter/material.dart';
+
 import '../utils.dart';
+import '../widgets/base_page.dart';
 
 class ResearchPage extends StatelessWidget {
   const ResearchPage({super.key});
@@ -32,7 +33,7 @@ class ResearchPage extends StatelessWidget {
                       decorationColor: theme.colorScheme.tertiary,
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => openWebpage(orcidUrl),
+                      ..onTap = () async => openWebpage(orcidUrl),
                   ),
                   const TextSpan(
                     text: ' in the meantime.',

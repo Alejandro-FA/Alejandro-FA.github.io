@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 TextTheme createTextTheme(
     BuildContext context, String bodyFont, String displayFont) {
-  TextTheme baseTheme = Theme.of(context).textTheme;
+  final baseTheme = Theme.of(context).textTheme;
 
   return baseTheme.copyWith(
     displayLarge: baseTheme.displayLarge?.copyWith(fontFamily: displayFont),

@@ -20,7 +20,7 @@ class FloatingRail extends StatelessWidget {
     final defaultBackgroundColor = colorScheme.tertiaryContainer;
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       decoration: BoxDecoration(
         color: backgroundColor ?? defaultBackgroundColor.withOpacity(opacity),
         borderRadius: BorderRadius.circular(30),
@@ -29,7 +29,7 @@ class FloatingRail extends StatelessWidget {
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),

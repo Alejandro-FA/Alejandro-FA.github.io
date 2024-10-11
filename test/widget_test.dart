@@ -10,8 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/widgets/base_page.dart';
 
 void main() {
-  testWidgets('ResponsiveAppBar adapts based on screen width',
-      (WidgetTester tester) async {
+  testWidgets('ResponsiveAppBar adapts based on screen width', (tester) async {
     tester.view.devicePixelRatio = 1.0;
     const appTitle = 'My app with a long title';
 

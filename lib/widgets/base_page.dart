@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'home_button.dart';
-import 'floating_rail.dart';
+import 'package:go_router/go_router.dart';
+
 import '../utils.dart';
+import 'floating_rail.dart';
+import 'home_button.dart';
 
 class RouteDestination {
   const RouteDestination({required this.label, required this.icon});
@@ -25,8 +26,8 @@ class SocialMedia {
 
 class BasePage extends StatelessWidget {
   const BasePage({
-    super.key,
     required this.bodySlivers,
+    super.key,
     this.socialMediaRail = false,
   });
 
@@ -73,17 +74,17 @@ class BasePage extends StatelessWidget {
               textStyle: textTheme.headlineLarge?.copyWith(
                 color: theme.colorScheme.onPrimary,
               ),
-              padding: const EdgeInsets.all(0),
+              padding: EdgeInsets.zero,
               iconSize: 40,
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
-          ...menuRoutes.map((route) {
-            return NavigationDrawerDestination(
+          ...menuRoutes.map(
+            (route) => NavigationDrawerDestination(
               label: Text(route.label, style: textTheme.titleMedium),
               icon: route.icon,
-            );
-          }),
+            ),
+          ),
           const Divider(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -98,7 +99,7 @@ class BasePage extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                  onPressed: () => openWebpage(media.url),
+                  onPressed: () async => openWebpage(media.url),
                   padding: const EdgeInsets.all(10),
                 ),
               ),
@@ -150,7 +151,7 @@ class BasePage extends StatelessWidget {
                           BlendMode.srcIn,
                         ),
                       ),
-                      onPressed: () => openWebpage(media.url),
+                      onPressed: () async => openWebpage(media.url),
                       padding: const EdgeInsets.all(10),
                     ),
                   ),
@@ -166,25 +167,25 @@ class BasePage extends StatelessWidget {
   List<Widget> _buildActions(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final actions = menuRoutes.map((route) {
-      return TextButton(
-        style: TextButton.styleFrom(
-          textStyle: textTheme.titleMedium?.copyWith(color: null),
-        ),
-        onPressed: () => route.go(context),
-        child: Text(route.label),
-      );
-    }).toList();
+    final actions = menuRoutes
+        .map(
+          (route) => TextButton(
+            style: TextButton.styleFrom(
+              textStyle: textTheme.titleMedium?.copyWith(color: null),
+            ),
+            onPressed: () => route.go(context),
+            child: Text(route.label),
+          ),
+        )
+        .toList();
 
     final drawerButton = Builder(
-      builder: (BuildContext context) {
-        return IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        );
-      },
+      builder: (context) => IconButton(
+        icon: const Icon(Icons.menu),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
+      ),
     );
 
     return MaterialWindowSizeClass.of(context) >=

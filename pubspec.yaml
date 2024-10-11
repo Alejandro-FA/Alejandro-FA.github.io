@@ -31,26 +31,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.10+1
   flutter_web_plugins:
     sdk: flutter
   go_router: ^14.3.0
-  flutter_svg: ^2.0.10+1
   url_launcher: ^6.3.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
+  dhttpd:
+    git:
+      url: https://github.com/Alejandro-FA/dhttpd.git
+      ref: c90b579b74a86174dbfce10e14362756aaf0a7a9
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-  dhttpd:
-    git:
-      url: https://github.com/Alejandro-FA/dhttpd.git
-      ref: c90b579b74a86174dbfce10e14362756aaf0a7a9
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
