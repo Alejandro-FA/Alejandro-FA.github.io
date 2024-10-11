@@ -1,4 +1,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://alejandrofernandez.pages.dev/sitemap.xml
+# Dynamically replaced with the `generate_sitemap.ts` script
+Sitemap: {{sitemap}}

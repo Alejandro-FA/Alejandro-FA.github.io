@@ -157,6 +157,18 @@ function pageUrl(baseUrl: string, pageFile: string): string {
 }
 
 /**
+ * Replaces a template variable in a string with the provided value.
+ *
+ * @param {string} string - The string to replace the template variable in.
+ * @param {string} name - The name of the template variable.
+ * @param {string} value - The value to replace the template variable with.
+ */
+function replaceTemplate(string: string, name: string, value: string): string {
+  const regex = new RegExp(`{{ *${name} *}}`, "g");
+  return string.replace(regex, value);
+}
+
+/**
  * Create a sitemap URL entry for a page.
  *
  * @param {ProgramOptions} options - The program options.
@@ -242,11 +254,31 @@ function generateSitemap(options: ProgramOptions): void {
   writeSitemap(sitemap, options.output);
 }
 
+/**
+ * Updates the robots.txt file with the sitemap URL.
+ *
+ * @param {string} robotsPath - The path to the robots.txt file.
+ * @param {string} sitemapUrl - The sitemap URL to be added to the robots.txt file.
+ */
+function updateRobotsTxt(robotsPath: string, sitemapUrl: string): void {
+  if (!fs.existsSync(robotsPath)) {
+    console.log(`${robotsPath} not found. Skipping update of sitemap field.`);
+    return;
+  }
+  const content = fs.readFileSync(robotsPath, "utf-8");
+  const newContent = replaceTemplate(content, "sitemap", sitemapUrl);
+  fs.writeFileSync(robotsPath, newContent);
+}
+
 function main(): void {
   const options = ProgramOptions.parse();
   if (!options.update || !fs.existsSync(options.output))
     generateSitemap(options);
   else updateSitemap(options);
+
+  const robotsPath = path.join(path.dirname(options.output), "robots.txt");
+  const sitemapUrl = `${options.baseUrl}/${path.basename(options.output)}`;
+  updateRobotsTxt(robotsPath, sitemapUrl);
 }
 
 main();

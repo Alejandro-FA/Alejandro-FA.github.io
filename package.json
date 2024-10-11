@@ -4,12 +4,11 @@
   "description": "Portfolio of Alejandro Fernández Alburquerque.",
   "config": {
     "port": 8080,
-    "headers": "Cross-Origin-Embedder-Policy=credentialless;Cross-Origin-Opener-Policy=same-origin",
     "url": "https://alejandrofernandez.dev"
   },
   "scripts": {
     "setup:ci": "npm ci --omit=dev && flutter pub get",
-    "setup:dev": "npm ci --include=dev && flutter pub get && flutter pub global activate dhttpd",
+    "setup:dev": "npm ci --include=dev && flutter pub get",
     "upgrade-deps:npm": "npm update --include=dev --save=true",
     "upgrade-deps:pub": "flutter pub upgrade --tighten --major-versions",
     "upgrade-deps": "npm run upgrade-deps:npm && npm run upgrade-deps:pub",
@@ -24,7 +23,7 @@
     "postbuild:wasm": "npm run generate-sitemap -- -o build/web/sitemap.xml",
     "postbuild:html": "npm run postbuild:wasm",
     "preserve:release": "npm run build",
-    "serve:release": "flutter pub global run dhttpd --port ${npm_package_config_port} --path build/web/ --headers=${npm_package_config_headers}",
+    "serve:release": "dart run dhttpd --port ${npm_package_config_port} --path build/web/ --headersfile=build/web/_headers",
     "serve": "flutter run -d chrome",
     "predeploy": "npm run build",
     "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
@@ -44,7 +43,7 @@
   "dependencies": {
     "fast-xml-parser": "^4.5.0",
     "tsx": "^4.19.1",
-    "wrangler": "^3.80.2"
+    "wrangler": "^3.80.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",

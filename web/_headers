@@ -4,22 +4,17 @@
     Cross-Origin-Embedder-Policy: credentialless
     Cross-Origin-Opener-Policy: same-origin
 
+# Cache for 30 days
 /icons/*
-    Cache-Control: public, max-age=31536000
+    Cache-Control: public, max-age=2592000
 
 /favicon.png
-    Cache-Control: public, max-age=31536000
+    Cache-Control: public, max-age=2592000
 
 /assets/*
     Cache-Control: public, max-age=2592000, must-revalidate
 
 /canvaskit/*
-    Cache-Control: public, max-age=2592000, must-revalidate
-
-/main.dart.mjs
-    Cache-Control: public, max-age=2592000, must-revalidate
-
-/flutter_bootstrap.js
     Cache-Control: public, max-age=2592000, must-revalidate
 
 /manifest.json
