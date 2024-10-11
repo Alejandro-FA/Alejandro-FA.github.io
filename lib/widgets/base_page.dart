@@ -62,8 +62,10 @@ class BasePage extends StatelessWidget {
 
     return Scaffold(
       drawer: NavigationDrawer(
-        onDestinationSelected: (selectedIndex) =>
-            menuRoutes[selectedIndex].go(context),
+        onDestinationSelected: (selectedIndex) => {
+          Navigator.of(context).pop(),
+          menuRoutes[selectedIndex].go(context)
+        },
         selectedIndex: null,
         children: [
           DrawerHeader(
@@ -167,17 +169,15 @@ class BasePage extends StatelessWidget {
   List<Widget> _buildActions(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final actions = menuRoutes
-        .map(
-          (route) => TextButton(
-            style: TextButton.styleFrom(
-              textStyle: textTheme.titleMedium?.copyWith(color: null),
-            ),
-            onPressed: () => route.go(context),
-            child: Text(route.label),
-          ),
-        )
-        .toList();
+    final actions = menuRoutes.map(
+      (route) => TextButton(
+        style: TextButton.styleFrom(
+          textStyle: textTheme.titleMedium?.copyWith(color: null),
+        ),
+        onPressed: () => route.go(context),
+        child: Text(route.label),
+      ),
+    );
 
     final drawerButton = Builder(
       builder: (context) => IconButton(
@@ -190,7 +190,7 @@ class BasePage extends StatelessWidget {
 
     return MaterialWindowSizeClass.of(context) >=
             MaterialWindowSizeClass.expanded
-        ? actions
+        ? actions.toList()
         : [drawerButton];
   }
 }

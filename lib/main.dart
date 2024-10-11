@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp.router(
       title: 'Alejandro Fernández Alburquerque',
-      routerConfig: buildRouter(color: theme.light().primaryColor),
+      routerConfig: router,
       theme: theme.light(),
       darkTheme: theme.dark(),
       highContrastTheme: theme.lightHighContrast(),
