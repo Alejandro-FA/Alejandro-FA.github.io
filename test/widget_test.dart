@@ -18,7 +18,7 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: BasePage(
-          bodySlivers: [
+          slivers: [
             SliverFillRemaining(
               hasScrollBody: true,
               child: Center(

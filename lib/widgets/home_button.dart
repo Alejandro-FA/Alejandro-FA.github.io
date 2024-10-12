@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
+
+import '../utils.dart';
 
 class HomeButton extends StatelessWidget {
-  const HomeButton(
-      {super.key, this.textStyle, this.padding, this.iconSize, this.onPressed});
+  const HomeButton({super.key, this.textStyle, this.padding, this.iconSize});
 
   final TextStyle? textStyle;
   final EdgeInsetsGeometry? padding;
   final double? iconSize;
-
-  /// A callback function that is called when the button is pressed.
-  /// This function is executed in addition to navigating to the home page.
-  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) => TextButton.icon(
@@ -28,7 +24,7 @@ class HomeButton extends StatelessWidget {
           height: iconSize,
           width: iconSize,
         ),
-        onPressed: () => {onPressed?.call(), GoRouter.of(context).go('/')},
+        onPressed: () => context.navigateTo('/'),
         label: Text(
           'Alejandro',
           style: textStyle,

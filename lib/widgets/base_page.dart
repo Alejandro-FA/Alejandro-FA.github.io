@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../utils.dart';
 import 'floating_rail.dart';
 import 'home_button.dart';
 
-class RouteDestination {
-  const RouteDestination({required this.label, required this.icon});
+class MenuRoute {
+  const MenuRoute({
+    required this.name,
+    required this.path,
+    required this.icon,
+  });
 
-  final String label;
+  final String name;
+  final String path;
   final Widget icon;
-
-  void go(BuildContext context) {
-    GoRouter.of(context).goNamed(label);
-  }
 }
 
 class SocialMedia {
@@ -26,18 +26,31 @@ class SocialMedia {
 
 class BasePage extends StatelessWidget {
   const BasePage({
-    required this.bodySlivers,
+    required this.slivers,
     super.key,
+    this.title = 'Alejandro Fernández Alburquerque',
     this.socialMediaRail = false,
   });
 
-  static const menuRoutes = [
-    RouteDestination(label: 'Research', icon: Icon(Icons.article)),
-    RouteDestination(label: 'Projects', icon: Icon(Icons.terminal)),
-    RouteDestination(label: 'Curriculum Vitae', icon: Icon(Icons.school)),
+  final menuRoutes = const [
+    MenuRoute(
+      name: 'Research',
+      path: '/research',
+      icon: Icon(Icons.article),
+    ),
+    MenuRoute(
+      name: 'Projects',
+      path: '/projects',
+      icon: Icon(Icons.terminal),
+    ),
+    MenuRoute(
+      name: 'Curriculum Vitae',
+      path: '/cv',
+      icon: Icon(Icons.school),
+    ),
   ];
 
-  static const socialMedia = [
+  final socialMedia = const [
     SocialMedia(
       url: 'https://github.com/Alejandro-FA',
       iconPath: 'assets/icons/github.svg',
@@ -52,145 +65,179 @@ class BasePage extends StatelessWidget {
     ),
   ];
 
-  final List<Widget> bodySlivers;
+  final List<Widget> slivers;
+  final String title;
   final bool socialMediaRail;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Title(
+      title: title,
+      color: theme.colorScheme.primary,
+      child: Scaffold(
+        drawer: _Drawer(menuRoutes: menuRoutes, socialMedia: socialMedia),
+        body: Stack(
+          alignment: MaterialWindowSizeClass.of(context) >=
+                  MaterialWindowSizeClass.expanded
+              ? AlignmentDirectional.centerEnd
+              : AlignmentDirectional.bottomCenter,
+          children: [
+            CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                _TopBar(menuRoutes: menuRoutes),
+                ...slivers,
+              ],
+            ),
+            if (socialMediaRail)
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: _SocialMediaRail(socialMedia: socialMedia),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  const _TopBar({required this.menuRoutes});
+
+  final List<MenuRoute> menuRoutes;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return SliverAppBar(
+      pinned: false,
+      floating: true,
+      snap: false,
+      centerTitle: false,
+      forceMaterialTransparency: true,
+      automaticallyImplyLeading: false,
+      title: HomeButton(
+        textStyle: textTheme.titleLarge,
+      ),
+      titleSpacing: 0,
+      actions: [
+        if (_isWideScreen(context))
+          ...menuRoutes.map(
+            (route) => TextButton(
+              style: TextButton.styleFrom(
+                textStyle: textTheme.titleMedium?.copyWith(color: null),
+              ),
+              onPressed: () => context.navigateTo(route.path),
+              child: Text(route.name),
+            ),
+          )
+        else
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+      ],
+    );
+  }
+}
+
+class _Drawer extends StatelessWidget {
+  const _Drawer({
+    required this.menuRoutes,
+    required this.socialMedia,
+  });
+
+  final List<MenuRoute> menuRoutes;
+  final List<SocialMedia> socialMedia;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return Scaffold(
-      drawer: NavigationDrawer(
-        onDestinationSelected: (selectedIndex) => {
-          Navigator.of(context).pop(),
-          menuRoutes[selectedIndex].go(context)
-        },
-        selectedIndex: null,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: HomeButton(
-              textStyle: textTheme.headlineLarge?.copyWith(
-                color: theme.colorScheme.onPrimary,
-              ),
-              padding: EdgeInsets.zero,
-              iconSize: 40,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+    return NavigationDrawer(
+      onDestinationSelected: (selectedIndex) =>
+          context.navigateTo(menuRoutes[selectedIndex].path),
+      selectedIndex: null,
+      children: [
+        DrawerHeader(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
           ),
-          ...menuRoutes.map(
-            (route) => NavigationDrawerDestination(
-              label: Text(route.label, style: textTheme.titleMedium),
-              icon: route.icon,
+          child: HomeButton(
+            textStyle: textTheme.headlineLarge?.copyWith(
+              color: theme.colorScheme.onPrimary,
             ),
+            padding: EdgeInsets.zero,
+            iconSize: 40,
           ),
-          const Divider(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ...socialMedia.map(
-                (media) => IconButton(
-                  icon: SvgPicture.asset(
-                    media.iconPath,
-                    height: 30,
-                    colorFilter: ColorFilter.mode(
-                      theme.colorScheme.onSurface,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  onPressed: () async => openWebpage(media.url),
-                  padding: const EdgeInsets.all(10),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: Stack(
-        alignment: MaterialWindowSizeClass.of(context) >=
-                MaterialWindowSizeClass.expanded
-            ? AlignmentDirectional.centerEnd
-            : AlignmentDirectional.bottomCenter,
-        children: [
-          CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                pinned: false,
-                floating: true,
-                snap: false,
-                centerTitle: false,
-                forceMaterialTransparency: true,
-                automaticallyImplyLeading: false,
-                title: HomeButton(
-                  textStyle: textTheme.titleLarge,
-                ),
-                titleSpacing: 0,
-                actions: _buildActions(context),
-              ),
-              ...bodySlivers,
-            ],
-          ),
-          if (socialMediaRail)
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: FloatingRail(
-                axis: MaterialWindowSizeClass.of(context) >=
-                        MaterialWindowSizeClass.expanded
-                    ? Axis.vertical
-                    : Axis.horizontal,
-                children: [
-                  ...socialMedia.map(
-                    (media) => IconButton(
-                      icon: SvgPicture.asset(
-                        media.iconPath,
-                        height: 30,
-                        colorFilter: ColorFilter.mode(
-                          theme.colorScheme.onTertiaryContainer,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      onPressed: () async => openWebpage(media.url),
-                      padding: const EdgeInsets.all(10),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  /// Builds the actions menu for the app bar.
-  List<Widget> _buildActions(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    final actions = menuRoutes.map(
-      (route) => TextButton(
-        style: TextButton.styleFrom(
-          textStyle: textTheme.titleMedium?.copyWith(color: null),
         ),
-        onPressed: () => route.go(context),
-        child: Text(route.label),
-      ),
+        ...menuRoutes.map(
+          (route) => NavigationDrawerDestination(
+            label: Text(route.name, style: textTheme.titleMedium),
+            icon: route.icon,
+          ),
+        ),
+        const Divider(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ...socialMedia.map(
+              (media) => IconButton(
+                icon: SvgPicture.asset(
+                  media.iconPath,
+                  height: 30,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.onSurface,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                onPressed: () async => openWebpage(media.url),
+                padding: const EdgeInsets.all(10),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
-
-    final drawerButton = Builder(
-      builder: (context) => IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: () {
-          Scaffold.of(context).openDrawer();
-        },
-      ),
-    );
-
-    return MaterialWindowSizeClass.of(context) >=
-            MaterialWindowSizeClass.expanded
-        ? actions.toList()
-        : [drawerButton];
   }
 }
+
+class _SocialMediaRail extends StatelessWidget {
+  const _SocialMediaRail({required this.socialMedia});
+
+  final List<SocialMedia> socialMedia;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return FloatingRail(
+      axis: _isWideScreen(context) ? Axis.vertical : Axis.horizontal,
+      children: [
+        ...socialMedia.map(
+          (media) => IconButton(
+            icon: SvgPicture.asset(
+              media.iconPath,
+              height: 30,
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.onTertiaryContainer,
+                BlendMode.srcIn,
+              ),
+            ),
+            onPressed: () async => openWebpage(media.url),
+            padding: const EdgeInsets.all(10),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+bool _isWideScreen(BuildContext context) =>
+    MaterialWindowSizeClass.of(context) >= MaterialWindowSizeClass.expanded;

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,5 +55,14 @@ Future<void> openWebpage(String url) async {
   final uri = Uri.parse(url);
   if (!await launchUrl(uri)) {
     throw Exception('Could not launch $uri');
+  }
+}
+
+extension AppNavigation on BuildContext {
+  void navigateTo(String path) {
+    // ignore: discarded_futures
+    AutoRouter.of(this).navigateNamed(path).then(
+          (value) => Scaffold.of(this).closeDrawer(),
+        );
   }
 }

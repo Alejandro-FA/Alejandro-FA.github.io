@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
 import '../widgets/base_page.dart';
 
+@RoutePage()
 class ResearchPage extends StatelessWidget {
   const ResearchPage({super.key});
 
@@ -14,7 +16,8 @@ class ResearchPage extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return BasePage(
-      bodySlivers: [
+      title: 'Research | Alejandro Fernández Alburquerque',
+      slivers: [
         SliverFillRemaining(
           hasScrollBody: true,
           child: Center(
