@@ -121,6 +121,7 @@ class _TopBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       title: HomeButton(
         textStyle: textTheme.titleLarge,
+        padding: const EdgeInsets.all(16),
       ),
       titleSpacing: 0,
       actions: [
@@ -129,6 +130,7 @@ class _TopBar extends StatelessWidget {
             (route) => TextButton(
               style: TextButton.styleFrom(
                 textStyle: textTheme.titleMedium?.copyWith(color: null),
+                padding: const EdgeInsets.all(16),
               ),
               onPressed: () => context.navigateTo(route.path),
               child: Text(route.name),
@@ -237,6 +239,7 @@ class _SocialMediaRail extends StatelessWidget {
               ),
             ),
             hoverColor: theme.colorScheme.tertiaryFixedDim,
+            focusColor: theme.colorScheme.tertiaryFixedDim,
             onPressed: () async => openWebpage(media.url),
             padding: const EdgeInsets.all(10),
           ),

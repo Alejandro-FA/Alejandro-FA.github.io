@@ -13,11 +13,13 @@ class HomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => TextButton.icon(
         style: TextButton.styleFrom(
-          overlayColor: Colors.transparent,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-          ),
           padding: padding,
+        ).copyWith(
+          overlayColor: WidgetStateProperty.resolveWith(
+            (states) => states.contains(WidgetState.focused)
+                ? null
+                : Colors.transparent,
+          ),
         ),
         icon: SvgPicture.asset(
           'assets/icons/portfolio-icon.svg',
