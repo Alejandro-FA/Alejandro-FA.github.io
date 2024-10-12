@@ -17,10 +17,14 @@ class HomePage extends StatelessWidget {
       slivers: [
         SliverFillRemaining(
           hasScrollBody: true,
-          child: Center(
-            child: Text(
-              'Home | Work in progress',
-              style: textTheme.displayLarge,
+          child: Padding(
+            padding: const EdgeInsets.all(100),
+            child: Center(
+              child: Text(
+                'Home | Work in progress',
+                style: textTheme.displayLarge,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -29,8 +33,10 @@ class HomePage extends StatelessWidget {
           child: Center(
             child: Text(
               'Home | Work in progress',
-              style: textTheme.bodyLarge
-                  ?.copyWith(fontVariations: const [FontVariation.weight(100)]),
+              style: textTheme.bodyLarge?.copyWith(
+                fontVariations: const [FontVariation.weight(100)],
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ),

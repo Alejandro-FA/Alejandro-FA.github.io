@@ -209,9 +209,13 @@ class _Drawer extends StatelessWidget {
 }
 
 class _SocialMediaRail extends StatelessWidget {
-  const _SocialMediaRail({required this.socialMedia});
+  _SocialMediaRail({required this.socialMedia})
+      : icons = socialMedia
+            .map((media) => SvgPicture.asset(media.iconPath, height: 30))
+            .toList();
 
   final List<SocialMedia> socialMedia;
+  final List<SvgPicture> icons;
 
   @override
   Widget build(BuildContext context) {
@@ -219,6 +223,8 @@ class _SocialMediaRail extends StatelessWidget {
 
     return FloatingRail(
       axis: _isWideScreen(context) ? Axis.vertical : Axis.horizontal,
+      backgroundColor: theme.colorScheme.tertiaryContainer,
+      opacity: 0.9,
       children: [
         ...socialMedia.map(
           (media) => IconButton(
@@ -230,6 +236,7 @@ class _SocialMediaRail extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
+            hoverColor: theme.colorScheme.tertiaryFixedDim,
             onPressed: () async => openWebpage(media.url),
             padding: const EdgeInsets.all(10),
           ),

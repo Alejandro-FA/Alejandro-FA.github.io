@@ -16,10 +16,14 @@ class CVPage extends StatelessWidget {
       slivers: [
         SliverFillRemaining(
           hasScrollBody: true,
-          child: Center(
-            child: Text(
-              'Curriculum Vitae | Work in progress',
-              style: textTheme.displaySmall,
+          child: Padding(
+            padding: const EdgeInsets.all(100),
+            child: Center(
+              child: Text(
+                'Curriculum Vitae | Work in progress',
+                style: textTheme.displaySmall,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),

@@ -20,28 +20,32 @@ class ResearchPage extends StatelessWidget {
       slivers: [
         SliverFillRemaining(
           hasScrollBody: true,
-          child: Center(
-            child: RichText(
-              text: TextSpan(
-                style: textTheme.displaySmall,
-                children: [
-                  const TextSpan(
-                    text: 'Work in progress. Take a look at my ',
-                  ),
-                  TextSpan(
-                    text: 'ORCID profile',
-                    style: TextStyle(
-                      color: theme.colorScheme.tertiary,
-                      decoration: TextDecoration.underline,
-                      decorationColor: theme.colorScheme.tertiary,
+          child: Padding(
+            padding: const EdgeInsets.all(100),
+            child: Center(
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: textTheme.displaySmall,
+                  children: [
+                    const TextSpan(
+                      text: 'Work in progress. Take a look at my ',
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () async => openWebpage(orcidUrl),
-                  ),
-                  const TextSpan(
-                    text: ' in the meantime.',
-                  ),
-                ],
+                    TextSpan(
+                      text: 'ORCID profile',
+                      style: TextStyle(
+                        color: theme.colorScheme.tertiary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: theme.colorScheme.tertiary,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async => openWebpage(orcidUrl),
+                    ),
+                    const TextSpan(
+                      text: ' in the meantime.',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
