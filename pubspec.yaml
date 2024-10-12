@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_route: ^9.2.2
-  build_runner:
+  build_runner: ^2.4.13
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.10+1

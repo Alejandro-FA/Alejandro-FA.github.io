@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Portfolio of Alejandro Fernández Alburquerque.",
   "config": {
     "port": 8080,
@@ -20,7 +20,7 @@
     "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build": "npm run build:${BUILD_RENDERER:-html}",
-    "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml",
+    "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify",
     "postbuild:wasm": "npm run postbuild:html",
     "preserve:release": "npm run build",
     "serve:release": "dart run dhttpd --port ${npm_package_config_port} --path build/web/ --headersfile=build/web/_headers",
@@ -29,7 +29,7 @@
     "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
     "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}",
     "generate-routes": "dart run build_runner build",
-    "minify": "esbuild build/web/main.dart.js --minify --tree-shaking=true --outfile=build/web/main.dart.js"
+    "minify": "esbuild build/web/*.js --outdir=build/web/ --minify --format=esm --tree-shaking=true --allow-overwrite"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "esbuild": "^0.24.0",
     "fast-xml-parser": "^4.5.0",
     "tsx": "^4.19.1",
-    "wrangler": "^3.80.3"
+    "wrangler": "^3.80.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",
