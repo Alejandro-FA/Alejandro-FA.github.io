@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             child: Center(
               child: Text(
                 'Home | Work in progress',
-                style: textTheme.displayLarge,
+                style: textTheme.displaySmall,
                 textAlign: TextAlign.center,
               ),
             ),
