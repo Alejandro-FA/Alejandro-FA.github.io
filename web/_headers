@@ -3,19 +3,3 @@
     Content-Security-Policy: script-src 'sha256-jRFbZPGxmdoW0/Eufbok8i1mRwc8cgBguB60B/V1YeU=' 'strict-dynamic' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'self';
     Cross-Origin-Embedder-Policy: credentialless
     Cross-Origin-Opener-Policy: same-origin
-
-# Cache for 30 days
-/icons/*
-    Cache-Control: public, max-age=2592000
-
-/favicon.png
-    Cache-Control: public, max-age=2592000
-
-/assets/*
-    Cache-Control: public, max-age=2592000, must-revalidate
-
-/canvaskit/*
-    Cache-Control: public, max-age=2592000, must-revalidate
-
-/manifest.json
-    Cache-Control: public, max-age=2592000, must-revalidate

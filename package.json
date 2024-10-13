@@ -20,8 +20,8 @@
     "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build": "npm run build:${BUILD_RENDERER:-html}",
-    "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify",
-    "postbuild:wasm": "npm run postbuild:html",
+    "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify:js",
+    "postbuild:wasm": "npm run postbuild:html && npm run minify:mjs",
     "preserve:release": "npm run build",
     "serve:release": "dart run dhttpd --port ${npm_package_config_port} --path build/web/ --headersfile=build/web/_headers",
     "serve": "flutter run -d chrome",
@@ -29,7 +29,8 @@
     "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
     "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}",
     "generate-routes": "dart run build_runner build",
-    "minify": "esbuild build/web/*.js --outdir=build/web/ --minify --format=esm --tree-shaking=true --allow-overwrite"
+    "minify:js": "esbuild 'build/web/**/*.js' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite",
+    "minify:mjs": "esbuild 'build/web/**/*.mjs' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite --out-extension:.js=.mjs"
   },
   "repository": {
     "type": "git",

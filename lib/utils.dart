@@ -53,6 +53,7 @@ enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
 
 Future<void> openWebpage(String url) async {
   final uri = Uri.parse(url);
+  assert(uri.scheme == 'https', 'URL must be secure');
   if (!await launchUrl(uri)) {
     throw Exception('Could not launch $uri');
   }
