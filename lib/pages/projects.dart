@@ -8,12 +8,13 @@ import '../widgets/base_page.dart';
 @RoutePage()
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
+  static const githubUrl = 'https://github.com/Alejandro-FA';
 
   @override
   Widget build(BuildContext context) {
-    const githubUrl = 'https://github.com/Alejandro-FA';
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return BasePage(
       title: 'Projects | Alejandro Fernández Alburquerque',
@@ -21,7 +22,7 @@ class ProjectsPage extends StatelessWidget {
         SliverFillRemaining(
           hasScrollBody: true,
           child: Padding(
-            padding: const EdgeInsets.all(100),
+            padding: EdgeInsets.all(screenWidth * 0.1),
             child: Center(
               child: RichText(
                 textAlign: TextAlign.center,

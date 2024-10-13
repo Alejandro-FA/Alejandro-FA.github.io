@@ -8,12 +8,13 @@ import '../widgets/base_page.dart';
 @RoutePage()
 class ResearchPage extends StatelessWidget {
   const ResearchPage({super.key});
+  static const orcidUrl = 'https://orcid.org/0009-0009-0884-7015';
 
   @override
   Widget build(BuildContext context) {
-    const orcidUrl = 'https://orcid.org/0009-0009-0884-7015';
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return BasePage(
       title: 'Research | Alejandro Fernández Alburquerque',
@@ -21,7 +22,7 @@ class ResearchPage extends StatelessWidget {
         SliverFillRemaining(
           hasScrollBody: true,
           child: Padding(
-            padding: const EdgeInsets.all(100),
+            padding: EdgeInsets.all(screenWidth * 0.1),
             child: Center(
               child: RichText(
                 textAlign: TextAlign.center,

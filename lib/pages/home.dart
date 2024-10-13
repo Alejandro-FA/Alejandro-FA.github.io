@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return BasePage(
       title: 'Home | Alejandro Fernández Alburquerque',
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
         SliverFillRemaining(
           hasScrollBody: true,
           child: Padding(
-            padding: const EdgeInsets.all(100),
+            padding: EdgeInsets.all(screenWidth * 0.1),
             child: Center(
               child: Text(
                 'Home | Work in progress',
