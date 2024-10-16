@@ -30,7 +30,13 @@ class BasePage extends StatelessWidget {
     super.key,
     this.title = 'Alejandro Fernández Alburquerque',
     this.socialMediaRail = false,
+    this.floatingActionButton,
   });
+
+  final List<Widget> slivers;
+  final String title;
+  final bool socialMediaRail;
+  final Widget? floatingActionButton;
 
   final menuRoutes = const [
     MenuRoute(
@@ -65,10 +71,6 @@ class BasePage extends StatelessWidget {
     ),
   ];
 
-  final List<Widget> slivers;
-  final String title;
-  final bool socialMediaRail;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -77,6 +79,7 @@ class BasePage extends StatelessWidget {
       title: title,
       color: theme.colorScheme.primary,
       child: Scaffold(
+        floatingActionButton: floatingActionButton,
         drawer: _Drawer(menuRoutes: menuRoutes, socialMedia: socialMedia),
         body: Stack(
           alignment: MaterialWindowSizeClass.of(context) >=
