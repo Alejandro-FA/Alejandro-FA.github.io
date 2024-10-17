@@ -23,10 +23,10 @@
     "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify:js",
     "postbuild:wasm": "npm run postbuild:html && npm run minify:mjs",
     "preserve:release": "npm run build",
-    "serve:release": "dart run dhttpd --port ${npm_package_config_port} --path build/web/ --headersfile=build/web/_headers",
+    "serve:release": "wrangler pages dev build/web/ --port=${npm_package_config_port}",
     "serve": "flutter run -d chrome",
     "predeploy": "npm run build",
-    "deploy": "wrangler pages deploy build/web/ --branch=${DEPLOY_BRANCH} --project-name=${npm_package_name}",
+    "deploy": "wrangler pages deploy --branch=${DEPLOY_BRANCH}",
     "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}",
     "generate-routes": "dart run build_runner build",
     "minify:js": "esbuild 'build/web/**/*.js' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite",
@@ -47,19 +47,19 @@
     "esbuild": "^0.24.0",
     "fast-xml-parser": "^4.5.0",
     "tsx": "^4.19.1",
-    "wrangler": "^3.80.4"
+    "wrangler": "^3.80.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",
     "@tsconfig/node-lts": "^20.1.3",
     "@tsconfig/strictest": "^2.0.5",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.7.6",
     "cheerio": "^1.0.0",
     "eslint": "^9.12.0",
     "shellcheck": "^3.0.0",
     "typescript": "^5.6.3",
-    "typescript-eslint": "^8.8.1"
+    "typescript-eslint": "^8.9.0"
   },
   "engines": {
     "node": "^20.18.0"

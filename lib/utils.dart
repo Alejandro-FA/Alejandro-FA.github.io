@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,9 +53,16 @@ enum MaterialWindowSizeClass implements Comparable<MaterialWindowSizeClass> {
   bool operator >=(MaterialWindowSizeClass other) => minDP >= other.minDP;
 }
 
-Future<void> openWebpage(String url) async {
+void openWebpage(String url) {
   final uri = Uri.parse(url);
   assert(uri.scheme == 'https', 'URL must be secure');
+  unawaited(_openUrl(uri).catchError(
+    (Object error) => throw error as Exception,
+    test: (error) => error is Exception,
+  ));
+}
+
+Future<void> _openUrl(Uri uri) async {
   if (!await launchUrl(uri)) {
     throw Exception('Could not launch $uri');
   }

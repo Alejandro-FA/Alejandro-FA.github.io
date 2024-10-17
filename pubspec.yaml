@@ -36,19 +36,12 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_web_plugins:
     sdk: flutter
+  path: ^1.9.0
   url_launcher: ^6.3.1
+  web: ^1.1.0
 
 dev_dependencies:
   auto_route_generator: ^9.0.0
-  dhttpd:
-    git:
-      url: https://github.com/Alejandro-FA/dhttpd.git
-      ref: c90b579b74a86174dbfce10e14362756aaf0a7a9
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter

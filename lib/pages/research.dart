@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../utils.dart';
+import '../utils.dart' show openWebpage;
 import '../widgets/base_page.dart';
 
 @RoutePage()
@@ -40,7 +40,7 @@ class ResearchPage extends StatelessWidget {
                         decorationColor: theme.colorScheme.tertiary,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () async => openWebpage(orcidUrl),
+                        ..onTap = () => openWebpage(orcidUrl),
                     ),
                     const TextSpan(
                       text: ' in the meantime.',

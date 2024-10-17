@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../web_utils.dart' show downloadFile;
 import '../widgets/base_page.dart';
 import '../widgets/timeline.dart';
 
@@ -19,7 +20,7 @@ class CVPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Download CV', style: textTheme.titleMedium),
         tooltip: 'Download CV',
-        onPressed: () => {},
+        onPressed: () => downloadFile('/r2/alejandro_fernandez_cv-en.pdf'),
         icon: const Icon(Icons.download),
       ),
       slivers: [
