@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../utils.dart' show MaterialWindowSizeClass;
+import '../utils.dart' show MaterialWindowClass;
 
 abstract class TimelineEvent {
   Widget buildLeft(BuildContext context);
@@ -32,7 +32,7 @@ class Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      MaterialWindowSizeClass.of(context) >= MaterialWindowSizeClass.expanded
+      MaterialWindowClass.of(context) >= MaterialWindowClass.expanded
           ? _buildWide(context)
           : _buildNarrow(context);
 

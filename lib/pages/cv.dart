@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../utils.dart' show MaterialWindowSizeClass;
+import '../utils.dart' show MaterialWindowClass;
 import '../web_utils.dart' show downloadFile;
 import '../widgets/base_page.dart';
 import '../widgets/timeline.dart';
@@ -18,8 +18,8 @@ class CVPage extends StatelessWidget {
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
     final double padding = max(
-      50,
-      (screenWidth - MaterialWindowSizeClass.large.minDP) / 2,
+      MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 25 : 50,
+      (screenWidth - MaterialWindowClass.large.minDP) / 2,
     );
 
     return BasePage(
@@ -174,15 +174,17 @@ class MyTimelineEvent implements TimelineEvent {
             title,
             style: textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
           ),
-          Text(
-            institution,
-            style: textTheme.titleMedium?.copyWith(color: colorScheme.tertiary),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              institution,
+              style:
+                  textTheme.titleSmall?.copyWith(color: colorScheme.tertiary),
+            ),
           ),
-          if (grade != null || awards != null || description != null)
-            const SizedBox(height: 12),
           if (grade != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
+              padding: const EdgeInsets.only(top: 20),
               child: RichText(
                 text: TextSpan(
                   text: 'Average grade: ',
@@ -201,7 +203,7 @@ class MyTimelineEvent implements TimelineEvent {
             ),
           if (awards != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
+              padding: const EdgeInsets.only(top: 8),
               child: RichText(
                 text: TextSpan(
                   text: 'Awards: ',
@@ -220,7 +222,7 @@ class MyTimelineEvent implements TimelineEvent {
             ),
           if (description != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.only(top: 20),
               child: Text(
                 description!,
                 style: textTheme.bodyLarge?.copyWith(height: 1.5),

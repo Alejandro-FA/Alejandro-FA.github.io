@@ -82,10 +82,10 @@ class BasePage extends StatelessWidget {
         floatingActionButton: floatingActionButton,
         drawer: _Drawer(menuRoutes: menuRoutes, socialMedia: socialMedia),
         body: Stack(
-          alignment: MaterialWindowSizeClass.of(context) >=
-                  MaterialWindowSizeClass.expanded
-              ? AlignmentDirectional.centerEnd
-              : AlignmentDirectional.bottomCenter,
+          alignment:
+              MaterialWindowClass.of(context) >= MaterialWindowClass.expanded
+                  ? AlignmentDirectional.centerEnd
+                  : AlignmentDirectional.bottomCenter,
           children: [
             CustomScrollView(
               physics: const BouncingScrollPhysics(),
@@ -253,4 +253,4 @@ class _SocialMediaRail extends StatelessWidget {
 }
 
 bool _isWideScreen(BuildContext context) =>
-    MaterialWindowSizeClass.of(context) >= MaterialWindowSizeClass.expanded;
+    MaterialWindowClass.of(context) >= MaterialWindowClass.expanded;
