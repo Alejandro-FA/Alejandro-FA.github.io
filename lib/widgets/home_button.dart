@@ -26,7 +26,7 @@ class HomeButton extends StatelessWidget {
           height: iconSize,
           width: iconSize,
         ),
-        onPressed: () => context.navigateTo('/'),
+        onPressed: () => context.goTo('/'),
         label: Text(
           'Alejandro',
           style: textStyle,

@@ -18,6 +18,7 @@ class ProjectsPage extends StatelessWidget {
 
     return BasePage(
       title: 'Projects | Alejandro Fernández Alburquerque',
+      socialMediaRail: true,
       slivers: [
         SliverFillRemaining(
           hasScrollBody: true,

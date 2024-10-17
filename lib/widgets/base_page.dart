@@ -135,7 +135,7 @@ class _TopBar extends StatelessWidget {
                 textStyle: textTheme.titleMedium?.copyWith(color: null),
                 padding: const EdgeInsets.all(16),
               ),
-              onPressed: () => context.navigateTo(route.path),
+              onPressed: () => context.goTo(route.path),
               child: Text(route.name),
             ),
           )
@@ -167,7 +167,7 @@ class _Drawer extends StatelessWidget {
 
     return NavigationDrawer(
       onDestinationSelected: (selectedIndex) =>
-          context.navigateTo(menuRoutes[selectedIndex].path),
+          context.goTo(menuRoutes[selectedIndex].path),
       selectedIndex: null,
       children: [
         DrawerHeader(

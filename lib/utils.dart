@@ -69,7 +69,7 @@ Future<void> _openUrl(Uri uri) async {
 }
 
 extension AppNavigation on BuildContext {
-  void navigateTo(String path) {
+  void goTo(String path) {
     // ignore: discarded_futures
     AutoRouter.of(this).navigateNamed(path).then(
           (value) => Scaffold.of(this).closeDrawer(),

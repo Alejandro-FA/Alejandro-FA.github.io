@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/base_page.dart';
@@ -9,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -21,23 +23,30 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(screenWidth * 0.1),
             child: Center(
-              child: Text(
-                'Home | Work in progress',
-                style: textTheme.displaySmall,
+              child: RichText(
                 textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: textTheme.displaySmall,
+                  children: [
+                    const TextSpan(
+                      text: 'Work in progress. Take a look at my ',
+                    ),
+                    TextSpan(
+                      text: 'Curriculum Vitae',
+                      style: TextStyle(
+                        color: colorScheme.secondary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: colorScheme.secondary,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async => context.navigateNamedTo('/cv'),
+                    ),
+                    const TextSpan(
+                      text: ' in the meantime.',
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-        SliverFillRemaining(
-          hasScrollBody: true,
-          child: Center(
-            child: Text(
-              'Home | Work in progress',
-              style: textTheme.bodyLarge?.copyWith(
-                fontVariations: const [FontVariation.weight(100)],
-              ),
-              textAlign: TextAlign.center,
             ),
           ),
         ),

@@ -18,6 +18,7 @@ class ResearchPage extends StatelessWidget {
 
     return BasePage(
       title: 'Research | Alejandro Fernández Alburquerque',
+      socialMediaRail: true,
       slivers: [
         SliverFillRemaining(
           hasScrollBody: true,

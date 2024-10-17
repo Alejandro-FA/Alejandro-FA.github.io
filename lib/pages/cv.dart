@@ -41,19 +41,33 @@ class CVPage extends StatelessWidget {
                 lineWidth: 3,
                 children: const [
                   MyTimelineEvent(
-                    date: 'Jan 2021',
-                    location: 'New York, NY',
-                    description: 'Started Job at XYZ Corp',
+                    date: 'Sep 2020 - Jul 2024',
+                    location: 'Barcelona, Spain',
+                    title: "Bachelor's degree, Computer Engineering",
+                    institution: 'Universitat Pompeu Fabra',
+                    grade: '9.16/10',
+                    awards: '20 subjects completed with Honours',
+                    description: """
+My four-year academic journey in Physics Engineering led me to discover my passion for computer engineering and programming. I graduated in Computer Engineering in second place, completing 20 subjects with Honours ("Matrícula de Honor" in Spanish). These subjects, including Artificial Intelligence, Cryptography and Security, Object-Oriented Programming, Machine Learning, and Algorithm Design, are a testament to my strong technical skills and academic achievements.
+
+One of the most rewarding aspects of my Bachelor's degree was the opportunity to collaborate on multiple team projects with brilliant colleagues. This experience honed my fundamental skills in collaborative planning and organization, technical communication, and synchronous and asynchronous collaboration in software development.""",
                   ),
                   MyTimelineEvent(
-                    date: 'Jun 2022',
-                    location: 'San Francisco, CA',
-                    description: 'Promoted to Senior Developer',
+                    date: 'Sep 2016 - Jul 2020',
+                    location: 'Barcelona, Spain',
+                    title:
+                        "Bachelor's degree, Physics Engineering (unfinished)",
+                    institution: 'Universitat Politècnica de Catalunya',
+                    description: """
+After completing my Baccalaureate studies with an honorary distinction, I decided to continue my education with a challenging scientific Bachelor's degree, so I chose Engineering Physics. However, amid the COVID-19 pandemic, I discovered my passion for computers and programming, prompting me to switch from Engineering Physics to Computer Engineering. Even though I did not finish my studies, I am deeply appreciative for the learning experience and the brilliant people I met, and for the strong foundation in mathematics and physics that I acquired.""",
                   ),
                   MyTimelineEvent(
-                    date: 'Oct 2023',
-                    location: 'Remote',
-                    description: 'Became a Freelance Developer',
+                    date: 'Sep 2014 - Jun 2016',
+                    location: 'Barcelona, Spain',
+                    title: 'Spanish Baccalaureate, Science',
+                    institution: 'Col·legi Pare Manyanet Les Corts',
+                    grade: '10/10',
+                    awards: 'Baccalaureate completion with honors.',
                   ),
                 ],
               ),
@@ -70,19 +84,15 @@ class CVPage extends StatelessWidget {
                 lineWidth: 3,
                 children: const [
                   MyTimelineEvent(
-                    date: 'Jan 2021',
-                    location: 'New York, NY',
-                    description: 'Started Job at XYZ Corp',
-                  ),
-                  MyTimelineEvent(
-                    date: 'Jun 2022',
-                    location: 'San Francisco, CA',
-                    description: 'Promoted to Senior Developer',
-                  ),
-                  MyTimelineEvent(
-                    date: 'Oct 2023',
-                    location: 'Remote',
-                    description: 'Became a Freelance Developer',
+                    date: 'Jan 2024 - Jun 2024',
+                    location: 'Barcelona, Spain',
+                    title:
+                        'Intern at the Artificial Intelligence and Machine Learning Research Group',
+                    institution: 'Universitat Pompeu Fabra',
+                    description: """
+While interning at the University's AI and ML research group, I developed my Bachelor's thesis, "Parallel Strategies for Best-First Generalized Planning." I also had the opportunity to learn from world-renowned researchers in automated planning.
+
+For more information check my Research page.""",
                   ),
                 ],
               ),
@@ -98,12 +108,20 @@ class MyTimelineEvent implements TimelineEvent {
   const MyTimelineEvent({
     required this.date,
     required this.location,
-    required this.description,
+    required this.title,
+    required this.institution,
+    this.grade,
+    this.awards,
+    this.description,
   });
 
   final String date;
   final String location;
-  final String description;
+  final String title;
+  final String institution;
+  final String? grade;
+  final String? awards;
+  final String? description;
 
   @override
   Widget buildLeft(BuildContext context) {
@@ -144,11 +162,66 @@ class MyTimelineEvent implements TimelineEvent {
         color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        description,
-        style: textTheme.bodyLarge?.copyWith(
-          color: colorScheme.onSurface,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
+          ),
+          Text(
+            institution,
+            style: textTheme.titleMedium?.copyWith(color: colorScheme.tertiary),
+          ),
+          if (grade != null || awards != null || description != null)
+            const SizedBox(height: 12),
+          if (grade != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Average grade: ',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: grade,
+                      style: const TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (awards != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Awards: ',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: awards,
+                      style: const TextStyle(fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (description != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+              child: Text(
+                description!,
+                style: textTheme.bodyMedium,
+              ),
+            ),
+        ],
       ),
     );
   }
