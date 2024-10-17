@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../utils.dart' show MaterialWindowSizeClass;
 import '../web_utils.dart' show downloadFile;
 import '../widgets/base_page.dart';
 import '../widgets/timeline.dart';
@@ -14,6 +17,10 @@ class CVPage extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
+    final double padding = max(
+      50,
+      (screenWidth - MaterialWindowSizeClass.large.minDP) / 2,
+    );
 
     return BasePage(
       title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
@@ -25,7 +32,10 @@ class CVPage extends StatelessWidget {
       ),
       slivers: [
         SliverPadding(
-          padding: EdgeInsets.all(screenWidth * 0.1),
+          padding: EdgeInsets.symmetric(
+            vertical: 50,
+            horizontal: padding,
+          ),
           sliver: SliverList.list(
             children: [
               Padding(
@@ -125,8 +135,6 @@ class MyTimelineEvent implements TimelineEvent {
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           date,
@@ -215,7 +223,8 @@ class MyTimelineEvent implements TimelineEvent {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 description!,
-                style: textTheme.bodyMedium,
+                style: textTheme.bodyLarge?.copyWith(height: 1.5),
+                textAlign: TextAlign.justify,
               ),
             ),
         ],

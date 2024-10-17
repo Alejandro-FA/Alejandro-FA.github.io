@@ -14,7 +14,7 @@ class Timeline extends StatelessWidget {
     super.key,
     this.lineWidth = 2,
     this.leftFlex = 1,
-    this.rightFlex = 4,
+    this.rightFlex = 6,
     this.centerWidth = 60,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.children = const <TimelineEvent>[],
@@ -91,7 +91,10 @@ class Timeline extends StatelessWidget {
             children: [
               Expanded(
                 flex: leftFlex,
-                child: event.buildLeft(context),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: event.buildLeft(context),
+                ),
               ),
               SizedBox(
                 width: centerWidth,
@@ -99,7 +102,10 @@ class Timeline extends StatelessWidget {
               ),
               Expanded(
                 flex: rightFlex,
-                child: event.buildRight(context),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: event.buildRight(context),
+                ),
               ),
             ],
           ),
