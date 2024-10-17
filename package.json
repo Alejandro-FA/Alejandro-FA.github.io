@@ -19,7 +19,7 @@
     "test": "flutter test --no-pub",
     "build:html": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer html",
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
-    "build": "npm run build:${BUILD_RENDERER:-html}",
+    "build": "npm run build:${BUILD_RENDERER:-wasm}",
     "postbuild:html": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify:js",
     "postbuild:wasm": "npm run postbuild:html && npm run minify:mjs",
     "preserve:release": "npm run build",
