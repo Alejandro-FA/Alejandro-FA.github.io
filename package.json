@@ -44,6 +44,8 @@
   },
   "homepage": "https://github.com/Alejandro-FA/Alejandro-FA.github.io#readme",
   "dependencies": {
+    "@tsconfig/node-lts": "^20.1.3",
+    "@tsconfig/strictest": "^2.0.5",
     "esbuild": "^0.24.0",
     "fast-xml-parser": "^4.5.0",
     "tsx": "^4.19.1",
@@ -51,8 +53,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.11.0",
-    "@tsconfig/node-lts": "^20.1.3",
-    "@tsconfig/strictest": "^2.0.5",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.7.6",
     "cheerio": "^1.0.0",

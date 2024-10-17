@@ -30,10 +30,7 @@ class CVPage extends StatelessWidget {
             children: [
               Padding(
                 // Check: https://medium.com/geekculture/dynamically-pinned-list-headers-ee5aa23f1db4
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 0,
-                  vertical: 20,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Text('Education', style: textTheme.displaySmall),
               ),
               Timeline(
@@ -177,7 +174,7 @@ class MyTimelineEvent implements TimelineEvent {
             const SizedBox(height: 12),
           if (grade != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: RichText(
                 text: TextSpan(
                   text: 'Average grade: ',
@@ -196,7 +193,7 @@ class MyTimelineEvent implements TimelineEvent {
             ),
           if (awards != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: RichText(
                 text: TextSpan(
                   text: 'Awards: ',
@@ -215,7 +212,7 @@ class MyTimelineEvent implements TimelineEvent {
             ),
           if (description != null)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 description!,
                 style: textTheme.bodyMedium,

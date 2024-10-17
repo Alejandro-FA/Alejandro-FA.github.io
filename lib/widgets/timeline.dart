@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../utils.dart' show MaterialWindowSizeClass;
+
 abstract class TimelineEvent {
   Widget buildLeft(BuildContext context);
   Widget buildIcon(BuildContext context);
@@ -24,14 +26,17 @@ class Timeline extends StatelessWidget {
   final int rightFlex;
   final double centerWidth;
   final MainAxisAlignment mainAxisAlignment;
-  final EdgeInsetsGeometry eventPadding = const EdgeInsets.symmetric(
-    horizontal: 0,
-    vertical: 8,
-  );
+  final EdgeInsetsGeometry eventPadding =
+      const EdgeInsets.symmetric(vertical: 8);
   final Iterable<TimelineEvent> children;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      MaterialWindowSizeClass.of(context) >= MaterialWindowSizeClass.expanded
+          ? _buildWide(context)
+          : _buildNarrow(context);
+
+  Widget _buildWide(BuildContext context) {
     final xAlignment = 2 * leftFlex / (leftFlex + rightFlex) - 1;
 
     return IntrinsicHeight(
@@ -49,14 +54,35 @@ class Timeline extends StatelessWidget {
           ),
           Column(
             mainAxisAlignment: mainAxisAlignment,
-            children: children.map(buildEvent).toList(),
+            children: children.map(_buildEventWide).toList(),
           ),
         ],
       ),
     );
   }
 
-  Widget buildEvent(TimelineEvent event) => Builder(
+  Widget _buildNarrow(BuildContext context) => IntrinsicHeight(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: CustomPaint(
+                size: Size(centerWidth, double.infinity),
+                painter: TimelineLinePainter(
+                  color: lineColor,
+                  width: lineWidth,
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: mainAxisAlignment,
+              children: children.map(_buildEventNarrow).toList(),
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildEventWide(TimelineEvent event) => Builder(
         builder: (context) => Padding(
           padding: eventPadding,
           child: Row(
@@ -75,6 +101,33 @@ class Timeline extends StatelessWidget {
                 flex: rightFlex,
                 child: event.buildRight(context),
               ),
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildEventNarrow(TimelineEvent event) => Builder(
+        builder: (context) => Padding(
+          padding: eventPadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: centerWidth,
+                      child: event.buildIcon(context),
+                    ),
+                    event.buildLeft(context),
+                  ],
+                ),
+              ),
+              event.buildRight(context),
             ],
           ),
         ),
