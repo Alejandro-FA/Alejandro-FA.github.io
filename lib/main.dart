@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'router.dart';
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
       highContrastTheme: theme.lightHighContrast(),
       highContrastDarkTheme: theme.darkHighContrast(),
       themeMode: ThemeMode.system,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

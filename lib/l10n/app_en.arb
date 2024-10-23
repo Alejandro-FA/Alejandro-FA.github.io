@@ -1,0 +1,6 @@
+{
+  "contentPath": "assets/content/en/",
+  "@contentPath": {
+    "description": "The base path to content files"
+  }
+}
