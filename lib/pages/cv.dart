@@ -111,6 +111,7 @@ For more information check my Research page.""",
   }
 }
 
+// TODO: Change build functions with widgets
 class MyTimelineEvent implements TimelineEvent {
   const MyTimelineEvent({
     required this.date,
@@ -161,75 +162,74 @@ class MyTimelineEvent implements TimelineEvent {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              institution,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
               style:
-                  textTheme.titleSmall?.copyWith(color: colorScheme.tertiary),
+                  textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
             ),
-          ),
-          if (grade != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Average grade: ',
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colorScheme.secondary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: grade,
-                      style: const TextStyle(fontWeight: FontWeight.normal),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          if (awards != null)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Awards: ',
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colorScheme.secondary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: awards,
-                      style: const TextStyle(fontWeight: FontWeight.normal),
+              child: Text(
+                institution,
+                style:
+                    textTheme.titleSmall?.copyWith(color: colorScheme.tertiary),
+              ),
+            ),
+            if (grade != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Average grade: ',
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
+                    children: [
+                      TextSpan(
+                        text: grade,
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          if (description != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Text(
-                description!,
-                style: textTheme.bodyLarge?.copyWith(height: 1.5),
-                textAlign: TextAlign.justify,
+            if (awards != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Awards: ',
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.secondary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: awards,
+                        style: const TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-        ],
+            if (description != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  description!,
+                  style: textTheme.bodyLarge?.copyWith(height: 1.5),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

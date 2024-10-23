@@ -39,12 +39,7 @@ class ResearchPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final basePath = AppLocalizations.of(context).contentPath;
               final filePath = '$basePath${contentFiles[index]}';
-              return Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(16),
-                ),
+              return Card(
                 child: ResearchItem(contentPath: filePath),
               );
             },
@@ -62,14 +57,17 @@ class ResearchItem extends StatelessWidget {
   final Future<String> content;
 
   @override
-  Widget build(BuildContext context) => FutureBuilder(
-        future: content,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MarkdownBody(data: snapshot.data!);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(20),
+        child: FutureBuilder(
+          future: content,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return MarkdownBody(data: snapshot.data!);
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       );
 }
