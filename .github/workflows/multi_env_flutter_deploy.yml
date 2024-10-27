@@ -12,7 +12,7 @@ jobs:
   Wasm:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildRenderer: default
+      buildRenderer: auto
       deploymentBranch: main
     secrets: inherit
 
