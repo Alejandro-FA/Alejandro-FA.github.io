@@ -21,7 +21,7 @@ class SocialMediaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BetterLink(
         uri: Uri.parse(data.url),
-        // target: LinkTarget.blank,
+        target: LinkTarget.blank,
         builder: (context, followLink) => IconButton(
           icon: SvgPicture.asset(
             data.iconPath,
