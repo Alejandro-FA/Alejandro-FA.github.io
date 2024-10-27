@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/link.dart';
@@ -62,7 +63,7 @@ class BetterLink extends StatelessWidget {
       if (!await launchUrl(uri)) throw Exception('Could not launch $uri');
     } else {
       // Respect the behavior of [target].
-      await followLink?.call();
+      return context.navigateNamedTo(uri.toString());
     }
   }
 }

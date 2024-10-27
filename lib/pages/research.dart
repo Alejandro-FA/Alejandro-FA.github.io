@@ -50,6 +50,7 @@ class ResearchPage extends StatelessWidget {
   }
 }
 
+// TODO: wait for content to load before loading page.
 class ResearchItem extends StatelessWidget {
   ResearchItem({required String contentPath, super.key})
       : content = rootBundle.loadString(contentPath);
@@ -64,9 +65,8 @@ class ResearchItem extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return MarkdownBody(data: snapshot.data!);
-            } else {
-              return const Center(child: CircularProgressIndicator());
             }
+            return const SizedBox.shrink();
           },
         ),
       );
