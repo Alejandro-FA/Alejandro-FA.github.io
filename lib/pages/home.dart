@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/base_page.dart';
+import '../widgets/page_scaffold.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return BasePage(
+    return PageScaffold(
       title: 'Home | Alejandro Fernández Alburquerque',
       socialMediaRail: true,
       slivers: [

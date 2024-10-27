@@ -13,7 +13,7 @@
     "upgrade-deps:pub": "flutter pub upgrade --tighten --major-versions",
     "upgrade-deps": "npm run upgrade-deps:npm && npm run upgrade-deps:pub",
     "lint:shell": "shellcheck --enable=all .githooks/*",
-    "lint:dart": "flutter analyze --no-pub",
+    "lint:dart": "flutter analyze --no-pub && dart run custom_lint",
     "lint:ts": "tsc && eslint scripts",
     "lint": "npm run lint:shell && npm run lint:dart && npm run lint:ts",
     "test": "flutter test --no-pub",
@@ -28,9 +28,9 @@
     "predeploy": "npm run build",
     "deploy": "wrangler pages deploy --branch=${DEPLOY_BRANCH}",
     "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}",
-    "generate-routes": "dart run build_runner build",
     "minify:js": "esbuild 'build/web/**/*.js' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite",
-    "minify:mjs": "esbuild 'build/web/**/*.mjs' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite --out-extension:.js=.mjs"
+    "minify:mjs": "esbuild 'build/web/**/*.mjs' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite --out-extension:.js=.mjs",
+    "code-generation": "dart run build_runner build"
   },
   "repository": {
     "type": "git",

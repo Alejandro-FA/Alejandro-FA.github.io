@@ -6,7 +6,6 @@ function authorizeRequest(key) {
 
 export async function onRequestGet(context) {
   const path = new URL(context.request.url).pathname.replace("/r2/", "");
-  console.log(`Path: ${path}`);
 
   if (!authorizeRequest(path)) {
     return new Response(null, { status: 404 });

@@ -17,6 +17,8 @@ analyzer:
     strict-casts: true
     strict-inference: true
     strict-raw-types: true
+  plugins:
+    - custom_lint
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -127,6 +129,5 @@ linter:
     use_string_buffers: true
     use_test_throws_matchers: true
     use_to_and_as_if_applicable: true
-
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

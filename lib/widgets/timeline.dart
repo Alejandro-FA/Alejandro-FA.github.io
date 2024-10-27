@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../utils.dart' show MaterialWindowClass;
+import '../theme/material_window_class.dart';
 
 abstract class TimelineEvent {
   Widget buildLeft(BuildContext context);

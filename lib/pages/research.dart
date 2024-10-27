@@ -6,8 +6,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../utils.dart' show MaterialWindowClass;
-import '../widgets/base_page.dart';
+import '../theme/material_window_class.dart';
+import '../widgets/page_scaffold.dart';
 
 @RoutePage()
 class ResearchPage extends StatelessWidget {
@@ -25,7 +25,7 @@ class ResearchPage extends StatelessWidget {
       (screenWidth - MaterialWindowClass.expanded.minDP) / 2,
     );
 
-    return BasePage(
+    return PageScaffold(
       title: 'Research | Alejandro Fernández Alburquerque',
       socialMediaRail: true,
       slivers: [

@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:portfolio/widgets/base_page.dart';
+import 'package:portfolio/widgets/page_scaffold.dart';
 
 void main() {
   testWidgets('ResponsiveAppBar adapts based on screen width', (tester) async {
@@ -17,7 +17,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       const MaterialApp(
-        home: BasePage(
+        home: PageScaffold(
           slivers: [
             SliverFillRemaining(
               hasScrollBody: true,

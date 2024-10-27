@@ -2,18 +2,20 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../utils.dart' show MaterialWindowClass;
-import '../web_utils.dart' show downloadFile;
-import '../widgets/base_page.dart';
+import '../services/storage_service.dart';
+import '../theme/material_window_class.dart';
+import '../widgets/page_scaffold.dart';
 import '../widgets/timeline.dart';
 
 @RoutePage()
-class CVPage extends StatelessWidget {
+class CVPage extends ConsumerWidget {
   const CVPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -21,13 +23,15 @@ class CVPage extends StatelessWidget {
       MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 25 : 50,
       (screenWidth - MaterialWindowClass.large.minDP) / 2,
     );
+    final cvFile = AppLocalizations.of(context).cvFile;
+    final fileRepository = ref.watch(storageServiceProvider);
 
-    return BasePage(
+    return PageScaffold(
       title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Download CV', style: textTheme.titleMedium),
         tooltip: 'Download CV',
-        onPressed: () => downloadFile('/r2/alejandro_fernandez_cv-en.pdf'),
+        onPressed: () async => fileRepository.download(cvFile),
         icon: const Icon(Icons.download),
       ),
       slivers: [

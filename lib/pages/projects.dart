@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../utils.dart' show openWebpage;
-import '../widgets/base_page.dart';
+import '../services/webpage_launcher.dart';
+import '../widgets/page_scaffold.dart';
 
 @RoutePage()
 class ProjectsPage extends StatelessWidget {
@@ -16,7 +16,7 @@ class ProjectsPage extends StatelessWidget {
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return BasePage(
+    return PageScaffold(
       title: 'Projects | Alejandro Fernández Alburquerque',
       socialMediaRail: true,
       slivers: [
@@ -41,7 +41,7 @@ class ProjectsPage extends StatelessWidget {
                         decorationColor: theme.colorScheme.tertiary,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => openWebpage(githubUrl),
+                        ..onTap = () async => openWebpage(githubUrl),
                     ),
                     const TextSpan(
                       text: ' in the meantime.',

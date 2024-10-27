@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'router.dart';
+import 'navigation/router.dart';
 import 'theme/material_theme.dart';
 import 'theme/text_theme.dart';
 
@@ -10,7 +11,7 @@ void main() {
   setUrlStrategy(Uri.base.host.endsWith('github.io')
       ? const HashUrlStrategy()
       : PathUrlStrategy()); // ignore: prefer_const_constructors
-  runApp(MyApp(router: AppRouter()));
+  runApp(ProviderScope(child: MyApp(router: AppRouter())));
 }
 
 class MyApp extends StatelessWidget {

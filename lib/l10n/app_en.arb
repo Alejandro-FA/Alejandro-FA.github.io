@@ -2,5 +2,6 @@
   "contentPath": "assets/content/en/",
   "@contentPath": {
     "description": "The base path to content files"
-  }
+  },
+  "cvFile": "alejandro_fernandez_cv-en.pdf"
 }

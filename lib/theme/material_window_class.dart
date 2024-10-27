@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// An enumeration of the different window sizes according to the [Material
 /// Design 3 guidelines](https://m3.material.io/foundations/layout/applying-layout/window-size-classes).
@@ -51,28 +47,4 @@ enum MaterialWindowClass implements Comparable<MaterialWindowClass> {
   bool operator <=(MaterialWindowClass other) => minDP <= other.minDP;
   bool operator >(MaterialWindowClass other) => minDP > other.minDP;
   bool operator >=(MaterialWindowClass other) => minDP >= other.minDP;
-}
-
-void openWebpage(String url) {
-  final uri = Uri.parse(url);
-  assert(uri.scheme == 'https', 'URL must be secure');
-  unawaited(_openUrl(uri).catchError(
-    (Object error) => throw error as Exception,
-    test: (error) => error is Exception,
-  ));
-}
-
-Future<void> _openUrl(Uri uri) async {
-  if (!await launchUrl(uri)) {
-    throw Exception('Could not launch $uri');
-  }
-}
-
-extension AppNavigation on BuildContext {
-  void goTo(String path) {
-    // ignore: discarded_futures
-    AutoRouter.of(this).navigateNamed(path).then(
-          (value) => Scaffold.of(this).closeDrawer(),
-        );
-  }
 }
