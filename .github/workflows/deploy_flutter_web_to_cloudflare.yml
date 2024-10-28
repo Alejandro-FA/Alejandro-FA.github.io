@@ -11,7 +11,7 @@ on:
         description: "The renderer to use for the Flutter web build."
         type: string
         required: true
-        default: "default" # valid options: ['wasm', 'html', 'default']
+        default: "wasm" # valid options: ['wasm', 'auto']
       deploymentBranch:
         description: |
           Deployment environment name (usually the branch name).

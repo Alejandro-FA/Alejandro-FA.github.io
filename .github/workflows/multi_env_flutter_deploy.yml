@@ -13,12 +13,12 @@ jobs:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
       buildRenderer: auto
-      deploymentBranch: main
+      deploymentBranch: canvaskit
     secrets: inherit
 
   Wasm:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
       buildRenderer: wasm
-      deploymentBranch: wasm
+      deploymentBranch: main
     secrets: inherit

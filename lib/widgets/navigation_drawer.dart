@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart' hide RouteData;
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
 
 import '../models/route_data.dart';
 import '../models/social_media_data.dart';
+import 'better_link.dart';
 import 'home_button.dart';
 import 'social_media_button.dart';
 
@@ -69,7 +69,7 @@ class _NavigationDestination extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Link(
+    return BetterLink(
       uri: Uri.parse(route.path),
       builder: (context, followLink) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
