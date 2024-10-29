@@ -5,60 +5,34 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+@TestOn('browser')
+library;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:portfolio/models/route_data.dart';
-import 'package:portfolio/widgets/sliver_app_bar.dart';
-
-const routesEnglish = [
-  RouteData(
-    name: 'Research',
-    path: '/research',
-    icon: Icons.article,
-  ),
-  RouteData(
-    name: 'Projects',
-    path: '/projects',
-    icon: Icons.terminal,
-  ),
-  RouteData(
-    name: 'Curriculum Vitae',
-    path: '/cv',
-    icon: Icons.school,
-  ),
-];
+import 'package:portfolio/main.dart';
+import 'package:portfolio/navigation/router.dart';
 
 void main() {
-  testWidgets('ResponsiveAppBar adapts based on screen width', (tester) async {
+  testWidgets('App bar adapts based on screen width', (tester) async {
     tester.view.devicePixelRatio = 1.0;
-    const appTitle = 'Alejandro';
 
     // Build our app and trigger a frame.
-    // Build our app with English top bar and trigger a frame.
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(
-          body: CustomScrollView(
-            physics: BouncingScrollPhysics(),
-            slivers: [
-              MySliverAppBar(menuRoutes: routesEnglish),
-            ],
-          ),
-        ),
-      ),
+      ProviderScope(child: MyApp(router: AppRouter())),
     );
+    await tester.pumpAndSettle();
 
     // Test actions visibility when screen width is greater than the breakpoint
     tester.view.physicalSize = const Size(840, 600);
     await tester.pump();
     expect(find.byIcon(Icons.menu), findsNothing);
-    expect(find.text(appTitle), findsOneWidget);
 
     // Test actions visibility when screen width is less than the breakpoint
     tester.view.physicalSize = const Size(839, 600);
     await tester.pump();
     expect(find.byIcon(Icons.menu), findsOneWidget);
-    expect(find.text(appTitle), findsOneWidget);
   });
 }

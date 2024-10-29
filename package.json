@@ -16,7 +16,7 @@
     "lint:dart": "flutter analyze --no-pub && dart run custom_lint",
     "lint:ts": "tsc && eslint scripts",
     "lint": "npm run lint:shell && npm run lint:dart && npm run lint:ts",
-    "test": "flutter test --no-pub",
+    "test": "flutter test --no-pub -r expanded --platform chrome",
     "build:auto": "flutter build web --no-pub --release --no-web-resources-cdn --web-renderer auto",
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build": "npm run build:${BUILD_RENDERER:-wasm}",
