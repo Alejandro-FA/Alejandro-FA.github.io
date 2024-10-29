@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/route_data.dart';
 import '../models/social_media_data.dart';
@@ -21,24 +22,6 @@ class PageScaffold extends StatelessWidget {
   final bool socialMediaRail;
   final Widget? floatingActionButton;
 
-  static const menuRoutes = [
-    RouteData(
-      name: 'Research',
-      path: '/research',
-      icon: Icons.article,
-    ),
-    RouteData(
-      name: 'Projects',
-      path: '/projects',
-      icon: Icons.terminal,
-    ),
-    RouteData(
-      name: 'Curriculum Vitae',
-      path: '/cv',
-      icon: Icons.school,
-    ),
-  ];
-
   static const socialMedia = [
     SocialMediaData(
       url: 'https://github.com/Alejandro-FA',
@@ -57,13 +40,30 @@ class PageScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final menuRoutes = [
+      RouteData(
+        name: AppLocalizations.of(context).research,
+        path: '/research',
+        icon: Icons.article,
+      ),
+      RouteData(
+        name: AppLocalizations.of(context).projects,
+        path: '/projects',
+        icon: Icons.terminal,
+      ),
+      RouteData(
+        name: AppLocalizations.of(context).cv,
+        path: '/cv',
+        icon: Icons.school,
+      ),
+    ];
 
     return Title(
       title: title,
       color: theme.colorScheme.primary,
       child: Scaffold(
         floatingActionButton: floatingActionButton,
-        drawer: const MyNavigationDrawer(
+        drawer: MyNavigationDrawer(
           menuRoutes: menuRoutes,
           socialMedia: socialMedia,
         ),
@@ -76,7 +76,7 @@ class PageScaffold extends StatelessWidget {
             CustomScrollView(
               physics: const BouncingScrollPhysics(),
               slivers: [
-                const MySliverAppBar(menuRoutes: menuRoutes),
+                MySliverAppBar(menuRoutes: menuRoutes),
                 ...slivers,
               ],
             ),

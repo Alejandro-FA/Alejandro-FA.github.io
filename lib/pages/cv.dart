@@ -45,7 +45,10 @@ class CVPage extends ConsumerWidget {
               Padding(
                 // Check: https://medium.com/geekculture/dynamically-pinned-list-headers-ee5aa23f1db4
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text('Education', style: textTheme.displaySmall),
+                child: Text(
+                  AppLocalizations.of(context).education,
+                  style: textTheme.displaySmall,
+                ),
               ),
               Timeline(
                 lineColor: theme.colorScheme.surfaceContainerHighest,
@@ -88,7 +91,10 @@ After completing my Baccalaureate studies with an honorary distinction, I decide
                   horizontal: 0,
                   vertical: 20,
                 ),
-                child: Text('Experience', style: textTheme.displaySmall),
+                child: Text(
+                  AppLocalizations.of(context).experience,
+                  style: textTheme.displaySmall,
+                ),
               ),
               Timeline(
                 lineColor: theme.colorScheme.surfaceContainerHighest,

@@ -4,6 +4,7 @@ import '../models/route_data.dart';
 import '../theme/material_window_class.dart';
 import 'better_link.dart';
 import 'home_button.dart';
+import 'language_toggle_button.dart';
 
 class MySliverAppBar extends StatelessWidget {
   const MySliverAppBar({required this.menuRoutes, super.key});
@@ -13,6 +14,26 @@ class MySliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final actions = isWideScreen(context)
+        ? [
+            ...menuRoutes.map((route) => _MenuButton(route: route)),
+            const Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: LanguageToggleButton(),
+            ),
+          ]
+        : [
+            const Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: LanguageToggleButton(),
+            ),
+            IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ];
 
     return SliverAppBar(
       pinned: false,
@@ -26,17 +47,7 @@ class MySliverAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(16),
       ),
       titleSpacing: 0,
-      actions: [
-        if (isWideScreen(context))
-          ...menuRoutes.map((route) => _MenuButton(route: route))
-        else
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-      ],
+      actions: actions,
     );
   }
 

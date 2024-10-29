@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import 'controllers/localization_controller.dart';
 import 'navigation/router.dart';
 import 'theme/material_theme.dart';
 import 'theme/text_theme.dart';
@@ -14,13 +15,13 @@ void main() {
   runApp(ProviderScope(child: MyApp(router: AppRouter())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({required this.router, super.key});
 
   final AppRouter router;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = createTextTheme(context, 'Noto Sans', 'Silkscreen');
     final theme = MaterialTheme(textTheme);
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: ref.watch(localizationControllerProvider),
     );
   }
 }

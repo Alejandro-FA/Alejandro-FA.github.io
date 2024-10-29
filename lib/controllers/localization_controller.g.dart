@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'file_repository.dart';
+part of 'localization_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fileRepositoryHash() => r'3e4f0f2c47a5764f3475de7fb02fcc39dad2df76';
+String _$localizationControllerHash() =>
+    r'62bb56d1a30988418a99562ffe447ecb1dd618ae';
 
-/// See also [fileRepository].
-@ProviderFor(fileRepository)
-final fileRepositoryProvider = AutoDisposeProvider<FileRepository>.internal(
-  fileRepository,
-  name: r'fileRepositoryProvider',
+/// See also [LocalizationController].
+@ProviderFor(LocalizationController)
+final localizationControllerProvider =
+    AutoDisposeNotifierProvider<LocalizationController, Locale>.internal(
+  LocalizationController.new,
+  name: r'localizationControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$fileRepositoryHash,
+      : _$localizationControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef FileRepositoryRef = AutoDisposeProviderRef<FileRepository>;
+typedef _$LocalizationController = AutoDisposeNotifier<Locale>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

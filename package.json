@@ -30,7 +30,7 @@
     "generate-sitemap": "tsx scripts/generate_sitemap.ts lib/pages/*.dart --baseUrl ${npm_package_config_url}",
     "minify:js": "esbuild 'build/web/**/*.js' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite",
     "minify:mjs": "esbuild 'build/web/**/*.mjs' --outdir=build/web/ --minify --tree-shaking=true --allow-overwrite --out-extension:.js=.mjs",
-    "code-generation": "dart run build_runner build"
+    "code-generation": "dart run build_runner build && flutter gen-l10n"
   },
   "repository": {
     "type": "git",

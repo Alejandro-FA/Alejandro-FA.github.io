@@ -1,4 +1,9 @@
 {
   "contentPath": "assets/content/es/",
-  "cvFile": "alejandro_fernandez_cv-en.pdf"
+  "cvFile": "alejandro_fernandez_cv-en.pdf",
+  "research": "Investigación",
+  "projects": "Proyectos",
+  "cv": "Curriculum Vitae",
+  "experience": "Experiencia",
+  "education": "Educación"
 }
