@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../controllers/content_controller.dart';
 import '../theme/material_window_class.dart';
 import '../widgets/page_scaffold.dart';
 
@@ -36,13 +36,9 @@ class ResearchPage extends StatelessWidget {
           ),
           sliver: SliverList.builder(
             itemCount: contentFiles.length,
-            itemBuilder: (context, index) {
-              final basePath = AppLocalizations.of(context).contentPath;
-              final filePath = '$basePath${contentFiles[index]}';
-              return Card(
-                child: ResearchItem(contentPath: filePath),
-              );
-            },
+            itemBuilder: (context, index) => Card(
+              child: _ResearchItem(contentFile: contentFiles[index]),
+            ),
           ),
         ),
       ],
@@ -50,24 +46,22 @@ class ResearchPage extends StatelessWidget {
   }
 }
 
-// TODO: wait for content to load before loading page.
-class ResearchItem extends StatelessWidget {
-  ResearchItem({required String contentPath, super.key})
-      : content = rootBundle.loadString(contentPath);
+class _ResearchItem extends ConsumerWidget {
+  const _ResearchItem({required this.contentFile});
 
-  final Future<String> content;
+  final String contentFile;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(20),
-        child: FutureBuilder(
-          future: content,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return MarkdownBody(data: snapshot.data!);
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final content = ref.watch(contentControllerProvider(contentFile));
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: switch (content) {
+        AsyncData(:final value) => MarkdownBody(data: value),
+        AsyncError() => const Text('Oops, something unexpected happened'),
+        _ => const SizedBox.shrink(),
+      },
+    );
+  }
 }

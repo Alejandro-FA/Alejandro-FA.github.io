@@ -2,13 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'file_repository.g.dart';
+part 'storage_repository.g.dart';
 
-abstract interface class FileRepository {
+abstract interface class StorageRepository {
   Future<Uri> getUri(String fileName);
 }
 
-class _R2CloudRepository implements FileRepository {
+class _R2CloudRepository implements StorageRepository {
   _R2CloudRepository();
 
   final _client = http.Client();
@@ -29,7 +29,7 @@ class _R2CloudRepository implements FileRepository {
 }
 
 @riverpod
-FileRepository fileRepository(Ref ref) {
+StorageRepository storageRepository(Ref ref) {
   final repository = _R2CloudRepository();
   ref.onDispose(repository.dispose);
   return repository;

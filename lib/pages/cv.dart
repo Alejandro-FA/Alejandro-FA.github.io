@@ -11,11 +11,11 @@ import '../widgets/page_scaffold.dart';
 import '../widgets/timeline.dart';
 
 @RoutePage()
-class CVPage extends ConsumerWidget {
+class CVPage extends StatelessWidget {
   const CVPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -23,17 +23,10 @@ class CVPage extends ConsumerWidget {
       MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 25 : 50,
       (screenWidth - MaterialWindowClass.large.minDP) / 2,
     );
-    final cvFile = AppLocalizations.of(context).cvFile;
-    final fileRepository = ref.watch(storageServiceProvider);
 
     return PageScaffold(
       title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Download CV', style: textTheme.titleMedium),
-        tooltip: 'Download CV',
-        onPressed: () async => fileRepository.download(cvFile),
-        icon: const Icon(Icons.download),
-      ),
+      floatingActionButton: const _DownloadCVButton(),
       slivers: [
         SliverPadding(
           padding: EdgeInsets.symmetric(
@@ -117,6 +110,22 @@ For more information check my Research page.""",
           ),
         ),
       ],
+    );
+  }
+}
+
+class _DownloadCVButton extends ConsumerWidget {
+  const _DownloadCVButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return FloatingActionButton.extended(
+      label: Text('Download CV', style: textTheme.titleMedium),
+      tooltip: 'Download CV',
+      onPressed: () async => ref.read(storageServiceProvider).downloadCV(),
+      icon: const Icon(Icons.download),
     );
   }
 }
