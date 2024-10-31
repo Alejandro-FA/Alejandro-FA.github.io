@@ -21,7 +21,7 @@
     "build:wasm": "flutter build web --no-pub --release --no-web-resources-cdn --wasm",
     "build": "npm run build:${BUILD_RENDERER:-wasm}",
     "postbuild:canvaskit": "npm run generate-sitemap -- -o build/web/sitemap.xml && npm run minify:js",
-    "postbuild:wasm": "npm run postbuild:auto && npm run minify:mjs",
+    "postbuild:wasm": "npm run postbuild:canvaskit && npm run minify:mjs",
     "preserve:release": "npm run build",
     "serve:release": "wrangler pages dev --port=${npm_package_config_port}",
     "serve": "flutter run -d chrome",
