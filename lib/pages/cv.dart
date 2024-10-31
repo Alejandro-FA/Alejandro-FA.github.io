@@ -131,7 +131,7 @@ class _DownloadCVButton extends ConsumerWidget {
 }
 
 // TODO: Change build functions with widgets
-class MyTimelineEvent implements TimelineEvent {
+class MyTimelineEvent extends StatelessWidget {
   const MyTimelineEvent({
     required this.date,
     required this.location,
@@ -140,6 +140,7 @@ class MyTimelineEvent implements TimelineEvent {
     this.grade,
     this.awards,
     this.description,
+    super.key,
   });
 
   final String date;
@@ -151,103 +152,97 @@ class MyTimelineEvent implements TimelineEvent {
   final String? description;
 
   @override
-  Widget buildLeft(BuildContext context) {
+  Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return Column(
-      children: [
-        Text(
-          date,
-          style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(location, style: textTheme.bodyLarge),
-      ],
-    );
-  }
-
-  @override
-  Widget buildIcon(BuildContext context) => Container(
+    return TimelineEvent(
+      icon: Container(
         width: 20,
         height: 20,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: colorScheme.primary,
           shape: BoxShape.circle,
         ),
-      );
-
-  @override
-  Widget buildRight(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style:
-                  textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                institution,
+      ),
+      left: Column(
+        children: [
+          Text(
+            date,
+            style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Text(location, style: textTheme.bodyLarge),
+        ],
+      ),
+      right: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
                 style:
-                    textTheme.titleSmall?.copyWith(color: colorScheme.tertiary),
+                    textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
               ),
-            ),
-            if (grade != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Average grade: ',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: grade,
-                        style: const TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            if (awards != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Awards: ',
-                    style: textTheme.bodyLarge?.copyWith(
-                      color: colorScheme.secondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: awards,
-                        style: const TextStyle(fontWeight: FontWeight.normal),
+                child: Text(
+                  institution,
+                  style: textTheme.titleSmall
+                      ?.copyWith(color: colorScheme.tertiary),
+                ),
+              ),
+              if (grade != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Average grade: ',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
+                      children: [
+                        TextSpan(
+                          text: grade,
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            if (description != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  description!,
-                  style: textTheme.bodyLarge?.copyWith(height: 1.5),
-                  textAlign: TextAlign.justify,
+              if (awards != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Awards: ',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: awards,
+                          style: const TextStyle(fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-          ],
+              if (description != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    description!,
+                    style: textTheme.bodyLarge?.copyWith(height: 1.5),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
