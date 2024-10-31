@@ -165,7 +165,7 @@ class MyTimelineEvent extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      left: Column(
+      label: Column(
         children: [
           Text(
             date,
@@ -175,7 +175,7 @@ class MyTimelineEvent extends StatelessWidget {
           Text(location, style: textTheme.bodyLarge),
         ],
       ),
-      right: Card(
+      details: Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
