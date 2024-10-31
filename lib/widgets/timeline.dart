@@ -149,127 +149,59 @@ class Timeline extends StatelessWidget {
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) =>
-      MaterialWindowClass.of(context) >= MaterialWindowClass.expanded
-          ? _WideTimeline(
-              lineColor: lineColor,
-              lineWidth: lineWidth,
-              centerWidth: centerWidth,
-              mainAxisAlignment: mainAxisAlignment,
-              children: children,
-            )
-          : _NarrowTimeline(
-              lineColor: lineColor,
-              lineWidth: lineWidth,
-              centerWidth: centerWidth,
-              mainAxisAlignment: mainAxisAlignment,
-              children: children,
-            );
-}
-
-class _NarrowTimeline extends StatelessWidget {
-  const _NarrowTimeline({
-    required this.lineColor,
-    required this.lineWidth,
-    required this.centerWidth,
-    required this.mainAxisAlignment,
-    required this.children,
-  });
-
-  final Color lineColor;
-  final double lineWidth;
-  final double centerWidth;
-  final MainAxisAlignment mainAxisAlignment;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) => IntrinsicHeight(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: CustomPaint(
-                size: Size(centerWidth, double.infinity),
-                painter: TimelineLinePainter(
-                  color: lineColor,
-                  width: lineWidth,
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: mainAxisAlignment,
-              children: children,
-            ),
-          ],
-        ),
-      );
-}
-
-class _WideTimeline extends StatelessWidget {
-  const _WideTimeline({
-    required this.lineColor,
-    required this.lineWidth,
-    required this.centerWidth,
-    required this.mainAxisAlignment,
-    required this.children,
-  });
-
-  final Color lineColor;
-  final double lineWidth;
-  final double centerWidth;
-  final MainAxisAlignment mainAxisAlignment;
-  final List<Widget> children;
-
-  @override
   Widget build(BuildContext context) {
-    const leftFlex = 1;
-    const rightFlex = 6;
-    const xAlignment = 2 * leftFlex / (leftFlex + rightFlex) - 1;
+    final isWide =
+        MaterialWindowClass.of(context) >= MaterialWindowClass.expanded;
 
-    return IntrinsicHeight(
-      child: Stack(
-        children: [
-          Align(
-            alignment: const Alignment(xAlignment, 0),
-            child: CustomPaint(
-              size: Size(centerWidth, double.infinity),
-              painter: TimelineLinePainter(
-                color: lineColor,
-                width: lineWidth,
-              ),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: mainAxisAlignment,
-            children: children,
-          ),
-        ],
+    return CustomPaint(
+      size: Size(centerWidth, double.infinity),
+      painter: TimelineLinePainter(
+        color: lineColor,
+        lineWidth: lineWidth,
+        leftFlex: isWide ? leftFlex : 0,
+        rightFlex: rightFlex,
+        centerWidth: centerWidth,
+      ),
+      child: Column(
+        mainAxisAlignment: mainAxisAlignment,
+        children: children,
       ),
     );
   }
 }
 
 class TimelineLinePainter extends CustomPainter {
-  const TimelineLinePainter({required this.color, this.width = 2});
+  const TimelineLinePainter({
+    required this.color,
+    this.lineWidth = 2,
+    this.leftFlex = 1,
+    this.rightFlex = 6,
+    this.centerWidth = 60,
+  });
 
   final Color color;
-  final double width;
+  final double lineWidth;
+  final int leftFlex;
+  final int rightFlex;
+  final double centerWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = width
+      ..strokeWidth = 2
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
     const topOffset = 0.0;
     const bottomOffset = 0.0;
+    final flexFactor = leftFlex / (leftFlex + rightFlex);
+    final xOffset = (size.width - centerWidth) * flexFactor + centerWidth / 2;
 
     canvas.drawLine(
-      Offset(size.width / 2, topOffset),
-      Offset(size.width / 2, size.height - bottomOffset),
+      Offset(xOffset, topOffset),
+      Offset(xOffset, size.height - bottomOffset),
       paint,
     );
   }
