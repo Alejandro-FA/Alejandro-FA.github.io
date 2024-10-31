@@ -24,11 +24,11 @@ class BetterLink extends StatelessWidget {
         onKeyEvent: _skipFocusNode,
         child: Link(
           uri: uri,
+          target: target,
           builder: (context, _) => builder(
             context,
             () async => followLink(context, uri, target),
           ),
-          target: target,
         ),
       );
 

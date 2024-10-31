@@ -12,7 +12,7 @@ jobs:
   HTML-Canvaskit:
     uses: ./.github/workflows/deploy_flutter_web_to_cloudflare.yml
     with:
-      buildRenderer: auto
+      buildRenderer: canvaskit
       deploymentBranch: canvaskit
     secrets: inherit
 
