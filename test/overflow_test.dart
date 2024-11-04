@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:portfolio/main.dart';
-import 'package:portfolio/navigation/router.dart';
 import 'package:portfolio/widgets/language_toggle_button.dart';
 
 void main() {
@@ -22,9 +21,7 @@ void main() {
     tester.view.physicalSize = const Size(840, 600);
 
     // Change if nothing overflows in the default language
-    await tester.pumpWidget(
-      ProviderScope(child: MyApp(router: AppRouter())),
-    );
+    await tester.pumpWidget(const ProviderScope(child: MyApp()));
     await tester.pumpAndSettle();
 
     // Change language and check if nothing overflows

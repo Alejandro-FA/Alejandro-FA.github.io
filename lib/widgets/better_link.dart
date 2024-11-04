@@ -49,16 +49,16 @@ class BetterLink extends StatelessWidget {
     Uri uri,
     LinkTarget target,
   ) async {
+    final isModifierPressed = Theme.of(context).platform == TargetPlatform.macOS
+        ? HardwareKeyboard.instance.isMetaPressed
+        : HardwareKeyboard.instance.isControlPressed;
     if (isRoute(uri)) {
-      final isModifierPressed =
-          Theme.of(context).platform == TargetPlatform.macOS
-              ? HardwareKeyboard.instance.isMetaPressed
-              : HardwareKeyboard.instance.isControlPressed;
       return isModifierPressed
           ? launchUrl(uri, webOnlyWindowName: '_blank')
           : context.navigateNamedTo(uri.toString());
     }
-    final windowName = target == LinkTarget.blank ? '_blank' : '_self';
+    final windowName =
+        target == LinkTarget.blank || isModifierPressed ? '_blank' : '_self';
     if (!await launchUrl(uri, webOnlyWindowName: windowName)) {
       throw Exception('Could not launch $uri');
     }

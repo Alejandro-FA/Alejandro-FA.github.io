@@ -30,7 +30,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_route: ^9.2.2
-  build_runner: ^2.4.13
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -49,6 +48,7 @@ dependencies:
 
 dev_dependencies:
   auto_route_generator: ^9.0.0
+  build_runner: ^2.4.13
   custom_lint: ^0.6.8
   dhttpd: ^4.1.0
   flutter_lints: ^5.0.0
@@ -72,6 +72,8 @@ flutter:
     - assets/icons/
     - assets/content/en/
     - assets/content/es/
+    - assets/content/en/cv/
+    - assets/content/es/cv/
 
   # Enables generation of localized strings from arb files, see
   # https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization

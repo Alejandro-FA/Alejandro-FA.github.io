@@ -1,0 +1,3 @@
+const researchFiles = [
+  'tfg.md',
+];

@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/cv_data.dart';
 import '../services/storage_service.dart';
 import '../theme/material_window_class.dart';
+import '../widgets/cv_timeline_event.dart';
 import '../widgets/page_scaffold.dart';
 import '../widgets/timeline.dart';
 
@@ -46,37 +48,7 @@ class CVPage extends StatelessWidget {
               Timeline(
                 lineColor: theme.colorScheme.surfaceContainerHighest,
                 lineWidth: 3,
-                children: const [
-                  MyTimelineEvent(
-                    date: 'Sep 2020 - Jul 2024',
-                    location: 'Barcelona, Spain',
-                    title: "Bachelor's degree, Computer Engineering",
-                    institution: 'Universitat Pompeu Fabra',
-                    grade: '9.16/10',
-                    awards: '20 subjects completed with Honours',
-                    description: """
-My four-year academic journey in Physics Engineering led me to discover my passion for computer engineering and programming. I graduated in Computer Engineering in second place, completing 20 subjects with Honours ("Matrícula de Honor" in Spanish). These subjects, including Artificial Intelligence, Cryptography and Security, Object-Oriented Programming, Machine Learning, and Algorithm Design, are a testament to my strong technical skills and academic achievements.
-
-One of the most rewarding aspects of my Bachelor's degree was the opportunity to collaborate on multiple team projects with brilliant colleagues. This experience honed my fundamental skills in collaborative planning and organization, technical communication, and synchronous and asynchronous collaboration in software development.""",
-                  ),
-                  MyTimelineEvent(
-                    date: 'Sep 2016 - Jul 2020',
-                    location: 'Barcelona, Spain',
-                    title:
-                        "Bachelor's degree, Physics Engineering (unfinished)",
-                    institution: 'Universitat Politècnica de Catalunya',
-                    description: """
-After completing my Baccalaureate studies with an honorary distinction, I decided to continue my education with a challenging scientific Bachelor's degree, so I chose Engineering Physics. However, amid the COVID-19 pandemic, I discovered my passion for computers and programming, prompting me to switch from Engineering Physics to Computer Engineering. Even though I did not finish my studies, I am deeply appreciative for the learning experience and the brilliant people I met, and for the strong foundation in mathematics and physics that I acquired.""",
-                  ),
-                  MyTimelineEvent(
-                    date: 'Sep 2014 - Jun 2016',
-                    location: 'Barcelona, Spain',
-                    title: 'Spanish Baccalaureate, Science',
-                    institution: 'Col·legi Pare Manyanet Les Corts',
-                    grade: '10/10',
-                    awards: 'Baccalaureate completion with honors.',
-                  ),
-                ],
+                children: educationEntries.map(CVTimelineEvent.new).toList(),
               ),
               const SizedBox(height: 40),
               Padding(
@@ -92,19 +64,7 @@ After completing my Baccalaureate studies with an honorary distinction, I decide
               Timeline(
                 lineColor: theme.colorScheme.surfaceContainerHighest,
                 lineWidth: 3,
-                children: const [
-                  MyTimelineEvent(
-                    date: 'Jan 2024 - Jun 2024',
-                    location: 'Barcelona, Spain',
-                    title:
-                        'Intern at the Artificial Intelligence and Machine Learning Research Group',
-                    institution: 'Universitat Pompeu Fabra',
-                    description: """
-While interning at the University's AI and ML research group, I developed my Bachelor's thesis, "Parallel Strategies for Best-First Generalized Planning." I also had the opportunity to learn from world-renowned researchers in automated planning.
-
-For more information check my Research page.""",
-                  ),
-                ],
+                children: experienceEntries.map(CVTimelineEvent.new).toList(),
               ),
             ],
           ),
@@ -126,125 +86,6 @@ class _DownloadCVButton extends ConsumerWidget {
       tooltip: 'Download CV',
       onPressed: () async => ref.read(storageServiceProvider).downloadCV(),
       icon: const Icon(Icons.download),
-    );
-  }
-}
-
-// TODO: Change build functions with widgets
-class MyTimelineEvent extends StatelessWidget {
-  const MyTimelineEvent({
-    required this.date,
-    required this.location,
-    required this.title,
-    required this.institution,
-    this.grade,
-    this.awards,
-    this.description,
-    super.key,
-  });
-
-  final String date;
-  final String location;
-  final String title;
-  final String institution;
-  final String? grade;
-  final String? awards;
-  final String? description;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return TimelineEvent(
-      icon: Container(
-        width: 20,
-        height: 20,
-        decoration: BoxDecoration(
-          color: colorScheme.primary,
-          shape: BoxShape.circle,
-        ),
-      ),
-      label: Column(
-        children: [
-          Text(
-            date,
-            style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 4),
-          Text(location, style: textTheme.bodyLarge),
-        ],
-      ),
-      details: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style:
-                    textTheme.titleLarge?.copyWith(color: colorScheme.tertiary),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  institution,
-                  style: textTheme.titleSmall
-                      ?.copyWith(color: colorScheme.tertiary),
-                ),
-              ),
-              if (grade != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Average grade: ',
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: grade,
-                          style: const TextStyle(fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              if (awards != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Awards: ',
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: awards,
-                          style: const TextStyle(fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              if (description != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    description!,
-                    style: textTheme.bodyLarge?.copyWith(height: 1.5),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
