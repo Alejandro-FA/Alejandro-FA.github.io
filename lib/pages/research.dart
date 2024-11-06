@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import '../data/research_data.dart';
 import '../models/link_data.dart';
 import '../models/research_entry.dart';
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 import '../widgets/better_link.dart';
 import '../widgets/markdown_content.dart';
 import '../widgets/page_scaffold.dart';
@@ -18,31 +18,33 @@ class ResearchPage extends StatelessWidget {
   static const orcidUrl = 'https://orcid.org/0009-0009-0884-7015';
 
   @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final double padding = max(
-      MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 15 : 50,
-      (screenWidth - MaterialWindowClass.expanded.minDP) / 2,
-    );
-
-    return PageScaffold(
-      title: 'Research | Alejandro Fernández Alburquerque',
-      socialMediaRail: true,
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            vertical: 50,
-            horizontal: padding,
-          ),
-          sliver: SliverList.builder(
-            itemCount: researchEntries.length,
-            itemBuilder: (context, index) => _ResearchItem(
-              researchEntries[index],
+  Widget build(BuildContext context) => PageScaffold(
+        title: 'Research | Alejandro Fernández Alburquerque',
+        socialMediaRail: true,
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.symmetric(
+              vertical: 50,
+              horizontal: _getPadding(context),
+            ),
+            sliver: SliverList.builder(
+              itemCount: researchEntries.length,
+              itemBuilder: (context, index) => _ResearchItem(
+                researchEntries[index],
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+
+  static double _getPadding(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return switch (WindowClass.of(context)) {
+      WindowClass.compact => 15,
+      WindowClass.medium => 30,
+      WindowClass.expanded => 100,
+      _ => max(100, (screenWidth - WindowClass.expanded.minDP) * 0.4),
+    };
   }
 }
 
@@ -62,12 +64,15 @@ class _ResearchItem extends StatelessWidget {
         child: Column(
           children: [
             MarkdownContent(file: entry.filePath),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const SizedBox(height: 20),
+            Wrap(
+              direction: Axis.horizontal,
+              alignment: WrapAlignment.spaceAround,
+              runAlignment: WrapAlignment.spaceAround,
+              spacing: 14,
+              runSpacing: 14,
               children: [
                 ...pdfLinks.map(_PdfLink.new),
-                const Spacer(),
                 ...githubLinks.map(_GithubLink.new),
               ],
             ),
@@ -95,28 +100,25 @@ class _LinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: BetterLink(
-        uri: Uri.parse(link.url),
-        target: LinkTarget.blank,
-        builder: (context, followLink) => TextButton.icon(
-          label: Text(
-            link.text,
-            style: textTheme.titleSmall?.copyWith(color: foregroundColor),
+    return BetterLink(
+      uri: Uri.parse(link.url),
+      target: LinkTarget.blank,
+      builder: (context, followLink) => TextButton.icon(
+        label: Text(
+          link.text,
+          style: textTheme.titleSmall?.copyWith(color: foregroundColor),
+        ),
+        icon: SvgPicture.asset(
+          iconPath,
+          height: 22,
+          colorFilter: ColorFilter.mode(
+            foregroundColor,
+            BlendMode.srcIn,
           ),
-          icon: SvgPicture.asset(
-            iconPath,
-            height: 22,
-            colorFilter: ColorFilter.mode(
-              foregroundColor,
-              BlendMode.srcIn,
-            ),
-          ),
-          onPressed: followLink,
-          style: TextButton.styleFrom(
-            backgroundColor: backgroundColor,
-          ),
+        ),
+        onPressed: followLink,
+        style: TextButton.styleFrom(
+          backgroundColor: backgroundColor,
         ),
       ),
     );

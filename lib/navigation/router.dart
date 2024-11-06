@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 
 import '../controllers/content_controller.dart';
 import '../data/cv_data.dart';
+import '../data/home_data.dart';
 import '../data/research_data.dart';
 import 'route_guards.dart';
 import 'router.gr.dart';
@@ -34,6 +35,12 @@ class AppRouter extends RootStackRouter {
           page: HomeRoute.page,
           path: '/',
           initial: true,
+          guards: [
+            CacheGuard(
+              cacheController: cacheController,
+              files: [aboutMe],
+            ),
+          ],
         ),
         AutoRoute(
           page: ProjectsRoute.page,

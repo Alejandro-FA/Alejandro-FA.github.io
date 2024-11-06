@@ -8,10 +8,13 @@ import '../controllers/content_controller.dart';
 import '../theme/markdown_theme.dart';
 import '../widgets/better_link.dart';
 
+export '../theme/markdown_theme.dart';
+
 class MarkdownContent extends ConsumerWidget {
-  const MarkdownContent({required this.file, super.key});
+  const MarkdownContent({required this.file, this.styleSheet, super.key});
 
   final String file;
+  final MarkdownStyleSheet? styleSheet;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +28,7 @@ class MarkdownContent extends ConsumerWidget {
         ? MarkdownBody(
             data: content,
             selectable: true,
-            styleSheet: MarkdownTheme.of(context),
+            styleSheet: styleSheet ?? MarkdownTheme.of(context),
             onTapLink: (text, href, title) async {
               if (href == null) return;
               return BetterLink.followLink(

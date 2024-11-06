@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/social_media_data.dart';
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 import 'social_media_button.dart';
 
 class SocialMediaRail extends StatelessWidget {
@@ -51,5 +51,5 @@ class SocialMediaRail extends StatelessWidget {
   }
 
   bool isWideScreen(BuildContext context) =>
-      MaterialWindowClass.of(context) >= MaterialWindowClass.expanded;
+      WindowClass.of(context) >= WindowClass.expanded;
 }

@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../models/route_data.dart';
 import '../models/social_media_data.dart';
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 import 'navigation_drawer.dart';
 import 'sliver_app_bar.dart';
 import 'social_media_rail.dart';
@@ -68,10 +68,9 @@ class PageScaffold extends StatelessWidget {
           socialMedia: socialMedia,
         ),
         body: Stack(
-          alignment:
-              MaterialWindowClass.of(context) >= MaterialWindowClass.expanded
-                  ? AlignmentDirectional.centerEnd
-                  : AlignmentDirectional.bottomCenter,
+          alignment: WindowClass.of(context) >= WindowClass.expanded
+              ? AlignmentDirectional.centerEnd
+              : AlignmentDirectional.bottomCenter,
           children: [
             CustomScrollView(
               physics: const BouncingScrollPhysics(),

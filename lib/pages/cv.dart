@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/cv_data.dart';
 import '../services/storage_service.dart';
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 import '../widgets/cv_timeline_event.dart';
 import '../widgets/page_scaffold.dart';
 import '../widgets/timeline.dart';
@@ -20,11 +20,6 @@ class CVPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final double padding = max(
-      MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 15 : 50,
-      (screenWidth - MaterialWindowClass.large.minDP) / 2,
-    );
 
     return PageScaffold(
       title: 'Curriculum Vitae | Alejandro Fernández Alburquerque',
@@ -33,7 +28,7 @@ class CVPage extends StatelessWidget {
         SliverPadding(
           padding: EdgeInsets.symmetric(
             vertical: 50,
-            horizontal: padding,
+            horizontal: _getPadding(context),
           ),
           sliver: SliverList.list(
             children: [
@@ -71,6 +66,16 @@ class CVPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  static double _getPadding(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return switch (WindowClass.of(context)) {
+      WindowClass.compact => 15,
+      WindowClass.medium => 30,
+      WindowClass.expanded => 50,
+      _ => max(50, (screenWidth - WindowClass.large.minDP) * 0.5),
+    };
   }
 }
 

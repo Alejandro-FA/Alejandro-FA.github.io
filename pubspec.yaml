@@ -70,6 +70,7 @@ flutter:
   # To add assets to your application, add them here:
   assets:
     - assets/icons/
+    - assets/images/
     - assets/content/en/
     - assets/content/es/
     - assets/content/en/cv/

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/route_data.dart';
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 import 'better_link.dart';
 import 'home_button.dart';
 import 'language_toggle_button.dart';
@@ -52,7 +52,7 @@ class MySliverAppBar extends StatelessWidget {
   }
 
   bool isWideScreen(BuildContext context) =>
-      MaterialWindowClass.of(context) >= MaterialWindowClass.expanded;
+      WindowClass.of(context) >= WindowClass.expanded;
 }
 
 class _MenuButton extends StatelessWidget {

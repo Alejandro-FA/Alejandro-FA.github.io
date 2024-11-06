@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../theme/material_window_class.dart';
+import '../theme/window_class.dart';
 
 class TimelineEvent extends StatelessWidget {
   const TimelineEvent({
@@ -19,7 +19,7 @@ class TimelineEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: padding,
-        child: MaterialWindowClass.of(context) >= MaterialWindowClass.expanded
+        child: WindowClass.of(context) >= WindowClass.expanded
             ? _WideTimelineEvent(
                 icon: icon,
                 left: label,
@@ -65,8 +65,7 @@ class Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWide =
-        MaterialWindowClass.of(context) >= MaterialWindowClass.expanded;
+    final isWide = WindowClass.of(context) >= WindowClass.expanded;
 
     return TimelineData(
       labelFlex: labelFlex,

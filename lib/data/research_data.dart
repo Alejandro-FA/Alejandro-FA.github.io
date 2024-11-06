@@ -11,7 +11,7 @@ const researchEntries = [
     pdfLinks: [
       LinkData(
         url: 'https://repositori.upf.edu/handle/10230/61315',
-        text: 'Thesis',
+        text: 'Full Thesis',
       ),
       LinkData(
         url: 'https://arxiv.org/abs/2407.21485',
