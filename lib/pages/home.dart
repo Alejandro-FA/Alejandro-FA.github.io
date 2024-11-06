@@ -74,7 +74,7 @@ class _Portrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 50),
-        child: Image.asset('assets/images/portrait.png'),
+        child: Image.asset('assets/images/portrait.webp'),
       );
 }
 
@@ -96,13 +96,12 @@ class _Greeting extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hello, I’m ',
+            'Hi, I’m ',
             style: isCompact ? textTheme.displaySmall : textTheme.displayMedium,
           ),
           Text(
             'Alejandro Fernández',
             style: nameStyle?.copyWith(
-              fontWeight: FontWeight.bold,
               color: colorScheme.primary,
             ),
           ),
