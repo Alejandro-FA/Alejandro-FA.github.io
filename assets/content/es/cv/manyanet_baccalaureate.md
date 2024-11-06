@@ -4,4 +4,4 @@
 
 _**Average grade**: 10/10_
 
-_**Awards**: Baccalaureate completion with honors._
+_**Awards**: Baccalaureate completion with honors_

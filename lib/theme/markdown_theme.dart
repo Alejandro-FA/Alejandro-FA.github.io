@@ -39,7 +39,7 @@ class MarkdownTheme extends InheritedWidget {
         decorationColor: colorScheme.primary,
       ),
       em: TextStyle(color: colorScheme.secondary, fontStyle: FontStyle.normal),
-      textAlign: WrapAlignment.spaceBetween,
+      textAlign: WrapAlignment.start,
     );
   }
 

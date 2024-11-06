@@ -79,7 +79,6 @@ DEPLOY_BRANCH=main npm run deploy
 
 To see the full list of tasks, check the `scripts` section in the [package.json](package.json) file.
 
-
 ## Building a Material Theme
 
 This project uses the Material Design system to create a consistent and visually appealing user interface. Follow the instructions in the [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/) to build your own Material theme. For more information, check the [Material Design website](https://m3.material.io/blog/material-theme-builder).
@@ -98,13 +97,12 @@ There are two ways to use Google Fonts in a webpage. The first is to download th
 
 3. **Convert the fonts to woff format**. As of August 2024, the current stable version of Flutter does not support `.woff2` fonts. Therefore, the recommended option is to use the old web-optimized format: `.woff`. It should be noted that `.woff` is only supported on mobile and web platforms (but not on desktop). To convert the files we need to follow these steps:
 
-    1. Install the [woff2 tool](https://github.com/google/woff2) developed by Google (`woff2_decompress path/to/font.woff2`).
-    2. Use `woff2_decompress path/to/font.woff2` to decompress the `.woff2` files to `.ttf`.
-    3. Use an online tool like [FontSquirrel WebFont Generator](https://www.fontsquirrel.com/tools/webfont-generator) to convert the `.ttf` files to `.woff` (use the `Basic` preset).
-    4. Download the converted files.
+   1. Install the [woff2 tool](https://github.com/google/woff2) developed by Google (`woff2_decompress path/to/font.woff2`).
+   2. Use `woff2_decompress path/to/font.woff2` to decompress the `.woff2` files to `.ttf`.
+   3. Use an online tool like [FontSquirrel WebFont Generator](https://www.fontsquirrel.com/tools/webfont-generator) to convert the `.ttf` files to `.woff` (use the `Basic` preset).
+   4. Download the converted files.
 
-    > **Note**: FontSquirrel does not support variable fonts. To use variable fonts with Flutter web, you need to stick with `.ttf` files.
-
+   > **Note**: FontSquirrel does not support variable fonts. To use variable fonts with Flutter web, you need to stick with `.ttf` files.
 
 ### A note about Roboto font in Flutter
 
@@ -115,3 +113,7 @@ For more information, check the following GitHub issues:
 - [Allow dynamic loading of font assets from pubspec.yaml](https://github.com/flutter/flutter/issues/122282)
 
 - [Proposal to Stop downloading google font roboto when the app uses global custom font](https://github.com/flutter/flutter/issues/136118)
+
+### Icons
+
+Most custom icons have been downloaded from [Streamline](https://www.streamlinehq.com/) or from [Font Awesome](https://fontawesome.com/icons).

@@ -22,7 +22,7 @@ class CVPage extends StatelessWidget {
     final textTheme = theme.textTheme;
     final screenWidth = MediaQuery.of(context).size.width;
     final double padding = max(
-      MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 25 : 50,
+      MaterialWindowClass.of(context) <= MaterialWindowClass.medium ? 15 : 50,
       (screenWidth - MaterialWindowClass.large.minDP) / 2,
     );
 
