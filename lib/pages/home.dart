@@ -85,6 +85,10 @@ class _Greeting extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final isCompact = WindowClass.of(context) == WindowClass.compact;
+    final nameStyle =
+        isCompact ? textTheme.displayMedium : textTheme.displayLarge;
+    final markdownTheme = MarkdownTheme.of(context);
 
     return Padding(
       padding: const EdgeInsets.only(top: 50, bottom: 10),
@@ -93,11 +97,11 @@ class _Greeting extends StatelessWidget {
         children: [
           Text(
             'Hello, I’m ',
-            style: textTheme.displayMedium,
+            style: isCompact ? textTheme.displaySmall : textTheme.displayMedium,
           ),
           Text(
             'Alejandro Fernández',
-            style: textTheme.displayLarge?.copyWith(
+            style: nameStyle?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.primary,
             ),
@@ -105,10 +109,11 @@ class _Greeting extends StatelessWidget {
           const SizedBox(height: 20),
           MarkdownContent(
             file: aboutMe,
-            styleSheet: MarkdownTheme.of(context).copyWith(
-              p: textTheme.titleLarge?.copyWith(
-                fontFamily: textTheme.bodyLarge?.fontFamily,
-                height: 1.5,
+            styleSheet: markdownTheme.copyWith(
+              p: markdownTheme.p?.copyWith(
+                fontSize: isCompact
+                    ? textTheme.titleMedium?.fontSize
+                    : textTheme.titleLarge?.fontSize,
               ),
             ),
           ),
