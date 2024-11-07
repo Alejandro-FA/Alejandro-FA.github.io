@@ -4,11 +4,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'better_link.dart';
 
 class HomeButton extends StatelessWidget {
-  const HomeButton({super.key, this.textStyle, this.padding, this.iconSize});
+  const HomeButton({
+    super.key,
+    this.textStyle,
+    this.padding,
+    this.iconSize,
+    this.closeDrawer = false,
+  });
 
   final TextStyle? textStyle;
   final EdgeInsetsGeometry? padding;
   final double? iconSize;
+  final bool closeDrawer;
 
   @override
   Widget build(BuildContext context) => BetterLink(
@@ -28,7 +35,10 @@ class HomeButton extends StatelessWidget {
             height: iconSize,
             width: iconSize,
           ),
-          onPressed: followLink,
+          onPressed: () async {
+            if (closeDrawer) Navigator.of(context).pop();
+            return followLink?.call();
+          },
           label: Text(
             'Alejandro',
             style: textStyle,

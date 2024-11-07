@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart' hide RouteData;
 import 'package:flutter/material.dart';
 
 import '../models/route_data.dart';
@@ -23,11 +22,6 @@ class MyNavigationDrawer extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return NavigationDrawer(
-      onDestinationSelected: (selectedIndex) async {
-        Scaffold.of(context).closeDrawer();
-        await context.navigateNamedTo(menuRoutes[selectedIndex].path);
-      },
-      selectedIndex: null,
       children: [
         DrawerHeader(
           decoration: BoxDecoration(
@@ -39,6 +33,7 @@ class MyNavigationDrawer extends StatelessWidget {
             ),
             padding: EdgeInsets.zero,
             iconSize: 40,
+            closeDrawer: true,
           ),
         ),
         ...menuRoutes.map((route) => _NavigationDestination(route: route)),
@@ -94,7 +89,10 @@ class _NavigationDestination extends StatelessWidget {
             route.name,
             style: textTheme.titleMedium,
           ),
-          onPressed: followLink,
+          onPressed: () async {
+            Navigator.of(context).pop(); // Close the drawer
+            return followLink?.call();
+          },
         ),
       ),
     );
