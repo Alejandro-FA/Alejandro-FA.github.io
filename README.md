@@ -16,13 +16,17 @@ Common development tasks have been unified into single interface of npm scripts 
 npm run upgrade-deps
 ```
 
-### Running the development server
+### Running a local development server
 
 ```bash
 npm run serve
 ```
 
-> You can also run the server in release mode with `npm run serve:release`, which will build the project as the production build.
+> Alternatively, you can run the server in release mode with `npm run serve:release`, which will build the project as in a production environment. This also allows to emulate Cloudflare R2 storage by adding files to a local database. For example:
+>
+> ```bash
+> npx wrangler r2 object put cv-documents/alejandro_fernandez_cv-en.pdf --local --file ~/Sync/Personal/CV/alejandro_fernandez_cv-en.pdf
+> ```
 
 ### Checking for linting errors
 

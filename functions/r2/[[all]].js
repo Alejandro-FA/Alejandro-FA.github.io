@@ -4,6 +4,14 @@ function authorizeRequest(key) {
   return ALLOW_LIST.includes(key);
 }
 
+export async function onRequestHead(context) {
+  const path = new URL(context.request.url).pathname.replace("/r2/", "");
+
+  return authorizeRequest(path)
+    ? new Response(null, { status: 200 })
+    : new Response(null, { status: 404 });
+}
+
 export async function onRequestGet(context) {
   const path = new URL(context.request.url).pathname.replace("/r2/", "");
 
